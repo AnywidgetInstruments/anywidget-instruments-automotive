@@ -99,14 +99,19 @@ def _(ai, coolant, fuel, fuel_rate_lph, high_beam, hud, low_fuel, mil, mo, oil, 
     # Tell-tale colours follow their meaning (UN Regulation No. 121, ISO 2575): red for
     # danger, amber for warning, green for a function on, blue for high beam.
     RED, AMBER, GREEN, BLUE = "#d32f2f", "#ffb300", "#2e7d32", "#1565c0"
+    # An unlit tell-tale is a neutral dim grey, whatever its colour when lit: an unlit
+    # red one must not read as a green one.
+    OFF = "#3a3a3a"
+    # The widgets follow the reader's light or dark preference, as the page does.
+    THEME = "system"
     tell_tales = mo.hstack(
         [
-            ai.LED(oil.value, label="Oil pressure", on_color=RED),
-            ai.LED(coolant.value >= 115, label="Coolant hot", on_color=RED),
-            ai.LED(mil.value, label="Engine", on_color=AMBER),
-            ai.LED(low_fuel, label="Low fuel", on_color=AMBER),
-            ai.LED(turn.value, label="Indicator", on_color=GREEN, blink=turn.value),
-            ai.LED(high_beam.value, label="High beam", on_color=BLUE),
+            ai.LED(oil.value, label="Oil pressure", on_color=RED, off_color=OFF, theme=THEME),
+            ai.LED(coolant.value >= 115, label="Coolant hot", on_color=RED, off_color=OFF, theme=THEME),
+            ai.LED(mil.value, label="Engine", on_color=AMBER, off_color=OFF, theme=THEME),
+            ai.LED(low_fuel, label="Low fuel", on_color=AMBER, off_color=OFF, theme=THEME),
+            ai.LED(turn.value, label="Indicator", on_color=GREEN, off_color=OFF, blink=turn.value, theme=THEME),
+            ai.LED(high_beam.value, label="High beam", on_color=BLUE, off_color=OFF, theme=THEME),
         ],
         justify="center",
     )
@@ -114,27 +119,37 @@ def _(ai, coolant, fuel, fuel_rate_lph, high_beam, hud, low_fuel, mil, mo, oil, 
         [
             # Rounded up, never down, in the direction UN Regulation No. 39 asks of a
             # real speedometer.
-            ai.Gauge(float(speed.value), min=0, max=200, unit="km/h", label="Speed"),
-            ai.Gauge(float(rpm.value), min=0, max=7000, unit="rpm", label="Engine speed", hi=5500, hihi=6200),
+            ai.Gauge(float(speed.value), min=0, max=200, unit="km/h", label="Speed", theme=THEME),
+            # The tachometer's red zone, with an amber band before it.
+            ai.Gauge(
+                float(rpm.value),
+                min=0,
+                max=7000,
+                unit="rpm",
+                label="Engine speed",
+                ranges=[{"from": 5500, "to": 6200, "color": AMBER}, {"from": 6200, "to": 7000, "color": RED}],
+                theme=THEME,
+            ),
         ],
         justify="center",
     )
     gauges = mo.hstack(
         [
-            ai.Tank(float(fuel.value), min=0, max=100, unit="%", label="Fuel", lo=12, show_limits=True),
-            ai.Thermometer(float(coolant.value), min=40, max=130, unit="°C", label="Coolant", hi=110, hihi=115),
+            ai.Tank(float(fuel.value), min=0, max=100, unit="%", label="Fuel", lo=12, show_limits=True, theme=THEME),
+            ai.Thermometer(float(coolant.value), min=40, max=130, unit="°C", label="Coolant", hi=110, hihi=115, theme=THEME),
         ],
         justify="center",
     )
     trip = mo.hstack(
         [
-            ai.SevenSegment(fuel_rate_lph, digits=4, decimals=1, unit="L/h", label="Fuel rate"),
+            ai.SevenSegment(fuel_rate_lph, digits=4, decimals=1, unit="L/h", label="Fuel rate", theme=THEME),
             ai.SevenSegment(
                 per_100km if per_100km is not None else 0.0,
                 digits=4,
                 decimals=1,
                 unit="L/100 km",
                 label="Instant consumption" if per_100km is not None else "L/100 km (below 5 km/h: —)",
+                theme=THEME,
             ),
         ],
         justify="center",
