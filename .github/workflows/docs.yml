@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install mkdocs-material marimo
+      - run: pip install mkdocs-material marimo uv # uv: import analysis of the marimo export
       - name: MkDocs (offline-capable, strict)
         run: mkdocs build --strict -d site
       # The preview installs anywidget-instruments in the browser from the wheel that
