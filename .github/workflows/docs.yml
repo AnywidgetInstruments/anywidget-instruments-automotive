@@ -1,0 +1,46 @@
+# Documentation site, published to GitHub Pages — the workflow of anywidget-instruments,
+# without the package build, JupyterLite and marimo exports, since there is no package yet.
+name: Docs
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install mkdocs-material
+      - name: MkDocs (offline-capable, strict)
+        run: mkdocs build --strict -d site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  # Published from pushes to main (Settings > Pages > Source: GitHub Actions).
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -36,7 +36,7 @@ aa.Cluster([speed, rpm, engine], hud=False)
 
 ## Documentation
 
-`mkdocs serve` builds the site from `docs/`:
+Published at <https://s-celles.github.io/anywidget-automotives/>; `mkdocs serve` builds it locally from `docs/`:
 
 * [Widget catalog](docs/widgets.md) — what each planned widget shows and which convention it follows
 * [Safety notice](docs/safety.md)
