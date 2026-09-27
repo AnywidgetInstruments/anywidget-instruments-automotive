@@ -45,3 +45,7 @@ aa.Cluster([speed, rpm, engine], hud=False)
 * [Use with CAN & CANopen Studio](docs/integration.md)
 * [Specification](docs/specification.md) — requirements in EARS notation
 * [Requirements status](docs/requirements-status.md)
+
+## License
+
+BSD 3-Clause, as anywidget-instruments. See [LICENSE](LICENSE).

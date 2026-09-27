@@ -62,5 +62,6 @@ does, and for complying with the regulations that apply to them.
 
 ## No warranty
 
-The library is distributed "as is", without warranty of any kind. The standards cited in
+The library is distributed under the BSD 3-Clause license, "as is", without warranty of
+any kind (see the `LICENSE` file). The standards cited in
 this notice are listed with their disclaimer in [Standards and references](standards.md).
