@@ -1,0 +1,35 @@
+site_name: anywidget-automotives
+site_description: Automotive instruments for computational notebooks
+repo_url: https://github.com/s-celles/anywidget-automotives
+edit_uri: ""
+# Buildable offline — no Google Fonts, no CDN assets, as anywidget-instruments.
+theme:
+  name: material
+  font: false
+  features:
+    - navigation.sections
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle: { icon: material/weather-night, name: Dark mode }
+    - scheme: slate
+      toggle: { icon: material/weather-sunny, name: Light mode }
+nav:
+  - Home: index.md
+  - Widget catalog: widgets.md
+  - Safety notice: safety.md
+  - Standards and references: standards.md
+  - Guides:
+      - Head-up display mode: hud.md
+      - Use with CAN & CANopen Studio: integration.md
+  - Specification: specification.md
+  - Requirements status: requirements-status.md
+plugins:
+  - search
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - toc: { permalink: true }
+  - pymdownx.highlight
+  - pymdownx.superfences
