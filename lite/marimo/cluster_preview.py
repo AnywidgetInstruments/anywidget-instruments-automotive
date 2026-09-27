@@ -18,6 +18,28 @@ def _():
 
 
 @app.cell(hide_code=True)
+def _(mo):
+    mo.md("""
+    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-automotives/examples/)
+
+    # Instrument cluster — preview
+
+    Move the sliders to drive, flip the switches to light the tell-tales, and turn on
+    the **HUD mirror**. Everything runs in your browser.
+
+    > **Preview.** This cluster is composed from **anywidget-instruments** widgets, to
+    > show what anywidget-automotives will offer. The automotive widgets themselves —
+    > `Speedometer`, `Tachometer`, `TellTale`, `Cluster` — are specified but not written
+    > yet ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)). The
+    > figures are simulated.
+
+    > **Not a vehicle instrument.** See the
+    > [safety notice](https://s-celles.github.io/anywidget-automotives/safety/).
+    """)
+    return
+
+
+@app.cell(hide_code=True)
 async def _(mo, sys):
     # In the browser the package is not on the package index: install the wheel that
     # anywidget-instruments publishes next to its own gallery. Locally it is installed.
@@ -38,28 +60,6 @@ def _(installed):
     import anywidget_instruments as ai
 
     return (ai,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md("""
-    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-automotives/examples/)
-
-    # Instrument cluster — preview
-
-    Move the sliders to drive, flip the switches to light the tell-tales, and turn on
-    the **HUD mirror**. Everything runs in your browser.
-
-    > **Preview.** This cluster is composed from **anywidget-instruments** widgets, to
-    > show what anywidget-automotives will offer. The automotive widgets themselves —
-    > `Speedometer`, `Tachometer`, `TellTale`, `Cluster` — are specified but not written
-    > yet ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)). The
-    > figures are simulated.
-
-    > **Not a vehicle instrument.** See the
-    > [safety notice](https://s-celles.github.io/anywidget-automotives/safety/).
-    """)
-    return
 
 
 @app.cell(hide_code=True)
