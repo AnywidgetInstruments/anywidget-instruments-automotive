@@ -17,6 +17,7 @@ theme:
 nav:
   - Home: index.md
   - Widget catalog: widgets.md
+  - Examples: examples.md
   - Safety notice: safety.md
   - Standards and references: standards.md
   - Guides:

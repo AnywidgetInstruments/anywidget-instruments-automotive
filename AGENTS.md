@@ -10,6 +10,10 @@ built on [anywidget](https://anywidget.dev) and on
 [anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose base
 class, trait contract, themes and hosts it reuses.
 
+The library is a **TypeScript front end first**: the anywidget front-end modules are the
+implementation, and Python, Julia (KaimonSlate.jl), Rust and other languages are hosts
+that set traits described by the trait contract.
+
 The repository is at the **design stage**: `docs/` holds the documentation and the EARS
 specification, and no widget is implemented yet.
 
@@ -17,6 +21,10 @@ specification, and no widget is implemented yet.
 
 - Requirements come from `docs/specification.md`; `docs/requirements-status.md` tracks
   them. A change of behaviour goes through the specification first (bump its version).
+- Anything a widget displays — unit conversion, rounding, zones, stale states — is
+  computed in the TypeScript front end, never in a host binding, so every host shows
+  the same figures. A host binding only sets traits; it may accept its language's unit
+  quantities (pint, DynamicQuantities.jl, uom) and pass them on as a number and a unit name.
 - Build on anywidget-instruments rather than re-implementing it: a widget here derives
   from its base class and honours its trait contract. Anything general enough to serve
   a non-automotive display belongs upstream.

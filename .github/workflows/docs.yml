@@ -1,5 +1,6 @@
 # Documentation site, published to GitHub Pages — the workflow of anywidget-instruments,
-# without the package build, JupyterLite and marimo exports, since there is no package yet.
+# without the package build and JupyterLite, since there is no package yet. The marimo
+# previews install anywidget-instruments from the wheel its own site publishes.
 name: Docs
 
 on:
@@ -23,9 +24,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install mkdocs-material
+      - run: pip install mkdocs-material marimo
       - name: MkDocs (offline-capable, strict)
         run: mkdocs build --strict -d site
+      # The preview installs anywidget-instruments in the browser from the wheel that
+      # library publishes on its own site, so nothing is built here.
+      - name: marimo WebAssembly exports
+        run: |
+          for nb in lite/marimo/*.py; do
+            name=$(basename "$nb" .py)
+            marimo export html-wasm "$nb" -o "site/marimo/$name" --mode run --show-code
+            rm -f "site/marimo/$name/CLAUDE.md"
+          done
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

@@ -31,7 +31,7 @@ the widgets. This page names them so that readers can go to the original texts.
 | UN Regulation No. 121 (UNECE) | Location and identification of hand controls, tell-tales and indicators | Tell-tale colour code — red for danger, yellow/amber for warning, green for a function on, blue for high beam — and the symbols a tell-tale uses | TEL-001 .. TEL-005 |
 | FMVSS No. 101 (United States) | Controls and displays | The same concerns for the US market: symbols, colours, illumination | TEL-001 .. TEL-005 |
 | UN Regulation No. 39 (UNECE) | Speedometer and odometer equipment | A speedometer never shows less than the true speed; the shown speed may exceed it by at most 10 % plus 4 km/h. A widget cannot measure speed, but it can refuse to round down | SPD-001 .. SPD-004 |
-| Directive 80/181/EEC and the SI | Units of measurement | km/h and L/100 km as defaults, mph and mpg where a market uses them | UNIT-001 .. UNIT-003 |
+| Directive 80/181/EEC and the SI | Units of measurement | Metric, imperial and US unit systems, with the exact defining factors between them | UNIT-001 .. UNIT-017 |
 
 ## Human-machine interface standards
 

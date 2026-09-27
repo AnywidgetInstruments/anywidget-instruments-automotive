@@ -2,12 +2,27 @@
 
 Every widget below is **planned**: this page describes what it will show and which
 convention it follows, so that the specification can be reviewed before any code is
-written. Each derives from the anywidget-instruments base class and inherits its common
-traits (`value`, `label`, `unit`, `min`, `max`, `theme`, `size`, `disabled`, `visible`,
-`tooltip`) and its `on_change` callbacks.
+written. Each is a TypeScript front-end module extending anywidget-instruments, with its
+common traits (`value`, `label`, `unit`, `min`, `max`, `theme`, `size`, `disabled`,
+`visible`, `tooltip`). The examples use the Python host binding; from Julia, Rust or a
+web page, the same widgets take the same traits.
 
 All widgets are **indicators**: the value is set by the kernel and only displayed. A
 vehicle display is read, not operated, while driving.
+
+## Units
+
+Every widget reads its value in metric units by default and shows it in the unit system
+chosen for it — `metric`, `imperial` (UK) or `us` — or in a unit of its own:
+
+```python
+aa.Cluster([speed, economy], unit_system="us")        # mph, mpg (US), °F
+aa.TripComputer(6.2, unit="mpg (imperial)")           # one widget in its own unit
+```
+
+Fuel economy is the quantity to watch: L/100 km and mpg are reciprocal, so a scale
+converted from one to the other is turned round — its better end stays marked as better
+— and a figure that would be infinite, at a standstill, is not shown.
 
 ## Dials
 
@@ -15,8 +30,8 @@ vehicle display is read, not operated, while driving.
 
 Vehicle speed on a dial, with a digital readout.
 
-* Unit `km/h` by default, `mph` where chosen, with the other shown as an inner scale on
-  request.
+* The unit of the unit system — km/h in `metric`, mph in `imperial` and `us` — or a
+  unit of its own, with the other shown as an inner scale on request.
 * **Never rounds down** (SPD-001): 49.6 km/h reads 50, not 49 — in the direction
   UN Regulation No. 39 asks of a real speedometer, although the widget cannot guarantee
   the accuracy of the value it is given.

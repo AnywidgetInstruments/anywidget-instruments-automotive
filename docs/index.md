@@ -4,11 +4,14 @@ Automotive instruments for computational notebooks: speedometer, tachometer, fue
 temperature gauges, tell-tales, a trip computer display, gear and shift indicators, and a
 head-up display mode.
 
-Built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/s-celles/anywidget-instruments): the widgets
-reuse its base class, its [trait contract](https://s-celles.github.io/anywidget-instruments/trait-contract/),
-its themes and its hosts — JupyterLab, Jupyter Notebook 7, marimo, VS Code and Google
-Colab — with no JavaScript toolchain and no network access at runtime.
+A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
+[anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose front
+end, [trait contract](https://s-celles.github.io/anywidget-instruments/trait-contract/)
+and themes it extends. The front end computes everything a widget shows — unit
+conversion included — from a dictionary of traits, so the widgets behave alike in every
+host: **Python** (JupyterLab, Jupyter Notebook 7, marimo, VS Code, Google Colab),
+**Julia** (KaimonSlate.jl), **Rust** or a plain web page — with no JavaScript toolchain
+and no network access at runtime.
 
 !!! info "Status: design"
     This site documents the library before it is written. The [catalog](widgets.md)

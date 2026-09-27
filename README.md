@@ -2,9 +2,13 @@
 
 Automotive instruments for computational notebooks: speedometer, tachometer, fuel and
 temperature gauges, tell-tales, trip computer, gear and shift indicators, and a
-head-up display mode — built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose widget
-base, trait contract and themes it reuses.
+head-up display mode.
+
+A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
+[anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose front
+end, trait contract and themes it extends. Everything a widget shows, unit conversion
+included, is computed in the front end from its traits, so it behaves alike from
+**Python**, **Julia** (KaimonSlate.jl), **Rust** or any host that sets those traits.
 
 > **Status: design.** This repository holds the documentation and the specification.
 > No widget is implemented yet; every widget in the catalog is *planned*.
