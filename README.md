@@ -49,6 +49,7 @@ Published at <https://s-celles.github.io/anywidget-automotives/>; `mkdocs serve`
 * [Use with CAN & CANopen Studio](docs/integration.md)
 * [Specification](docs/specification.md) — requirements in EARS notation
 * [Requirements status](docs/requirements-status.md)
+* [Roadmap](docs/roadmap.md) — milestones in order of dependency
 
 ## License
 

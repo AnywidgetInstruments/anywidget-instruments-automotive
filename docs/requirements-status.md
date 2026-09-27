@@ -26,14 +26,4 @@ preview composed from anywidget-instruments widgets, not an implementation.
 
 ## Order of work
 
-Sequenced by dependency:
-
-1. The base, in the TypeScript front end: extend anywidget-instruments (GEN, API), the
-   trait contract and parity cases (HOST), units and conversion (UNIT), stale and
-   missing values (ROB).
-2. `TellTale` and `TellTaleCluster` (TEL), which need no dial.
-3. The dials: `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge` (DIAL, SPD),
-   with legibility (LEG).
-4. The digital displays: `TripComputer`, `Odometer`, `GearIndicator` (DIG).
-5. `Cluster` with the day, night and head-up display modes (CLU, DIS, HUD).
-6. Accessibility, documentation and verification throughout (A11Y, DOC, QA).
+The milestones, sequenced by dependency, are in the [roadmap](roadmap.md).

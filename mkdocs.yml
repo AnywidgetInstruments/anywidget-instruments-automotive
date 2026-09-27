@@ -25,6 +25,7 @@ nav:
       - Use with CAN & CANopen Studio: integration.md
   - Specification: specification.md
   - Requirements status: requirements-status.md
+  - Roadmap: roadmap.md
 plugins:
   - search
 markdown_extensions:
