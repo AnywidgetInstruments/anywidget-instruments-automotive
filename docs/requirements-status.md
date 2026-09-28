@@ -3,7 +3,7 @@
 Where the [specification](specification.md) 0.6 stands in the code. A requirement is
 **implemented** when the code does what it says for every widget it concerns, and
 **tested** when an automated test fails without it. A requirement met by one layer but
-not yet by the widgets that need it — the unit conversion before the trip computer exists — is
+not yet by the widgets that need it — the units of a cluster before the `Cluster` exists — is
 listed as partial and not counted.
 
 | Group | Requirements | Implemented | Tested |
@@ -13,18 +13,18 @@ listed as partial and not counted.
 | Dials (DIAL) | 13 | 13 | 13 |
 | Speed display (SPD) | 5 | 4 | 3 |
 | Tell-tales (TEL) | 8 | 8 | 8 |
-| Digital displays (DIG) | 7 | 0 | 0 |
+| Digital displays (DIG) | 7 | 7 | 7 |
 | Cluster (CLU) | 3 | 0 | 0 |
 | Legibility (LEG) | 5 | 0 | 0 |
 | Distraction (DIS) | 4 | 3 | 2 |
 | Head-up display (HUD) | 6 | 0 | 0 |
-| Units (UNIT) | 14 | 11 | 11 |
+| Units (UNIT) | 14 | 12 | 12 |
 | Robustness (ROB) | 3 | 3 | 3 |
 | Accessibility (A11Y) | 2 | 2 | 2 |
 | Documentation (DOC) | 5 | 4 | 0 |
 | Quality and verification (QA) | 3 | 2 | 2 |
 | Host independence (HOST) | 6 | 4 | 4 |
-| **Total** | **99** | **67** | **60** |
+| **Total** | **99** | **75** | **68** |
 
 ## Implemented
 
@@ -54,6 +54,8 @@ listed as partial and not counted.
 | ROB-001 .. ROB-003 | `max_age` and `_value_seq`, `null` values, the kernel liveness of anywidget-instruments | `telltale.test.ts`, `dials.test.ts` |
 | A11Y-001, A11Y-002 | Accessible names and states (a dial is a `meter`); no blinking and no gliding needle under reduced motion | `telltale.test.ts`, `dials.test.ts` |
 | DOC-002 .. DOC-005 | Safety notice, standards, JupyterLite and marimo examples, pictures captured by `npm run images` in CI | — |
+| DIG-001 .. DIG-007 | `js/src/core/trip.ts`, `js/src/widgets/digital.ts`, `_digital.py` | `js/test/digital.test.ts`, `tests/parity/trip.json` |
+| UNIT-016 | No mpg for a zero consumption, per hour below 5 km/h | `units.test.ts`, `digital.test.ts` |
 | QA-002 | Every tell-tale function against its colour, in every theme | `telltale.test.ts` |
 | QA-003 | SPD-001 at every boundary of resolutions 1, 0.5, 2 and 0.1, and of mph converted from km/h | `dials.test.ts` |
 | HOST-001 .. HOST-004 | Schemas, `static/contract.json`, `tests/parity/`, invalid state | `test_contract.py`, `units.test.ts`, `telltale.test.ts` |
@@ -63,10 +65,9 @@ listed as partial and not counted.
 | Requirement | What is missing |
 |---|---|
 | GEN-008 | Styles are scoped (tested); the kernel liveness of anywidget-instruments keeps its registry of heartbeats on `globalThis`. |
-| UNIT-016 | A zero L/100 km gives no mpg (tested); the speed threshold of DIG-002 comes with the trip computer. |
 | UNIT-004 | Comes with the `Cluster`. |
 | LEG-002, LEG-003 | Contrast of the tell-tale colours tested; the light and dark themes are those of anywidget-instruments. |
-| DOC-001 | The catalog shows the tell-tales and dials; the other widgets are still planned. |
+| DOC-001 | The catalog shows every widget but the `Cluster`, still planned. |
 
 ## Order of work
 

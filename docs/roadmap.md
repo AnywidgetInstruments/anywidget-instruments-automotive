@@ -13,10 +13,11 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | 2. Units and robustness | The unit layer and the missing, stale and invalid states, applied by every widget |
 | 3. Tell-tales | `TellTale` and `TellTaleCluster`, 22 functions with original symbols |
 | 4. Dials | `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`; legibility (LEG) waits for the visual angle of open question 3 |
-| Cluster preview | A marimo WebAssembly example: the real tell-tales and dials, the trip computer still from anywidget-instruments |
+| 5. Digital displays | `TripComputer`, `Odometer`, `GearIndicator`, with the consumption rules of CAN & CANopen Studio |
+| Cluster preview | A marimo WebAssembly example made of the real widgets, laid out by marimo until the `Cluster` exists |
 
-The [requirements status](requirements-status.md) shows 67 of 99 requirements
-implemented, 60 of them tested.
+The [requirements status](requirements-status.md) shows 75 of 99 requirements
+implemented, 68 of them tested.
 
 ## Principles
 
@@ -84,7 +85,7 @@ The first widgets, and the ones that need no dial.
 * Legibility from the viewing distance, day and night themes (LEG), once the visual angle
   is set from ISO 15008 (open question 3).
 
-### 5. Digital displays
+### 5. Digital displays — done
 
 * `TripComputer`, `Odometer` and `GearIndicator` (DIG), with the consumption rules shared
   with CAN & CANopen Studio's trip computer: per hour below 5 km/h, no average under

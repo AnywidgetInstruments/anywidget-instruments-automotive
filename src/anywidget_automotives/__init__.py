@@ -18,22 +18,28 @@ from ._dial import (
     Tachometer,
     TemperatureGauge,
 )
+from ._digital import GEARS, TRIP_FIELDS, GearIndicator, Odometer, TripComputer
 from ._telltale import TellTale, TellTaleCluster
 
 __all__ = [
+    "GEARS",
     "TELLTALE_FUNCTIONS",
     "TELLTALE_STATES",
+    "TRIP_FIELDS",
     "UNITS",
     "UNIT_SYSTEMS",
     "AutomotiveWidget",
     "DialWidget",
     "FuelGauge",
+    "GearIndicator",
+    "Odometer",
     "QuantityWidget",
     "Speedometer",
     "Tachometer",
     "TellTale",
     "TellTaleCluster",
     "TemperatureGauge",
+    "TripComputer",
 ]
 
 __version__ = "0.1.0.dev0"

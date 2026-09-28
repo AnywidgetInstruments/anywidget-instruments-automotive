@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/odometer.schema.json",
+  "title": "Odometer",
+  "description": "Total and trip distance, in a mechanical-counter style (DIG-005).",
+  "type": "object",
+  "x-awi-class": "Odometer",
+  "x-awa-quantity": "distance",
+  "allOf": [
+    {
+      "$ref": "quantity.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-odometer",
+      "default": "awa-odometer",
+      "x-awi-writer": "host"
+    },
+    "value": {
+      "description": "Total distance, in input_unit; null: not known (ROB-002)."
+    },
+    "trip": {
+      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "description": "Trip distance, in input_unit; null: no trip meter.",
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "$ref": "units.schema.json#/$defs/distance"
+    },
+    "input_unit": {
+      "$ref": "units.schema.json#/$defs/distance"
+    },
+    "digits": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9,
+      "description": "Drums of the total counter.",
+      "default": 6,
+      "x-awi-writer": "host"
+    },
+    "max": {
+      "default": 999999
+    },
+    "label": {
+      "default": "Odometer"
+    },
+    "size": {
+      "default": [
+        200,
+        90
+      ]
+    }
+  }
+}

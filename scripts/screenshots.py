@@ -67,7 +67,7 @@ def capture(name: str, notebook: Path) -> None:
                     device_scale_factor=2,
                 )
                 page.goto(url)
-                page.get_by_text("Instant consumption").first.wait_for(timeout=60_000)
+                page.get_by_text("Fuel used").first.wait_for(timeout=60_000)
                 # Light a warning and a function tell-tale, so the picture shows the
                 # colours by meaning next to unlit ones. Not the direction indicator:
                 # it blinks, and a capture would catch it at random.

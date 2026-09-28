@@ -15,17 +15,16 @@ and no network access at runtime.
 
 !!! info "Status: early implementation"
     The foundations are laid — front end, trait contract, units, Python binding — and
-    the **tell-tales** and **dials** are written. The digital displays and the cluster
-    are still planned: the [catalog](widgets.md) says which is which, the
+    the **tell-tales**, **dials** and **digital displays** are written. The `Cluster`
+    and its head-up display mode are still planned: the [catalog](widgets.md) says which is which, the
     [specification](specification.md) states what they shall do, and the
     [requirements status](requirements-status.md) shows where each requirement stands.
 
 ![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
 ![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)
 
-*The [cluster preview](examples.md): tell-tales and dials of anywidget-automotives; the
-trip computer, still made of anywidget-instruments widgets, stands in for the automotive
-one until it is written. The figures are simulated.*
+*The [cluster preview](examples.md), made of the widgets of anywidget-automotives and
+laid out by marimo until the `Cluster` is written. The figures are simulated.*
 
 !!! warning "Safety"
     The widgets are for visualization, teaching, simulation and aftermarket dashboards.

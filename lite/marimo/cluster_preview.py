@@ -1,8 +1,8 @@
 # Instrument cluster preview for the marimo WebAssembly export of the documentation site.
-# `marimo export html-wasm` runs it in the browser through Pyodide. The tell-tales and
-# dials are the widgets of anywidget-automotives; the trip computer, not written yet, is
-# still made of anywidget-instruments widgets. Both wheels are published next to the page
-# (public/).
+# `marimo export html-wasm` runs it in the browser through Pyodide. The widgets are those
+# of anywidget-automotives; the Cluster, not written yet, is stood in for by marimo
+# stacks. Both wheels, of this library and of anywidget-instruments on which it builds,
+# are published next to the page (public/).
 #
 # The page follows the reader's light or dark preference, as the widgets do; left to
 # its default, marimo would draw dark widgets on a light page.
@@ -35,12 +35,11 @@ def _(mo):
     Move the sliders to drive, flip the switches to light the tell-tales, and turn on
     the **HUD mirror**. Everything runs in your browser.
 
-    > **Preview.** The tell-tales and the dials are the widgets of
-    > anywidget-automotives; pick a unit system to see them convert. The trip computer
-    > is still made of **anywidget-instruments** widgets, standing in for
-    > `TripComputer`, which is specified but not written yet
-    > ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)). The
-    > figures are simulated.
+    > **Preview.** The widgets are those of anywidget-automotives; pick a unit system
+    > to see them convert. The `Cluster` that will lay them out, and its head-up
+    > display mode, are specified but not written yet
+    > ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)): the HUD
+    > mirror here is a plain CSS flip. The figures are simulated.
 
     > **Not a vehicle instrument.** See the
     > [safety notice](https://s-celles.github.io/anywidget-automotives/safety/).
@@ -103,29 +102,33 @@ def _(mo):
 
 @app.cell(hide_code=True)
 def _(fuel, rpm, speed):
-    # A simulated fuel rate, rising with engine speed: enough to show how the trip
-    # computer reads, not a model of any engine.
+    # A simulated fuel rate, rising with engine speed, and a gear from the speed: enough
+    # to show how the displays read, not a model of any vehicle. The consumption per
+    # 100 km, or per hour below 5 km/h, is computed by the trip computer itself.
     fuel_rate_lph = 0.6 + rpm.value / 1000 * 1.3 if rpm.value > 0 else 0.0
-    # Per 100 km only above 5 km/h, where it would otherwise tend to infinity.
-    per_100km = fuel_rate_lph / speed.value * 100 if speed.value >= 5 else None
+    gear = next(
+        (g for g, top in ((1, 20), (2, 40), (3, 60), (4, 80), (5, 110)) if speed.value < top), 6
+    )
     low_fuel = fuel.value < 12
-    return fuel_rate_lph, low_fuel, per_100km
+    # a 50 L tank, at 6 L/100 km
+    range_km = fuel.value / 100 * 50 / 6 * 100
+    return fuel_rate_lph, gear, low_fuel, range_km
 
 
 @app.cell(hide_code=True)
 def _(
     aa,
-    ai,
     coolant,
     fuel,
     fuel_rate_lph,
+    gear,
     high_beam,
     hud,
     low_fuel,
     mil,
     mo,
     oil,
-    per_100km,
+    range_km,
     rpm,
     speed,
     turn,
@@ -177,19 +180,20 @@ def _(
     )
     trip = mo.hstack(
         [
-            ai.SevenSegment(
-                fuel_rate_lph, digits=4, decimals=1, unit="L/h", label="Fuel rate", theme=THEME
-            ),
-            ai.SevenSegment(
-                per_100km if per_100km is not None else 0.0,
-                digits=4,
-                decimals=1,
-                unit="L/100 km",
-                label="Instant consumption"
-                if per_100km is not None
-                else "L/100 km (below 5 km/h: —)",
+            aa.TripComputer(
+                # the trip so far is fixed: the sliders drive the instant figures
+                {
+                    "speed": speed.value,
+                    "fuel_rate": fuel_rate_lph,
+                    "distance": 42.0,
+                    "fuel_used": 2.9,
+                    "elapsed": 1860,
+                    "range": range_km,
+                },
+                unit_system=units.value,
                 theme=THEME,
             ),
+            aa.GearIndicator(gear if speed.value > 0 else "N", theme=THEME),
         ],
         justify="center",
     )

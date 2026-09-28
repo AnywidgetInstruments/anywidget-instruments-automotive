@@ -89,3 +89,28 @@
 .awa-root .awa-dial-tt.awa-lit.awa-red { color: var(--awa-tt-red); }
 .awa-root .awa-dial-tt.awa-lit.awa-amber { color: var(--awa-tt-amber); }
 .awa-root .awa-filler { fill: var(--awi-muted); }
+
+/* ---- digital displays ----------------------------------------------------- */
+.awa-root { --awa-lcd-bg: #0b0f14; --awa-lcd-ink: #e5e7eb; --awa-lcd-dim: #9ca3af; }
+.awa-root.awa-tripcomputer .awi-body, .awa-root.awa-odometer .awi-body, .awa-root.awa-gearindicator .awi-body { height: auto !important; background: var(--awa-lcd-bg); color: var(--awa-lcd-ink); border-radius: 8px; padding: 8px 12px; box-sizing: border-box; font-family: var(--awi-font, system-ui, sans-serif); font-variant-numeric: tabular-nums slashed-zero; }
+.awa-root .awa-state-line { font-size: 11px; font-weight: 700; color: var(--awa-tt-amber); }
+.awa-root .awa-trip { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; align-items: baseline; }
+.awa-root .awa-trip dt { font-size: 12px; color: var(--awa-lcd-dim); }
+.awa-root .awa-trip dd { margin: 0; text-align: right; white-space: nowrap; }
+.awa-root .awa-trip-num { font-size: 18px; font-weight: 700; }
+.awa-root .awa-trip-unit { font-size: 11px; color: var(--awa-lcd-dim); margin-left: 4px; }
+.awa-root .awa-trip-why { display: block; font-size: 10px; color: var(--awa-lcd-dim); }
+.awa-root .awa-odo-row { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.awa-root .awa-odo-trip { margin-top: 6px; }
+.awa-root .awa-odo-tag { font-size: 10px; font-weight: 700; color: var(--awa-lcd-dim); margin-right: auto; }
+.awa-root .awa-drums { display: inline-flex; gap: 2px; }
+.awa-root .awa-drum { display: inline-block; min-width: 0.85em; padding: 1px 2px; text-align: center; font-size: 20px; font-weight: 700; background: #1f2937; color: var(--awa-lcd-ink); border-radius: 2px; }
+.awa-root .awa-drums-trip .awa-drum { font-size: 15px; }
+.awa-root .awa-drum-tenth { background: var(--awa-lcd-ink); color: var(--awa-lcd-bg); }
+.awa-root .awa-odo-unit { font-size: 11px; color: var(--awa-lcd-dim); min-width: 2em; }
+.awa-root.awa-gearindicator .awi-body { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.awa-root .awa-gear { font-size: 56px; font-weight: 800; line-height: 1; min-width: 0.8em; text-align: center; }
+.awa-root.awa-gear-reverse .awa-gear { color: var(--awa-tt-amber); }
+.awa-root .awa-gear-arrow { width: 22px; height: 22px; }
+.awa-root .awa-shift-arrow { fill: var(--awa-tt-green); }
+.awa-root.awa-stale :is(.awa-trip, .awa-odo-row, .awa-gear) { opacity: 0.5; }

@@ -117,6 +117,14 @@ shot("dial-states", (s) => {
   show(s, "Speedometer", { value: "nan", label: "Invalid value" });
 });
 
+shot("digital", (s) => {
+  show(s, "TripComputer", { value: { speed: 92, fuel_rate: 5.6, distance: 48.3, fuel_used: 3.1, elapsed: 1930, range: 420 } });
+  show(s, "TripComputer", { label: "Trip, just started", value: { speed: 3, fuel_rate: 0.9, distance: 0.04, fuel_used: 0.01, elapsed: 25 } });
+  show(s, "Odometer", { value: 48213.7, trip: 48.36 });
+  show(s, "GearIndicator", { value: "3", suggestion: "up" });
+  show(s, "GearIndicator", { value: "D", label: "Automatic" });
+});
+
 document.body.dataset.ready = "true";
 </script>
 </body>

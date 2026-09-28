@@ -1,6 +1,6 @@
 # Widget catalog
 
-The **dials and tell-tales are available**; the other widgets below are **planned**: this page
+The **dials, tell-tales and digital displays are available**; the `Cluster` is **planned**: this page
 describes what they will show and which convention they follow, so that the
 specification can be reviewed before their code is written. Each is a TypeScript
 front-end module extending anywidget-instruments, with its common traits (`value`, `label`, `unit`, `min`, `max`, `theme`, `size`, `disabled`,
@@ -166,19 +166,49 @@ row.set_telltale("turn_left", "blinking")
 
 ## Digital displays
 
-### `TripComputer`
+![Trip computers, odometer and gear indicators, day theme](img/digital-light.png#only-light)
+![Trip computers, odometer and gear indicators, night theme](img/digital-dark.png#only-dark)
 
-The figures of a trip: instant and average consumption, fuel used, distance, elapsed
-time, range. Each figure says what it rests on — an average over 0.1 km is noise and is
-not shown — and a consumption at a standstill is given per hour, not per 100 km.
+### `TripComputer` — available
 
-### `Odometer`
+The figures of a trip, computed by the front end from the raw figures a host reads —
+the rules of the trip computer of [CAN & CANopen Studio](integration.md):
 
-Total and trip distance, in a mechanical-counter style.
+```python
+trip = aa.TripComputer({"speed": 92, "fuel_rate": 5.6, "distance": 48.3,
+                        "fuel_used": 3.1, "elapsed": 1930, "range": 420})
+trip.update(speed=88, fuel_rate=5.1)
+```
 
-### `GearIndicator`
+`value` holds `speed` (km/h), `fuel_rate` (L/h), `distance` (km), `fuel_used` (L),
+`elapsed` (s) and, optionally, `range` (km), each a number or `None`.
 
-The engaged gear (`P`, `R`, `N`, `D`, `1`–`8`), and an up or down shift suggestion.
+* Instant and average consumption, fuel used, distance and elapsed time (DIG-001).
+* **Below 5 km/h the consumption is given per hour** — per 100 km it tends to infinity
+  at a standstill — and the line says so (DIG-002). In mpg a zero consumption has no
+  figure either (UNIT-016).
+* **No average before 0.1 km**: a dash, and *after 0.1 km* (DIG-003).
+* The range, only where it is given (DIG-004).
+* L/100 km, L and km in `metric`; mpg, gallons and miles in `imperial` and `us`; `unit`
+  sets the consumption unit alone (`"km/L"`, for instance).
+
+### `Odometer` — available
+
+Total and trip distance on drums, the tenths of the trip inverted, as on a mechanical
+counter; a counter never rounds a distance up. km, or miles in `imperial` and `us`.
+
+```python
+aa.Odometer(48213.7, trip=48.36)
+```
+
+### `GearIndicator` — available
+
+The engaged gear (`P`, `R`, `N`, `D`, `1`–`8`; a number may be given as an int), and an
+up or down shift arrow with `suggestion` (DIG-006, DIG-007).
+
+```python
+aa.GearIndicator(3, suggestion="up")
+```
 
 ## Layout
 
