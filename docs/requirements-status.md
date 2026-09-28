@@ -1,6 +1,6 @@
 # Requirements status
 
-Where the [specification](specification.md) 0.8 stands in the code. A requirement is
+Where the [specification](specification.md) 0.9 stands in the code. A requirement is
 **implemented** when the code does what it says for every widget it concerns, and
 **tested** when an automated test fails without it. A requirement met by one layer but
 not yet by the widgets that need it — the units of a cluster before the `Cluster` exists — is
@@ -12,7 +12,7 @@ listed as partial and not counted.
 | Common widget API (API) | 6 | 6 | 6 |
 | Dials (DIAL) | 13 | 13 | 13 |
 | Speed display (SPD) | 5 | 4 | 4 |
-| Tell-tales (TEL) | 8 | 8 | 8 |
+| Tell-tales (TEL) | 9 | 9 | 9 |
 | Digital displays (DIG) | 7 | 7 | 7 |
 | Cluster (CLU) | 3 | 3 | 3 |
 | Legibility (LEG) | 5 | 3 | 3 |
@@ -25,7 +25,7 @@ listed as partial and not counted.
 | Quality and verification (QA) | 3 | 2 | 2 |
 | Host independence (HOST) | 6 | 6 | 4 |
 | Electric and hybrid drivetrains (EV) | 8 | 8 | 8 |
-| **Total** | **107** | **101** | **98** |
+| **Total** | **108** | **102** | **99** |
 
 ## Implemented
 
@@ -52,7 +52,7 @@ listed as partial and not counted.
 | DIS-002 | Every widget holds a value changing faster than twice a second for 0.5 s (`AutomotiveView`) | `dials.test.ts` |
 | DIS-003 | `animate` on every dial | `dials.test.ts` |
 | DIS-004 | The safety notice | `tests/test_docs.py` |
-| TEL-001 .. TEL-008 | `js/src/widgets/telltales.ts`, `telltale.ts` | `telltale.test.ts`, `contrast.test.ts` |
+| TEL-001 .. TEL-009 | `js/src/widgets/telltales.ts`, `telltale.ts` | `telltale.test.ts`, `contrast.test.ts` |
 | UNIT-001 .. UNIT-003, UNIT-005, UNIT-010 .. UNIT-015, UNIT-017 | `units.ts`, `units.schema.json`, applied by the dials | `units.test.ts`, `dials.test.ts`, parity cases, `test_contract.py` |
 | ROB-001 .. ROB-003 | `max_age` and `_value_seq`, `null` values, the kernel liveness of anywidget-instruments | `telltale.test.ts`, `dials.test.ts` |
 | A11Y-001, A11Y-002 | Accessible names and states (a dial is a `meter`); no blinking and no gliding needle under reduced motion | `telltale.test.ts`, `dials.test.ts` |

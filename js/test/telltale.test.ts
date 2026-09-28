@@ -186,19 +186,30 @@ describe("indicator only (API-002, API-003)", () => {
   });
 });
 
-describe("a tell-tale cluster (TEL-006, TEL-008)", () => {
+describe("a tell-tale cluster (TEL-006, TEL-008, TEL-009)", () => {
   const lamp = (fn: string, state: Lamp["state"]): Lamp => ({ fn: FUNCTIONS[fn], function: fn, state, label: fn });
 
   test("orders the lit tell-tales red, amber, then green and blue, and the unlit ones after, as given (TEL-006)", () => {
-    const order = orderLamps([lamp("high_beam", "on"), lamp("turn_left", "off"), lamp("engine", "blinking"), lamp("low_beam", "on"), lamp("brake", "on"), lamp("abs", "off"), lamp("oil_pressure", "on")]);
-    expect(order.map((l) => l.function)).toEqual(["brake", "oil_pressure", "engine", "low_beam", "high_beam", "turn_left", "abs"]);
+    const order = orderLamps([lamp("high_beam", "on"), lamp("seat_belt", "off"), lamp("engine", "blinking"), lamp("low_beam", "on"), lamp("brake", "on"), lamp("abs", "off"), lamp("oil_pressure", "on")]);
+    expect(order.map((l) => l.function)).toEqual(["brake", "oil_pressure", "engine", "low_beam", "high_beam", "seat_belt", "abs"]);
+  });
+
+  test.each([
+    ["one blinking", "blinking", "off"],
+    ["the other blinking", "off", "blinking"],
+    ["both, hazard lights", "blinking", "blinking"],
+    ["neither", "off", "off"],
+  ])("keeps the direction indicators side by side, left before right, at the start of the row: %s (TEL-009)", (_n, left, right) => {
+    const order = orderLamps([lamp("brake", "on"), lamp("turn_right", right as Lamp["state"]), lamp("engine", "on"), lamp("low_beam", "off"), lamp("turn_left", left as Lamp["state"])]);
+    expect(order.map((l) => l.function).slice(0, 2)).toEqual(["turn_left", "turn_right"]);
+    expect(order.map((l) => l.function).slice(2)).toEqual(["brake", "engine", "low_beam"]);
   });
 
   test("shows a row of tell-tales, each with its name (TEL-008)", async () => {
     const w = cluster({ value: [{ function: "turn_left", state: "off" }, { function: "engine", state: "on" }, { function: "brake", state: "off", label: "Handbrake" }] });
     await frame();
     const tiles = [...w.el.querySelectorAll(".awa-tt")] as HTMLElement[];
-    expect(tiles.map((t) => t.querySelector(".awa-tt-name")!.textContent)).toEqual(["Engine", "Turn left", "Handbrake"]);
+    expect(tiles.map((t) => t.querySelector(".awa-tt-name")!.textContent)).toEqual(["Turn left", "Engine", "Handbrake"]);
     expect(tiles.map((t) => t.getAttribute("role"))).toEqual(["listitem", "listitem", "listitem"]);
     expect(w.body.getAttribute("aria-description")).toBe("1 lit of 3");
   });

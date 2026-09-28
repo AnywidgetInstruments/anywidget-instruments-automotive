@@ -82,7 +82,8 @@ def _item(item: Any) -> dict[str, Any]:
 
 
 class TellTaleCluster(AutomotiveWidget):
-    """A row of tell-tales, the lit ones first: red, then amber, then green and blue.
+    """A row of tell-tales: the direction indicators first, side by side, then the lit
+    ones, red, then amber, then green and blue (TEL-006, TEL-009).
 
     ``value`` is a list of tell-tales, each a dict ``{"function", "state",
     "label"}`` (``label`` optional), a ``(function, state)`` pair or a

@@ -15,9 +15,13 @@ test("the cluster follows the unit system and the head-up display set from Pytho
   await expect(speed.locator(".awa-unit")).toHaveText("mph");
   await expect(speed.locator(".awa-readout")).toHaveText("56");
 
-  // a tell-tale lit from Python moves to the front of its row
+  // a tell-tale lit from Python moves to the front of its row, after the direction
+  // indicators, which stay side by side whatever their state (TEL-009)
   await page.getByRole("switch", { name: "Oil pressure" }).click();
-  await expect(page.locator(".awa-telltalecluster .awa-tt").first()).toHaveAttribute("data-function", "oil_pressure");
+  const tiles = page.locator(".awa-telltalecluster .awa-tt");
+  await expect(tiles.nth(0)).toHaveAttribute("data-function", "turn_left");
+  await expect(tiles.nth(1)).toHaveAttribute("data-function", "turn_right");
+  await expect(tiles.nth(2)).toHaveAttribute("data-function", "oil_pressure");
 
   // the head-up display: mirrored, and only the speed and what is marked hud
   await page.getByRole("switch", { name: "Head-up display" }).click();

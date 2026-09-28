@@ -1,4 +1,4 @@
-// TellTale and TellTaleCluster (TEL-001 .. TEL-008).
+// TellTale and TellTaleCluster (TEL-001 .. TEL-009).
 import { html, setAttr, setText, svg, svgText } from "anywidget-instruments/js/src/core/dom.js";
 import type { AnyModel } from "anywidget-instruments/js/src/core/model.js";
 import { STATE_TEXT, type ValueState } from "../core/state.js";
@@ -18,15 +18,22 @@ const STATES = new Set(["off", "on", "blinking"]);
 
 export const lit = (l: Lamp): boolean => l.state === "on" || l.state === "blinking";
 
+/** The direction indicators, in the order they are shown: left, then right (TEL-009). */
+export const INDICATORS = ["turn_left", "turn_right"];
+
 /**
- * Order of a cluster (TEL-006): the lit tell-tales first, red, then amber, then
- * green and blue, each colour in the order given; then the others, in the order
- * given, so that nothing moves among them when one lights up.
+ * Order of a cluster. The direction indicators come first, side by side, left
+ * before right, whatever their state (TEL-009): a blinking arrow stays next to
+ * the other, as on a vehicle. Then the lit tell-tales, red, then amber, then
+ * green and blue, each colour in the order given (TEL-006); then the others, in
+ * the order given, so that nothing moves among them when one lights up.
  */
 export function orderLamps(lamps: Lamp[]): Lamp[] {
-  const on = lamps.filter(lit).map((l, i) => ({ l, i }));
+  const indicators = INDICATORS.flatMap((f) => lamps.filter((l) => l.function === f));
+  const rest = lamps.filter((l) => !INDICATORS.includes(l.function));
+  const on = rest.filter(lit).map((l, i) => ({ l, i }));
   on.sort((a, b) => COLOUR_ORDER[a.l.fn!.colour] - COLOUR_ORDER[b.l.fn!.colour] || a.i - b.i);
-  return [...on.map((x) => x.l), ...lamps.filter((l) => !lit(l))];
+  return [...indicators, ...on.map((x) => x.l), ...rest.filter((l) => !lit(l))];
 }
 
 /** Accessible text of a tell-tale: its name and its state. */

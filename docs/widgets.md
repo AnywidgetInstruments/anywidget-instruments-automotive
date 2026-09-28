@@ -162,8 +162,10 @@ yet. Captured from the widgets by `npm run images`, in the day and the night the
 
 ### `TellTaleCluster` — available
 
-A row of tell-tales. The lit ones come first, red, then amber, then green and blue; the
-others follow in the order given, so that nothing moves among them when one lights up
+A row of tell-tales. The direction indicators come first, side by side, left before
+right, whatever their state, so that a blinking arrow stays next to the other
+(TEL-009). Then the lit tell-tales, red, then amber, then green and blue; the others
+follow in the order given, so that nothing moves among them when one lights up
 (TEL-006). Each item is a dict, a `(function, state)` pair or a `TellTale`; `size` is
 the size of one tell-tale.
 

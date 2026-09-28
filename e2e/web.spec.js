@@ -27,9 +27,11 @@ test("a rejected trait is shown invalid, not guessed (HOST-004)", async ({ page 
 test("tell-tales take their colour from their function and the lit ones come first", async ({ page }) => {
   const tiles = page.locator("#lamps .awa-tt");
   await expect(tiles).toHaveCount(3);
-  await expect(tiles.nth(0)).toHaveClass(/awa-amber/);
-  await expect(tiles.nth(0).locator(".awa-sym")).toHaveCSS("color", "rgb(255, 176, 32)");
-  await expect(tiles.nth(1)).toHaveClass(/awa-green/);
+  // the direction indicator first, whatever its state (TEL-009), then the lit ones by colour
+  await expect(tiles.nth(0)).toHaveAttribute("data-function", "turn_left");
+  await expect(tiles.nth(1)).toHaveClass(/awa-amber/);
+  await expect(tiles.nth(1).locator(".awa-sym")).toHaveCSS("color", "rgb(255, 176, 32)");
+  await expect(tiles.nth(2)).toHaveClass(/awa-green/);
 });
 
 test("a cluster in head-up display mode is mirrored and shows the speed and what is marked hud", async ({ page }) => {

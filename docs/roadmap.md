@@ -8,7 +8,7 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | Delivered | Notes |
 |---|---|
 | Documentation site | Catalog, safety notice, standards, head-up display guide, integration with CAN & CANopen Studio, development guide |
-| Specification 0.8 | 107 requirements in EARS notation, 17 groups; open questions 1 and 2 resolved |
+| Specification 0.9 | 108 requirements in EARS notation, 17 groups; open questions 1 and 2 resolved |
 | 1. Foundations | TypeScript front end on the base view of anywidget-instruments, trait contract and parity cases, Python binding, CI, JupyterLite, documentation images captured in CI |
 | 2. Units and robustness | The unit layer and the missing, stale and invalid states, applied by every widget |
 | 3. Tell-tales | `TellTale` and `TellTaleCluster`, 22 functions with original symbols |
@@ -19,8 +19,8 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | 7. Hosts, in part | A page with no kernel and marimo tested end to end; pint quantities; a KaimonSlate.jl example and a Rust web view documented |
 | Examples | marimo WebAssembly notebooks, opened by clicking the pictures of the documentation: a cluster with a combustion, hybrid or electric drivetrain, tell-tales, dials, digital displays, electric and hybrid |
 
-The [requirements status](requirements-status.md) shows 101 of 107 requirements
-implemented, 98 of them tested.
+The [requirements status](requirements-status.md) shows 102 of 108 requirements
+implemented, 99 of them tested.
 
 ## Principles
 

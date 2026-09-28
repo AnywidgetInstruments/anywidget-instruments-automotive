@@ -161,6 +161,7 @@ def _(
         ("engine", on(mil.value and kind != "electric")),
         ("low_charge" if kind == "electric" else "low_fuel", on(low)),
         ("turn_left", "blinking" if turn.value else "off"),
+        ("turn_right", "off"),
         ("high_beam", on(high_beam.value)),
     ]
     if kind != "combustion":

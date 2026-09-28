@@ -8,7 +8,7 @@
 | Author | Sébastien Celles |
 | Document type | Software requirements specification |
 | Notation | EARS (Easy Approach to Requirements Syntax) |
-| Version | 0.8 |
+| Version | 0.9 |
 | Date | 2026-09-28 |
 | Status | Draft for review, during implementation |
 
@@ -168,9 +168,10 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 | TEL-003 | M | The `TellTale` shall show the name of its function as text as well as its symbol, so that colour is never the only cue. |
 | TEL-004 | M | The `TellTale` shall accept the states `off`, `on` and `blinking`. |
 | TEL-005 | S | While a `TellTale` is off, the widget shall draw its symbol dimmed, so that a lit one stands out. |
-| TEL-006 | S | When several tell-tales of a `TellTaleCluster` are lit, the widget shall order them red first, then amber, then green and blue. |
+| TEL-006 | S | When several tell-tales of a `TellTaleCluster` other than the direction indicators are lit, the widget shall order them red first, then amber, then green and blue. |
 | TEL-007 | M | While a `TellTale` is blinking, the widget shall blink at a frequency between 1 and 2 Hz. |
 | TEL-008 | M | The library shall provide a **TellTaleCluster**: a row of tell-tales. |
+| TEL-009 | S | The `TellTaleCluster` shall show the direction indicators side by side, left before right, at the start of the row, whatever their state, so that one blinking is never separated from the other. |
 
 ---
 
@@ -383,7 +384,7 @@ when the drivetrain drives the wheels and negative when it regenerates.
 | Tachometer, red zone, shift light | Tachometer | DIAL-102 to DIAL-104 |
 | Fuel gauge, reserve, filler side | FuelGauge | DIAL-105, DIAL-106 |
 | Temperature gauge | TemperatureGauge | DIAL-107, DIAL-108 |
-| Warning and indicator lights | TellTale, TellTaleCluster | TEL-001 to TEL-008 |
+| Warning and indicator lights | TellTale, TellTaleCluster | TEL-001 to TEL-009 |
 | Trip computer | TripComputer | DIG-001 to DIG-004 |
 | Odometer and trip meter | Odometer | DIG-005 |
 | Gear display and shift suggestion | GearIndicator | DIG-006, DIG-007 |
@@ -409,6 +410,7 @@ when the drivetrain drives the wheels and negative when it regenerates.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
+| 0.9 | TEL-009 added: the direction indicators side by side, left before right, at the start of a tell-tale row; TEL-006 orders the other tell-tales. |
 | 0.8 | Section 17 added: electric and hybrid drivetrains (EV-001 .. EV-008). Unit table: power, energy and energy economy; UNIT-012 extended to energy economy. Former sections 17 and 18 renumbered 18 and 19. |
 | 0.7 | Section 7: a `Cluster` holds its widgets as a list of trait dictionaries and draws them itself. Section 10: the `hud` trait of every widget. Section 8: the `theme` values `day` and `night`. |
 | 0.6 | Open questions 1 (dials derive from the base view of anywidget-instruments) and 2 (original tell-tale drawings) resolved. Unit table: fuel rate added, unit names stated as those of the trait contract and of the display. Section 12: the `_value_seq` trait, by which a host signals an update that does not change the value (ROB-001). |
