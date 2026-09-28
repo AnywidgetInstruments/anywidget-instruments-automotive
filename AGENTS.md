@@ -39,7 +39,11 @@ specification, and no widget is implemented yet.
 
 ```bash
 mkdocs serve        # documentation site, from docs/
+python scripts/screenshots.py   # light and dark images of docs/img/, from the preview
 ```
+
+The images of `docs/img/` are captures of the running notebook: take them again
+whenever the preview changes, so the site never shows an older look.
 
 ## Conventions
 

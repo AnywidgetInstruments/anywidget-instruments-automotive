@@ -2,6 +2,13 @@
 # `marimo export html-wasm` runs it in the browser through Pyodide. It is composed from
 # anywidget-instruments widgets, whose wheel is published on that library's site: the
 # automotive widgets themselves are not written yet.
+#
+# The page follows the reader's light or dark preference, as the widgets do; left to
+# its default, marimo would draw dark widgets on a light page.
+# /// script
+# [tool.marimo.display]
+# theme = "system"
+# ///
 import marimo
 
 __generated_with = "0.25.0"

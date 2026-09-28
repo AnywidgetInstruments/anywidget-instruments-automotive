@@ -13,6 +13,12 @@ tell-tales, and turn on the **HUD mirror**. The tell-tales take the colours of U
 Regulation No. 121 (red, amber, green, blue); the tachometer has its red zone; the trip
 computer gives the consumption per hour below 5 km/h and per 100 km above.
 
+![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
+![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)
+
+*The preview with the engine tell-tale (amber) and the high beam (blue) lit. The page
+and the widgets follow your light or dark preference.*
+
 <a class="md-button md-button--primary" href="../marimo/cluster_preview/">▶ Open it in your browser</a>
 
 It runs entirely in the browser, through marimo and Pyodide: the first load downloads

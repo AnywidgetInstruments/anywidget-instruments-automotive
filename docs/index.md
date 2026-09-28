@@ -19,6 +19,12 @@ and no network access at runtime.
     shall do, and the [requirements status](requirements-status.md) shows that none is
     implemented yet.
 
+![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
+![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)
+
+*The [cluster preview](examples.md), composed from anywidget-instruments widgets — not
+yet the automotive widgets themselves. The figures are simulated.*
+
 !!! warning "Safety"
     The widgets are for visualization, teaching, simulation and aftermarket dashboards.
     They are **not vehicle instruments**: they are not type-approved, and they must not
