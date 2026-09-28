@@ -14,17 +14,17 @@ listed as partial and not counted.
 | Speed display (SPD) | 5 | 4 | 3 |
 | Tell-tales (TEL) | 8 | 8 | 8 |
 | Digital displays (DIG) | 7 | 7 | 7 |
-| Cluster (CLU) | 3 | 0 | 0 |
+| Cluster (CLU) | 3 | 3 | 3 |
 | Legibility (LEG) | 5 | 0 | 0 |
-| Distraction (DIS) | 4 | 3 | 2 |
-| Head-up display (HUD) | 6 | 0 | 0 |
-| Units (UNIT) | 14 | 12 | 12 |
+| Distraction (DIS) | 4 | 4 | 3 |
+| Head-up display (HUD) | 6 | 6 | 6 |
+| Units (UNIT) | 14 | 13 | 13 |
 | Robustness (ROB) | 3 | 3 | 3 |
 | Accessibility (A11Y) | 2 | 2 | 2 |
-| Documentation (DOC) | 5 | 4 | 0 |
+| Documentation (DOC) | 5 | 5 | 0 |
 | Quality and verification (QA) | 3 | 2 | 2 |
 | Host independence (HOST) | 6 | 4 | 4 |
-| **Total** | **99** | **75** | **68** |
+| **Total** | **99** | **87** | **79** |
 
 ## Implemented
 
@@ -46,6 +46,8 @@ listed as partial and not counted.
 | DIAL-001 .. DIAL-005, DIAL-101 .. DIAL-108 | `js/src/widgets/dial.ts`, `dials.ts`, `_dial.py` | `js/test/dials.test.ts`, `tests/parity/dials.json` |
 | SPD-001 .. SPD-003 | Rounded up after conversion, the limit marked | `dials.test.ts` |
 | SPD-004 | The catalog and the safety notice | — |
+| CLU-001 .. CLU-003, DIS-001, UNIT-004 | `js/src/widgets/cluster.ts`, `_cluster.py`: one widget drawing the trait dictionaries it holds | `js/test/cluster.test.ts`, `tests/test_cluster.py` |
+| HUD-001 .. HUD-006 | `hud` on the cluster and on every widget; mirrored, black, one colour, no animation, brightness | `cluster.test.ts` |
 | DIS-002 | Every widget holds a value changing faster than twice a second for 0.5 s (`AutomotiveView`) | `dials.test.ts` |
 | DIS-003 | `animate` on every dial | `dials.test.ts` |
 | DIS-004 | The safety notice | — |
@@ -53,7 +55,7 @@ listed as partial and not counted.
 | UNIT-001 .. UNIT-003, UNIT-005, UNIT-010 .. UNIT-015, UNIT-017 | `units.ts`, `units.schema.json`, applied by the dials | `units.test.ts`, `dials.test.ts`, parity cases, `test_contract.py` |
 | ROB-001 .. ROB-003 | `max_age` and `_value_seq`, `null` values, the kernel liveness of anywidget-instruments | `telltale.test.ts`, `dials.test.ts` |
 | A11Y-001, A11Y-002 | Accessible names and states (a dial is a `meter`); no blinking and no gliding needle under reduced motion | `telltale.test.ts`, `dials.test.ts` |
-| DOC-002 .. DOC-005 | Safety notice, standards, JupyterLite and marimo examples, pictures captured by `npm run images` in CI | — |
+| DOC-001 .. DOC-005 | Safety notice, standards, JupyterLite and marimo examples, pictures captured by `npm run images` in CI | — |
 | DIG-001 .. DIG-007 | `js/src/core/trip.ts`, `js/src/widgets/digital.ts`, `_digital.py` | `js/test/digital.test.ts`, `tests/parity/trip.json` |
 | UNIT-016 | No mpg for a zero consumption, per hour below 5 km/h | `units.test.ts`, `digital.test.ts` |
 | QA-002 | Every tell-tale function against its colour, in every theme | `telltale.test.ts` |
@@ -65,9 +67,11 @@ listed as partial and not counted.
 | Requirement | What is missing |
 |---|---|
 | GEN-008 | Styles are scoped (tested); the kernel liveness of anywidget-instruments keeps its registry of heartbeats on `globalThis`. |
-| UNIT-004 | Comes with the `Cluster`. |
+| LEG-001 | Waits for the visual angle of ISO 15008 (open question 3). |
 | LEG-002, LEG-003 | Contrast of the tell-tale colours tested; the light and dark themes are those of anywidget-instruments. |
-| DOC-001 | The catalog shows every widget but the `Cluster`, still planned. |
+| GEN-009 | Built on anywidget-instruments, which renders in those hosts; no end-to-end test of this library in them yet. |
+| HOST-005 | Python and a page with no kernel are shown; Julia (KaimonSlate.jl) is not yet. |
+| QA-001 | Most requirements marked M have a test; see the table above. |
 
 ## Order of work
 

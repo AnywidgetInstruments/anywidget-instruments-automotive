@@ -125,6 +125,23 @@ shot("digital", (s) => {
   show(s, "GearIndicator", { value: "D", label: "Automatic" });
 });
 
+const panel = [
+  { _kind: "awa-tachometer", value: 2600, redline: 6200, shift_light: 5800 },
+  { _kind: "awa-telltalecluster", size: [40, 40], value: [
+    { function: "turn_left", state: "off" }, { function: "low_beam", state: "on" }, { function: "engine", state: "on" },
+    { function: "seat_belt", state: "off" }, { function: "abs", state: "off" }, { function: "turn_right", state: "off" },
+  ] },
+  { _kind: "awa-speedometer", value: 87.3, limit: 90, hud: true },
+  { _kind: "awa-fuelgauge", value: 38, filler_side: "right" },
+  { _kind: "awa-temperaturegauge", value: 90 },
+  { _kind: "awa-tripcomputer", value: { speed: 87, fuel_rate: 5.2, distance: 48.3, fuel_used: 3.1, elapsed: 1930 } },
+  { _kind: "awa-gearindicator", value: "5", hud: true },
+  { _kind: "awa-telltale", function: "high_beam", value: "on", hud: true, label: "" },
+];
+
+shot("cluster", (s) => show(s, "Cluster", { value: panel }));
+shot("cluster-hud", (s) => show(s, "Cluster", { value: panel, hud: true, label: "Head-up display" }));
+
 document.body.dataset.ready = "true";
 </script>
 </body>

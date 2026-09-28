@@ -1,14 +1,9 @@
 # Examples
 
-!!! info "Preview"
-    The widgets below are those of anywidget-automotives, laid out by marimo until the
-    `Cluster` is written; its head-up display mode is stood in for by a plain mirror.
-    The figures are simulated.
-
 ## Instrument cluster
 
 Drive with the sliders — speed, engine speed, fuel level, coolant temperature — light the
-tell-tales, pick a unit system, and turn on the **HUD mirror**. The tell-tales take their
+tell-tales, pick a unit system, and turn on the **head-up display**. The tell-tales take their
 colour from their meaning (red, amber, green, blue) and move to the front when lit; the
 speedometer rounds up after converting; the tachometer has its red zone and shift light;
 the trip computer gives the consumption per hour below 5 km/h and per 100 km above,

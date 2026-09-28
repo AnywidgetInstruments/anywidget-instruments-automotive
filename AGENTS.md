@@ -14,10 +14,11 @@ The library is a **TypeScript front end first**: the anywidget front-end modules
 implementation, and Python, Julia (KaimonSlate.jl), Rust and other languages are hosts
 that set traits described by the trait contract.
 
-The repository is in **early implementation**: the foundations (front end, trait
-contract, units, Python binding, CI) and the tell-tales are written; the dials, digital
-displays and cluster are specified in `docs/` and follow the roadmap
-(`docs/roadmap.md`). `docs/development.md` describes the layout.
+The repository is in **early implementation**: every widget of the catalog is written
+(tell-tales, dials, digital displays, the `Cluster` and its head-up display mode), with
+the Python binding; the next milestones are in `docs/roadmap.md`, and where each
+requirement stands in `docs/requirements-status.md`. `docs/development.md` describes
+the layout.
 
 ## Rules
 

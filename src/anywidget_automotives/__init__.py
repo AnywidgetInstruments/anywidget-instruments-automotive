@@ -9,6 +9,7 @@ dashboards, not vehicle instruments: see the safety notice of the documentation.
 from __future__ import annotations
 
 from ._base import AutomotiveWidget
+from ._cluster import Cluster
 from ._contract import TELLTALE_FUNCTIONS, TELLTALE_STATES, UNIT_SYSTEMS, UNITS
 from ._dial import (
     DialWidget,
@@ -29,6 +30,7 @@ __all__ = [
     "UNITS",
     "UNIT_SYSTEMS",
     "AutomotiveWidget",
+    "Cluster",
     "DialWidget",
     "FuelGauge",
     "GearIndicator",

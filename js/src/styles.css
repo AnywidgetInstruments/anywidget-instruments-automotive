@@ -114,3 +114,35 @@
 .awa-root .awa-gear-arrow { width: 22px; height: 22px; }
 .awa-root .awa-shift-arrow { fill: var(--awa-tt-green); }
 .awa-root.awa-stale :is(.awa-trip, .awa-odo-row, .awa-gear) { opacity: 0.5; }
+
+/* ---- cluster -------------------------------------------------------------- */
+.awa-root {
+  /* the one colour of the figures in head-up display mode (HUD-003) */
+  --awa-hud: #7ee8fa;
+}
+.awa-root .awa-panel { display: grid; grid-template-columns: auto auto auto; grid-template-areas: "left mid right" "bottom bottom bottom"; gap: 12px 16px; justify-content: center; align-items: center; padding: 8px; border-radius: 10px; }
+.awa-root .awa-area { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.awa-root .awa-area-left { grid-area: left; }
+.awa-root .awa-area-mid { grid-area: mid; max-width: 360px; }
+.awa-root .awa-area-right { grid-area: right; }
+.awa-root .awa-area-bottom { grid-area: bottom; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+.awa-root .awa-area:empty { display: none; }
+.awa-root .awa-cell-invalid { padding: 8px 12px; border: 1px dashed var(--awi-alarm-hihi); color: var(--awi-alarm-hihi); font-size: 12px; font-weight: 700; }
+.awa-root .awa-cluster-note { font-size: 11px; color: var(--awi-muted); text-align: center; margin-top: 4px; }
+/* HUD-001, HUD-002: mirrored, on black */
+.awa-root.awa-hud-on .awa-panel { transform: scaleX(-1); background: #000; }
+/* HUD-003: one colour for the figures, whatever the theme; tell-tale colours are kept */
+.awa-root.awa-hud-on .awa-panel .awa-root.awa-root.awa-root.awa-root {
+  --awi-fg: var(--awa-hud);
+  --awi-muted: var(--awa-hud);
+  --awi-face: #000;
+  --awi-face-stroke: var(--awa-hud);
+  --awi-needle: var(--awa-hud);
+  --awa-lcd-bg: #000;
+  --awa-lcd-ink: var(--awa-hud);
+  --awa-lcd-dim: var(--awa-hud);
+  --awa-tt-ground: #000;
+  --awa-limit: var(--awa-hud);
+  color: var(--awa-hud);
+}
+.awa-root.awa-hud-on .awa-panel .awa-drum { background: #000; color: var(--awa-hud); border: 1px solid var(--awa-hud); }

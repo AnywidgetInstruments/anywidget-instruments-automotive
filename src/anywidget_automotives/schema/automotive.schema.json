@@ -6,7 +6,11 @@
   "type": "object",
   "x-awi-abstract": true,
   "x-awi-class": "AutomotiveWidget",
-  "allOf": [{ "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json" }],
+  "allOf": [
+    {
+      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json"
+    }
+  ],
   "properties": {
     "mode": {
       "const": "indicator",
@@ -26,6 +30,12 @@
       "minimum": 0,
       "description": "Counter a host increments on every assignment of value, even an unchanged one, so that max_age counts from the last update rather than the last change (ROB-001). Hosts that set only changes may leave it alone.",
       "default": 0,
+      "x-awi-writer": "host"
+    },
+    "hud": {
+      "type": "boolean",
+      "description": "On a Cluster: the head-up display mode (HUD-001 .. HUD-006). On a widget held by a Cluster: shown in that mode, with the speed (HUD-004).",
+      "default": false,
       "x-awi-writer": "host"
     }
   }

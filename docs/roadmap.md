@@ -14,10 +14,11 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | 3. Tell-tales | `TellTale` and `TellTaleCluster`, 22 functions with original symbols |
 | 4. Dials | `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`; legibility (LEG) waits for the visual angle of open question 3 |
 | 5. Digital displays | `TripComputer`, `Odometer`, `GearIndicator`, with the consumption rules of CAN & CANopen Studio |
-| Cluster preview | A marimo WebAssembly example made of the real widgets, laid out by marimo until the `Cluster` exists |
+| 6. Cluster and head-up display | `Cluster`, one widget holding the trait dictionaries of the others; HUD mode |
+| Cluster example | A marimo WebAssembly example: one `Cluster` of every widget, with its head-up display |
 
-The [requirements status](requirements-status.md) shows 75 of 99 requirements
-implemented, 68 of them tested.
+The [requirements status](requirements-status.md) shows 87 of 99 requirements
+implemented, 79 of them tested.
 
 ## Principles
 
@@ -91,7 +92,7 @@ The first widgets, and the ones that need no dial.
   with CAN & CANopen Studio's trip computer: per hour below 5 km/h, no average under
   0.1 km.
 
-### 6. Cluster and head-up display
+### 6. Cluster and head-up display — done
 
 * `Cluster` layout, the eight-widget default, hold times against flicker, animation
   switch (CLU, DIS).

@@ -10,11 +10,9 @@ end, trait contract and themes it extends. Everything a widget shows, unit conve
 included, is computed in the front end from its traits, so it behaves alike from
 **Python**, **Julia** (KaimonSlate.jl), **Rust** or any host that sets those traits.
 
-> **Status: early implementation.** The front end, the trait contract, the unit layer,
-> the Python binding, the tell-tales (`TellTale`, `TellTaleCluster`) and the dials
-> (`Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`) and the digital
-> displays (`TripComputer`, `Odometer`, `GearIndicator`) are written; the `Cluster` and
-> its head-up display mode are *planned*. See the
+> **Status: early implementation.** Every widget of the catalog is written — tell-tales,
+> dials, digital displays and the `Cluster` with its head-up display mode — and used
+> from Python. Not released yet; see the [roadmap](docs/roadmap.md) and the
 > [requirements status](docs/requirements-status.md).
 
 > **Safety.** The widgets are for visualization, teaching, simulation and aftermarket
@@ -30,7 +28,16 @@ ISO 2575, legibility from ISO 15008, a speedometer that errs on the high side
 (UN Regulation No. 39), and glance-time limits against driver distraction. Those belong
 in their own package, one that depends on anywidget-instruments rather than bending it.
 
-## Planned use
+## Install
+
+Not on the package index yet. From a clone, with Node.js 22 for the front end:
+
+```bash
+pip install "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments@293aeea4190979218da5b515b25a1fabedd82901"
+npm install && npm run build && pip install -e .
+```
+
+## Use
 
 ```python
 import anywidget_automotives as aa

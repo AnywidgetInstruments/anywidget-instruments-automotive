@@ -1,8 +1,9 @@
 # Widget catalog
 
-The **dials, tell-tales and digital displays are available**; the `Cluster` is **planned**: this page
+Every widget below is **available**. This page describes what each shows and which
+convention it follows: this page
 describes what they will show and which convention they follow, so that the
-specification can be reviewed before their code is written. Each is a TypeScript
+specification can be checked against the code. Each is a TypeScript
 front-end module extending anywidget-instruments, with its common traits (`value`, `label`, `unit`, `min`, `max`, `theme`, `size`, `disabled`,
 `visible`, `tooltip`). The examples use the Python host binding; from Julia, Rust or a
 web page, the same widgets take the same traits.
@@ -212,8 +213,32 @@ aa.GearIndicator(3, suggestion="up")
 
 ## Layout
 
-### `Cluster`
+### `Cluster` — available
 
-Arranges widgets as an instrument cluster: dials left and right, tell-tales between, and
-digital displays below. It carries the [head-up display mode](hud.md) and the day and
-night themes.
+An instrument panel: dials on the sides, tell-tales between them and digital displays
+below (CLU-001).
+
+```python
+cluster = aa.Cluster(
+    [rpm, lamps, speed, fuel, coolant, trip, gear],
+    unit_system="us", theme="dark", brightness=0.8,
+)
+speed.value = 104          # shows in the cluster
+cluster.hud = True         # head-up display mode
+```
+
+![A cluster, day theme](img/cluster-light.png#only-light)
+![A cluster, night theme](img/cluster-dark.png#only-dark)
+
+* `theme`, `brightness` and `unit_system` apply to every widget it holds; a widget with a
+  `unit` of its own keeps it (CLU-002, UNIT-004).
+* At most eight widgets, or `max_items`; the others are named under the panel, not
+  silently dropped (DIS-001).
+* `hud` turns on the [head-up display mode](hud.md): mirrored, on black, one colour
+  for the figures, tell-tale colours kept, no animation, and only the speedometer and
+  the widgets marked `hud=True` (HUD-001 .. HUD-006).
+* It is **one widget**: its `value` is the list of the trait dictionaries of the widgets
+  it holds, each with its `_kind`, which its front end draws. A host in any language
+  sets that list; the Python binding builds it from its widgets and keeps it up to date
+  when one of them changes. It shows as one output in JupyterLab, Notebook 7, marimo
+  or VS Code, with no support for nested widgets needed (CLU-003).

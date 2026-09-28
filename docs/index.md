@@ -14,17 +14,17 @@ host: **Python** (JupyterLab, Jupyter Notebook 7, marimo, VS Code, Google Colab)
 and no network access at runtime.
 
 !!! info "Status: early implementation"
-    The foundations are laid — front end, trait contract, units, Python binding — and
-    the **tell-tales**, **dials** and **digital displays** are written. The `Cluster`
-    and its head-up display mode are still planned: the [catalog](widgets.md) says which is which, the
-    [specification](specification.md) states what they shall do, and the
-    [requirements status](requirements-status.md) shows where each requirement stands.
+    Every widget of the [catalog](widgets.md) is written, the `Cluster` and its
+    head-up display mode included, and used from Python. Hosts beyond Python, the
+    legibility rules and a first release are next: the [roadmap](roadmap.md) orders
+    them, and the [requirements status](requirements-status.md) shows where each
+    requirement of the [specification](specification.md) stands.
 
 ![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
 ![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)
 
-*The [cluster preview](examples.md), made of the widgets of anywidget-automotives and
-laid out by marimo until the `Cluster` is written. The figures are simulated.*
+*The [cluster example](examples.md): one `Cluster` of the widgets of
+anywidget-automotives. The figures are simulated.*
 
 !!! warning "Safety"
     The widgets are for visualization, teaching, simulation and aftermarket dashboards.
@@ -50,7 +50,7 @@ screens, IEC 60073 colours, ISA-18 annunciators. A vehicle display speaks anothe
 Those conventions live in their own package, which depends on anywidget-instruments
 rather than bending it.
 
-## Planned use
+## Use
 
 ```python
 import anywidget_automotives as aa
@@ -62,7 +62,7 @@ engine = aa.TellTale("engine", state="off")
 aa.Cluster([speed, rpm, engine])
 ```
 
-* [Widget catalog](widgets.md) — every widget, available or planned, and the convention it follows
+* [Widget catalog](widgets.md) — every widget, and the convention it follows
 * [Development](development.md) — building, testing, the trait contract
 * [Head-up display mode](hud.md) — mirrored, black, one colour
 * [Use with CAN & CANopen Studio](integration.md) — live data from an OBD-II adapter

@@ -24,6 +24,9 @@ class AutomotiveWidget(InstrumentWidget):
     max_age
         Seconds after which a value not updated is shown as stale; 0: never
         (ROB-001).
+    hud
+        Held by a :class:`Cluster`, the widget is shown in its head-up display
+        mode (HUD-004).
 
     Every widget is an indicator: ``mode`` is always ``"indicator"`` (API-002).
     """
@@ -33,6 +36,9 @@ class AutomotiveWidget(InstrumentWidget):
 
     mode = t.Enum(["indicator"], default_value="indicator").tag(sync=True)
     max_age = t.Float(0.0, min=0.0).tag(sync=True)
+    #: On a Cluster, the head-up display mode; on a widget it holds, shown in
+    #: that mode (HUD-004).
+    hud = t.Bool(False).tag(sync=True)
     #: Incremented on every assignment of ``value``, even an unchanged one: the
     #: front end counts ``max_age`` from the last update, not the last change.
     _value_seq = t.Int(0, min=0).tag(sync=True)

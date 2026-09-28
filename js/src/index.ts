@@ -2,24 +2,10 @@
 // One bundle serves every widget; the `_kind` trait selects the view.
 import { watchModel } from "anywidget-instruments/js/src/core/liveness.js";
 import type { AnyModel } from "anywidget-instruments/js/src/core/model.js";
-import type { AutomotiveView } from "./core/view.js";
-import { FuelGaugeView, SpeedometerView, TachometerView, TemperatureGaugeView } from "./widgets/dials.js";
-import { GearIndicatorView, OdometerView, TripComputerView } from "./widgets/digital.js";
-import { TellTaleClusterView, TellTaleView } from "./widgets/telltale.js";
+import { type ViewClass, WIDGET_VIEWS } from "./registry.js";
+import { ClusterView } from "./widgets/cluster.js";
 
-type ViewClass = new (model: AnyModel<any>, el: HTMLElement) => AutomotiveView<any>;
-
-export const VIEWS: Record<string, ViewClass> = {
-  "awa-telltale": TellTaleView,
-  "awa-telltalecluster": TellTaleClusterView,
-  "awa-speedometer": SpeedometerView,
-  "awa-tachometer": TachometerView,
-  "awa-fuelgauge": FuelGaugeView,
-  "awa-temperaturegauge": TemperatureGaugeView,
-  "awa-tripcomputer": TripComputerView,
-  "awa-odometer": OdometerView,
-  "awa-gearindicator": GearIndicatorView,
-};
+export const VIEWS: Record<string, ViewClass> = { ...WIDGET_VIEWS, "awa-cluster": ClusterView };
 
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): (() => void) | undefined {
   const View = VIEWS[String(model.get("_kind"))];

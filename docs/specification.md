@@ -8,7 +8,7 @@
 | Author | Sébastien Celles |
 | Document type | Software requirements specification |
 | Notation | EARS (Easy Approach to Requirements Syntax) |
-| Version | 0.6 |
+| Version | 0.7 |
 | Date | 2026-09-28 |
 | Status | Draft for review, during implementation |
 
@@ -189,6 +189,11 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 
 ## 7. Cluster (CLU)
 
+A `Cluster` is one front-end module. Its `value` is the list of the widgets it holds,
+each given as its trait dictionary with its `_kind`, which the cluster draws itself: a
+host sets one list of dictionaries, whatever its language, and needs no support for
+nested widgets. A host binding may accept its own widget objects and pass their traits.
+
 | ID | Pri. | Requirement |
 |---|---|---|
 | CLU-001 | M | The library shall provide a **Cluster** arranging dials on the sides, tell-tales between them and digital displays below. |
@@ -221,6 +226,9 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 ---
 
 ## 10. Head-up Display (HUD)
+
+Every widget has a `hud` trait. On a `Cluster` it turns the head-up display mode on; on a
+widget held by a cluster it marks the widget as one the head-up display shows (HUD-004).
 
 | ID | Pri. | Requirement |
 |---|---|---|
@@ -373,6 +381,7 @@ which the front end counts `max_age` (ROB-001) as from a change of `value`.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
+| 0.7 | Section 7: a `Cluster` holds its widgets as a list of trait dictionaries and draws them itself. Section 10: the `hud` trait of every widget. |
 | 0.6 | Open questions 1 (dials derive from the base view of anywidget-instruments) and 2 (original tell-tale drawings) resolved. Unit table: fuel rate added, unit names stated as those of the trait contract and of the display. Section 12: the `_value_seq` trait, by which a host signals an update that does not change the value (ROB-001). |
 | 0.5 | DOC-005 added: every widget pictured in the day and the night theme, captured from the widgets themselves by an automated run. |
 | 0.4 | The library is a TypeScript front end first, used from Python, Julia, Rust and other hosts: GEN rewritten (front-end modules, AFM, everything displayed computed in the front end), HOST-001 .. HOST-006 added (trait contract, contract file, parity cases), API made host-neutral. Unit conversion moved to the front end (UNIT-010 .. UNIT-018); pint is no longer a requirement but an optional convenience of the Python binding, as DynamicQuantities.jl and uom are of theirs. |

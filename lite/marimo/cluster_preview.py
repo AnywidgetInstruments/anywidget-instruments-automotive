@@ -1,8 +1,7 @@
 # Instrument cluster preview for the marimo WebAssembly export of the documentation site.
-# `marimo export html-wasm` runs it in the browser through Pyodide. The widgets are those
-# of anywidget-automotives; the Cluster, not written yet, is stood in for by marimo
-# stacks. Both wheels, of this library and of anywidget-instruments on which it builds,
-# are published next to the page (public/).
+# `marimo export html-wasm` runs it in the browser through Pyodide. Both wheels, of this
+# library and of anywidget-instruments on which it builds, are published next to the page
+# (public/).
 #
 # The page follows the reader's light or dark preference, as the widgets do; left to
 # its default, marimo would draw dark widgets on a light page.
@@ -30,16 +29,15 @@ def _(mo):
     mo.md("""
     [⬅ Back to the documentation](https://s-celles.github.io/anywidget-automotives/examples/)
 
-    # Instrument cluster — preview
+    # Instrument cluster
 
     Move the sliders to drive, flip the switches to light the tell-tales, and turn on
-    the **HUD mirror**. Everything runs in your browser.
+    the **head-up display**. Everything runs in your browser.
 
-    > **Preview.** The widgets are those of anywidget-automotives; pick a unit system
-    > to see them convert. The `Cluster` that will lay them out, and its head-up
-    > display mode, are specified but not written yet
-    > ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)): the HUD
-    > mirror here is a plain CSS flip. The figures are simulated.
+    > **The widgets of anywidget-automotives**, in one `Cluster`: pick a unit system
+    > to see them convert, and turn on the head-up display to see the cluster
+    > mirrored for a windscreen, showing only the speed and what is marked for it.
+    > The figures are simulated.
 
     > **Not a vehicle instrument.** See the
     > [safety notice](https://s-celles.github.io/anywidget-automotives/safety/).
@@ -90,7 +88,7 @@ def _(mo):
     oil = mo.ui.switch(label="Oil pressure")
     turn = mo.ui.switch(label="Direction indicator")
     high_beam = mo.ui.switch(label="High beam")
-    hud = mo.ui.switch(label="HUD mirror")
+    hud = mo.ui.switch(label="Head-up display")
     mo.vstack(
         [
             mo.md("### Tell-tales and display"),
@@ -134,17 +132,17 @@ def _(
     turn,
     units,
 ):
-    # The widgets follow the reader's light or dark preference, as the page does.
-    THEME = "system"
-
-    # The TellTaleCluster takes each colour from the function (red for danger, amber
-    # for warning, green for a function on, blue for the main beam), draws an unlit
-    # one in a neutral grey, and puts the lit ones first.
+    # The page follows the reader's light or dark preference, and the cluster with it.
     def on(lit: bool) -> str:
         return "on" if lit else "off"
 
-    tell_tales = mo.hstack(
+    # One Cluster: dials on the sides, tell-tales between, displays below. Its theme,
+    # unit system and head-up display mode apply to every widget it holds; in HUD mode
+    # it shows the speed and the widgets marked hud=True, mirrored, on black.
+    aa.Cluster(
         [
+            aa.Tachometer(float(rpm.value), redline=6200, shift_light=5800),
+            # colour from the function, the lit ones first
             aa.TellTaleCluster(
                 [
                     ("oil_pressure", on(oil.value)),
@@ -154,34 +152,15 @@ def _(
                     ("turn_left", "blinking" if turn.value else "off"),
                     ("high_beam", on(high_beam.value)),
                 ],
-                theme=THEME,
-            )
-        ],
-        justify="center",
-    )
-    dials = mo.hstack(
-        [
-            # Rounded up after conversion, never down; the limit marked on the scale.
-            aa.Speedometer(
-                float(speed.value), max=220, limit=130, unit_system=units.value, theme=THEME
+                size=(44, 44),
+                hud=True,
             ),
-            aa.Tachometer(float(rpm.value), redline=6200, shift_light=5800, theme=THEME),
-        ],
-        justify="center",
-    )
-    gauges = mo.hstack(
-        [
-            aa.FuelGauge(float(fuel.value), reserve=12, filler_side="right", theme=THEME),
-            aa.TemperatureGauge(
-                float(coolant.value), hot=115, unit_system=units.value, theme=THEME
-            ),
-        ],
-        justify="center",
-    )
-    trip = mo.hstack(
-        [
+            # rounded up after conversion, never down; the limit marked on the scale
+            aa.Speedometer(float(speed.value), limit=130),
+            aa.FuelGauge(float(fuel.value), reserve=12, filler_side="right"),
+            aa.TemperatureGauge(float(coolant.value), hot=115),
+            # the trip so far is fixed: the sliders drive the instant figures
             aa.TripComputer(
-                # the trip so far is fixed: the sliders drive the instant figures
                 {
                     "speed": speed.value,
                     "fuel_rate": fuel_rate_lph,
@@ -189,23 +168,14 @@ def _(
                     "fuel_used": 2.9,
                     "elapsed": 1860,
                     "range": range_km,
-                },
-                unit_system=units.value,
-                theme=THEME,
+                }
             ),
-            aa.GearIndicator(gear if speed.value > 0 else "N", theme=THEME),
+            aa.GearIndicator(gear if speed.value > 0 else "N", hud=True),
         ],
-        justify="center",
+        hud=hud.value,
+        unit_system=units.value,
+        theme="system",
     )
-    cluster = mo.vstack([tell_tales, dials, gauges, trip])
-    # The HUD mirror flips the cluster on black, for a reflection in the windscreen.
-    hud_style = {
-        "transform": "scaleX(-1)",
-        "background": "#000",
-        "padding": "16px",
-        "border-radius": "8px",
-    }
-    cluster.style(hud_style) if hud.value else cluster
     return
 
 
