@@ -8,8 +8,8 @@
 | Author | Sébastien Celles |
 | Document type | Software requirements specification |
 | Notation | EARS (Easy Approach to Requirements Syntax) |
-| Version | 0.4 |
-| Date | 2026-09-27 |
+| Version | 0.5 |
+| Date | 2026-09-28 |
 | Status | Draft for review, before implementation |
 
 ---
@@ -304,6 +304,7 @@ figures, so every host shows the same result.
 | DOC-002 | M | The documentation shall carry a safety notice stating that the widgets are not vehicle instruments. |
 | DOC-003 | M | The documentation shall list the standards that inform the design, with a disclaimer of conformity. |
 | DOC-004 | S | The documentation shall offer examples runnable in the browser, without installation. |
+| DOC-005 | M | The documentation shall show every widget in the day theme and in the night theme, with pictures captured from the widgets themselves by an automated run, so that no picture shows an older look than the code. |
 
 ---
 
@@ -362,6 +363,7 @@ figures, so every host shows the same result.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
+| 0.5 | DOC-005 added: every widget pictured in the day and the night theme, captured from the widgets themselves by an automated run. |
 | 0.4 | The library is a TypeScript front end first, used from Python, Julia, Rust and other hosts: GEN rewritten (front-end modules, AFM, everything displayed computed in the front end), HOST-001 .. HOST-006 added (trait contract, contract file, parity cases), API made host-neutral. Unit conversion moved to the front end (UNIT-010 .. UNIT-018); pint is no longer a requirement but an optional convenience of the Python binding, as DynamicQuantities.jl and uom are of theirs. |
 | 0.3 | Units rewritten (UNIT-001 .. UNIT-017): metric, imperial and US unit systems, per-widget override, exact conversion factors, reciprocal fuel economy with converted and reversed scales, rounding after conversion. |
 | 0.2 | Rewritten in the structure of the anywidget-instruments specification: glossary, identifiers and priorities, dial catalog (DIAL), digital displays (DIG), cluster (CLU), robustness (ROB, was STALE), accessibility (A11Y), documentation (DOC), quality (QA), traceability table and open questions. Vague requirements given values: DIS-001 (eight widgets), DIS-002 (0.5 s hold), TEL-007 (1 to 2 Hz). |

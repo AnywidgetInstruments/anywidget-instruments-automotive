@@ -19,10 +19,10 @@ preview composed from anywidget-instruments widgets, not an implementation.
 | Units (UNIT) | 14 | 0 | 0 |
 | Robustness (ROB) | 3 | 0 | 0 |
 | Accessibility (A11Y) | 2 | 0 | 0 |
-| Documentation (DOC) | 4 | 0 | 0 |
+| Documentation (DOC) | 5 | 0 | 0 |
 | Quality and verification (QA) | 3 | 0 | 0 |
 | Host independence (HOST) | 6 | 0 | 0 |
-| **Total** | **98** | **0** | **0** |
+| **Total** | **99** | **0** | **0** |
 
 ## Order of work
 

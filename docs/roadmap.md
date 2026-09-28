@@ -8,11 +8,11 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | Delivered | Notes |
 |---|---|
 | Documentation site | Catalog, safety notice, standards, head-up display guide, integration with CAN & CANopen Studio |
-| Specification 0.4 | 98 requirements in EARS notation, 16 groups; TypeScript front end first, units for every market |
+| Specification 0.5 | 99 requirements in EARS notation, 16 groups; TypeScript front end first, units for every market |
 | Cluster preview | A marimo WebAssembly example composed from anywidget-instruments widgets, labelled a preview |
 | Preview screenshots | Light and dark captures of the preview in the documentation, taken by `scripts/screenshots.py` |
 
-No widget is implemented: the [requirements status](requirements-status.md) shows 0 of 98.
+No widget is implemented: the [requirements status](requirements-status.md) shows 0 of 99.
 
 ## Principles
 
@@ -42,10 +42,10 @@ released the same way.
 * Python host binding: a package depending on anywidget-instruments (GEN-007).
 * Continuous integration for all of the above, and the docs workflow extended with
   JupyterLite.
-* Documentation images: a light and a dark capture of every widget, taken by Playwright
-  from the built front end in continuous integration, so the site never shows an older
-  look than the code. They take the place of the preview screenshots as the widgets
-  arrive.
+* Documentation images (DOC-005): a day and a night capture of every widget, taken by
+  Playwright from the built front end in continuous integration, so the site never shows
+  an older look than the code. They take the place of the preview screenshots as the
+  widgets arrive.
 
 **Decides:** whether the dials extend the `Gauge` view of anywidget-instruments or are
 modules of their own (open question 1 of the specification). If extending it needs a
