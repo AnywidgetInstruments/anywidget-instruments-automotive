@@ -13,17 +13,19 @@ host: **Python** (JupyterLab, Jupyter Notebook 7, marimo, VS Code, Google Colab)
 **Julia** (KaimonSlate.jl), **Rust** or a plain web page — with no JavaScript toolchain
 and no network access at runtime.
 
-!!! info "Status: design"
-    This site documents the library before it is written. The [catalog](widgets.md)
-    describes the planned widgets, the [specification](specification.md) states what they
-    shall do, and the [requirements status](requirements-status.md) shows that none is
-    implemented yet.
+!!! info "Status: early implementation"
+    The foundations are laid — front end, trait contract, units, Python binding — and
+    the **tell-tales** are written. The dials, digital displays and cluster are still
+    planned: the [catalog](widgets.md) says which is which, the
+    [specification](specification.md) states what they shall do, and the
+    [requirements status](requirements-status.md) shows where each requirement stands.
 
 ![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
 ![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)
 
-*The [cluster preview](examples.md), composed from anywidget-instruments widgets — not
-yet the automotive widgets themselves. The figures are simulated.*
+*The [cluster preview](examples.md): the tell-tales are those of anywidget-automotives;
+the dials and displays, still anywidget-instruments widgets, stand in for the automotive
+ones until they are written. The figures are simulated.*
 
 !!! warning "Safety"
     The widgets are for visualization, teaching, simulation and aftermarket dashboards.
@@ -61,7 +63,8 @@ engine = aa.TellTale("engine", state="off")
 aa.Cluster([speed, rpm, engine])
 ```
 
-* [Widget catalog](widgets.md) — every planned widget, and the convention it follows
+* [Widget catalog](widgets.md) — every widget, available or planned, and the convention it follows
+* [Development](development.md) — building, testing, the trait contract
 * [Head-up display mode](hud.md) — mirrored, black, one colour
 * [Use with CAN & CANopen Studio](integration.md) — live data from an OBD-II adapter
 * [Specification](specification.md) — requirements in EARS notation

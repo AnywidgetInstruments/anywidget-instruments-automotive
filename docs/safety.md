@@ -16,6 +16,10 @@ an engine warning light is none of that:
 * the driver must keep relying on the vehicle's own speedometer and warning lights;
 * a `TellTale` showing "off" does not mean the vehicle has no fault: it means the code
   feeding it did not report one;
+* the tell-tale symbols are original drawings modelled on the meaning of the ISO 2575
+  symbols, not the symbols of the standard, and the function a colour is given for is
+  the library's choice: a vehicle's own tell-tale may look different or take another
+  colour;
 * a `Speedometer` is only as right as the value it is given. Values read over OBD-II
   arrive late — a request and its answer take tens to hundreds of milliseconds, and an
   adapter polls several parameters in turn — and can be wrong or stale.

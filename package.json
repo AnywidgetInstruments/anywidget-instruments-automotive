@@ -1,0 +1,31 @@
+{
+  "name": "anywidget-automotives",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Front-end ES modules of anywidget-automotives (AFM compliant), built on anywidget-instruments.",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "scripts": {
+    "gen": "node js/scripts/gen-contract.mjs",
+    "build": "node js/build.mjs",
+    "typecheck": "node js/scripts/gen-contract.mjs && tsc -p .",
+    "pretest": "node js/scripts/gen-contract.mjs",
+    "test": "vitest run",
+    "lint": "eslint js",
+    "check:reproducible": "node js/scripts/check-reproducible.mjs",
+    "images": "node js/scripts/docs-images.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@playwright/test": "1.56.1",
+    "@types/node": "^22.20.4",
+    "anywidget-instruments": "git+https://github.com/s-celles/anywidget-instruments.git#293aeea4190979218da5b515b25a1fabedd82901",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.0.0",
+    "globals": "^16.0.0",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.70.1",
+    "vitest": "^3.0.0"
+  }
+}

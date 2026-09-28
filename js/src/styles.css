@@ -1,0 +1,47 @@
+/* anywidget-automotives styles, on top of those of anywidget-instruments.
+ * Every rule is scoped under .awa-root, which is also an .awi-root (GEN-008),
+ * and every colour is a custom property that a page may override. */
+@import "anywidget-instruments/js/src/styles.css";
+
+.awa-root {
+  /* tell-tale colours by meaning (TEL-001): the same in every theme, on a dark ground */
+  --awa-tt-ground: #0b0f14;
+  --awa-tt-red: #ff453a;
+  --awa-tt-amber: #ffb020;
+  --awa-tt-green: #30d158;
+  --awa-tt-blue: #4d8dff;
+  /* an unlit tell-tale is a dim neutral grey whatever its colour when lit (TEL-005) */
+  --awa-tt-off: #4b5563;
+  --awa-tt-flag-ink: #f9fafb;
+}
+
+/* ---- tell-tales ---------------------------------------------------------- */
+.awa-root .awa-tt { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--awa-tt-off); }
+.awa-root .awa-tt-tile { position: relative; width: 100%; height: 100%; }
+.awa-root.awa-telltalecluster .awa-tt-tile { width: var(--awa-tile, 56px); height: var(--awa-tile, 56px); }
+.awa-root .awa-tt-svg { width: 100%; height: 100%; display: block; }
+.awa-root .awa-tt-ground { fill: var(--awa-tt-ground); }
+.awa-root .awa-sym { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.awa-root .awa-sym .awa-fill { fill: currentColor; stroke: none; }
+.awa-root .awa-sym .awa-sym-text { fill: currentColor; stroke: none; font-family: var(--awi-font, system-ui, sans-serif); font-weight: 700; }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-red { color: var(--awa-tt-red); }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-amber { color: var(--awa-tt-amber); }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-green { color: var(--awa-tt-green); }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-blue { color: var(--awa-tt-blue); }
+/* TEL-007: the period comes from the view (--awa-blink-period, 1 / BLINK_HZ) */
+.awa-root .awa-tt-blinking .awa-sym { animation: awa-blink var(--awa-blink-period, 0.667s) steps(1, end) infinite; }
+@keyframes awa-blink { 50% { opacity: 0.12; } }
+/* A11Y-002: no blinking under reduced motion; the state is then given by text */
+.awa-root .awa-tt-blinking .awa-tt-flag { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .awa-root .awa-tt-blinking .awa-sym { animation: none; }
+  .awa-root .awa-tt-blinking .awa-tt-flag:not([hidden]) { display: block; }
+}
+.awa-root .awa-tt-flag { position: absolute; left: 0; right: 0; bottom: 2px; text-align: center; font-size: 8px; font-weight: 700; letter-spacing: 0.02em; color: var(--awa-tt-flag-ink); pointer-events: none; }
+/* no state, a rejected state, or a stale one: never read as an unlit lamp */
+.awa-root .awa-tt:is(.awa-tt-missing, .awa-tt-invalid, .awa-tt-stale) .awa-tt-ground { stroke: var(--awa-tt-flag-ink); stroke-width: 0.8; stroke-dasharray: 1.5 1.2; }
+.awa-root .awa-tt:is(.awa-tt-missing, .awa-tt-invalid) .awa-sym { opacity: 0.35; }
+.awa-root .awa-tt-name { font-size: 11px; line-height: 1.2; text-align: center; color: var(--awi-fg); max-width: calc(var(--awa-tile, 56px) + 40px); overflow-wrap: normal; }
+.awa-root .awa-tt-list { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: flex-start; }
+.awa-root.awa-telltalecluster .awa-tt { width: calc(var(--awa-tile, 56px) + 40px); }
+.awa-root .awa-row-flag { font-size: 11px; font-weight: 700; color: var(--awi-alarm-hihi); margin-bottom: 4px; }

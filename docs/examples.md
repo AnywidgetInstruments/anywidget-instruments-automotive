@@ -1,16 +1,16 @@
 # Examples
 
 !!! info "Preview"
-    The automotive widgets are not written yet. The example below is composed from
-    [anywidget-instruments](https://s-celles.github.io/anywidget-instruments/) widgets, to
-    show what anywidget-automotives will offer; it is replaced widget by widget as the
-    real ones arrive. The figures are simulated.
+    The tell-tales below are the `TellTaleCluster` of anywidget-automotives. The dials and
+    displays are still [anywidget-instruments](https://s-celles.github.io/anywidget-instruments/)
+    widgets, standing in for the automotive ones, which replace them as they are
+    written. The figures are simulated.
 
 ## Instrument cluster
 
 Drive with the sliders — speed, engine speed, fuel level, coolant temperature — light the
-tell-tales, and turn on the **HUD mirror**. The tell-tales take the colours of UN
-Regulation No. 121 (red, amber, green, blue); the tachometer has its red zone; the trip
+tell-tales, and turn on the **HUD mirror**. The tell-tales take their colour from
+their meaning (red, amber, green, blue) and move to the front when lit; the tachometer has its red zone; the trip
 computer gives the consumption per hour below 5 km/h and per 100 km above.
 
 ![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
@@ -24,11 +24,19 @@ and the widgets follow your light or dark preference.*
 It runs entirely in the browser, through marimo and Pyodide: the first load downloads
 Python and the widgets, which takes a few seconds.
 
-Locally, with the marimo editor:
+Locally, with the marimo editor, from a clone of the repository (see
+[Development](development.md)):
 
 ```bash
 pip install marimo "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments"
+npm install && npm run build && pip install -e .
 marimo edit lite/marimo/cluster_preview.py
 ```
+
+## Tell-tales in JupyterLite
+
+A notebook lighting the tell-tales from Python, in the browser, with no installation.
+
+<a class="md-button" href="../lite/lab/index.html?path=telltales.ipynb">▶ Open it in JupyterLite</a>
 
 See the [safety notice](safety.md): these are not vehicle instruments.

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/automotive.schema.json",
+  "title": "Automotive",
+  "description": "Traits shared by every widget of anywidget-automotives (API-001, API-002, ROB-001). The common traits of anywidget-instruments are kept; every widget is an indicator.",
+  "type": "object",
+  "x-awi-abstract": true,
+  "x-awi-class": "AutomotiveWidget",
+  "allOf": [{ "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json" }],
+  "properties": {
+    "mode": {
+      "const": "indicator",
+      "description": "Always \"indicator\": nothing is meant to be operated while driving (API-002).",
+      "default": "indicator",
+      "x-awi-writer": "host"
+    },
+    "max_age": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Seconds after which a value not updated is shown as stale; 0: never (ROB-001).",
+      "default": 0,
+      "x-awi-writer": "host"
+    },
+    "_value_seq": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Counter a host increments on every assignment of value, even an unchanged one, so that max_age counts from the last update rather than the last change (ROB-001). Hosts that set only changes may leave it alone.",
+      "default": 0,
+      "x-awi-writer": "host"
+    }
+  }
+}

@@ -1,0 +1,394 @@
+{
+  "description": "Unit conversion (UNIT-010 .. UNIT-016). convert: a value in `from`, shown in `to`, to within 1e-9 relative; null: no figure (UNIT-016). resolve: the input and displayed units of a widget of `quantity` from its traits; null: the widget shows its invalid state (HOST-004). round_up: [value, resolution, expected] (SPD-001, UNIT-015). scale: [min, max] in `from`, shown in `to` (UNIT-013).",
+  "convert": [
+    {
+      "value": 100,
+      "from": "km/h",
+      "to": "mph",
+      "expected": 62.13711922373339
+    },
+    {
+      "value": 50,
+      "from": "mph",
+      "to": "km/h",
+      "expected": 80.4672
+    },
+    {
+      "value": 80.4672,
+      "from": "km/h",
+      "to": "mph",
+      "expected": 50
+    },
+    {
+      "value": 1,
+      "from": "mi",
+      "to": "km",
+      "expected": 1.609344
+    },
+    {
+      "value": 1,
+      "from": "US gal",
+      "to": "L",
+      "expected": 3.785411784
+    },
+    {
+      "value": 1,
+      "from": "imperial gal",
+      "to": "L",
+      "expected": 4.54609
+    },
+    {
+      "value": 1,
+      "from": "imperial gal",
+      "to": "US gal",
+      "expected": 1.200949925504855
+    },
+    {
+      "value": 100,
+      "from": "°C",
+      "to": "°F",
+      "expected": 212
+    },
+    {
+      "value": -40,
+      "from": "°C",
+      "to": "°F",
+      "expected": -40
+    },
+    {
+      "value": 32,
+      "from": "°F",
+      "to": "°C",
+      "expected": 0
+    },
+    {
+      "value": 1,
+      "from": "psi",
+      "to": "kPa",
+      "expected": 6.894757293168361
+    },
+    {
+      "value": 250,
+      "from": "kPa",
+      "to": "bar",
+      "expected": 2.5
+    },
+    {
+      "value": 10,
+      "from": "L/100 km",
+      "to": "km/L",
+      "expected": 10
+    },
+    {
+      "value": 5,
+      "from": "L/100 km",
+      "to": "mpg (US)",
+      "expected": 47.04291666666666
+    },
+    {
+      "value": 5,
+      "from": "L/100 km",
+      "to": "mpg (imperial)",
+      "expected": 56.49618726636443
+    },
+    {
+      "value": 10,
+      "from": "L/100 km",
+      "to": "mpg (US)",
+      "expected": 23.52145833333333
+    },
+    {
+      "value": 29.401822916666664,
+      "from": "mpg (US)",
+      "to": "L/100 km",
+      "expected": 8
+    },
+    {
+      "value": 30,
+      "from": "mpg (US)",
+      "to": "mpg (imperial)",
+      "expected": 36.02849776514565
+    },
+    {
+      "value": 0,
+      "from": "L/100 km",
+      "to": "mpg (US)",
+      "expected": null
+    },
+    {
+      "value": 0,
+      "from": "mpg (imperial)",
+      "to": "L/100 km",
+      "expected": null
+    },
+    {
+      "value": "nan",
+      "from": "km/h",
+      "to": "mph",
+      "expected": null
+    },
+    {
+      "value": "inf",
+      "from": "km/h",
+      "to": "km/h",
+      "expected": null
+    },
+    {
+      "value": 3.2,
+      "from": "L/h",
+      "to": "US gal/h",
+      "expected": 0.845350567546075
+    },
+    {
+      "value": 3000,
+      "from": "rpm",
+      "to": "rpm",
+      "expected": 3000
+    }
+  ],
+  "resolve": [
+    {
+      "quantity": "speed",
+      "traits": {},
+      "expected": {
+        "from": "km/h",
+        "to": "km/h"
+      }
+    },
+    {
+      "quantity": "speed",
+      "traits": {
+        "unit_system": "imperial"
+      },
+      "expected": {
+        "from": "km/h",
+        "to": "mph"
+      }
+    },
+    {
+      "quantity": "speed",
+      "traits": {
+        "unit_system": "us",
+        "input_unit": "mph"
+      },
+      "expected": {
+        "from": "mph",
+        "to": "mph"
+      }
+    },
+    {
+      "quantity": "speed",
+      "traits": {
+        "unit_system": "us",
+        "unit": "km/h"
+      },
+      "expected": {
+        "from": "km/h",
+        "to": "km/h"
+      }
+    },
+    {
+      "quantity": "temperature",
+      "traits": {
+        "unit_system": "imperial"
+      },
+      "expected": {
+        "from": "°C",
+        "to": "°C"
+      }
+    },
+    {
+      "quantity": "temperature",
+      "traits": {
+        "unit_system": "us"
+      },
+      "expected": {
+        "from": "°C",
+        "to": "°F"
+      }
+    },
+    {
+      "quantity": "volume",
+      "traits": {
+        "unit_system": "imperial"
+      },
+      "expected": {
+        "from": "L",
+        "to": "imperial gal"
+      }
+    },
+    {
+      "quantity": "volume",
+      "traits": {
+        "unit_system": "us"
+      },
+      "expected": {
+        "from": "L",
+        "to": "US gal"
+      }
+    },
+    {
+      "quantity": "fuel_economy",
+      "traits": {
+        "unit_system": "us"
+      },
+      "expected": {
+        "from": "L/100 km",
+        "to": "mpg (US)"
+      }
+    },
+    {
+      "quantity": "fuel_economy",
+      "traits": {
+        "unit_system": "imperial",
+        "unit": "km/L"
+      },
+      "expected": {
+        "from": "L/100 km",
+        "to": "km/L"
+      }
+    },
+    {
+      "quantity": "pressure",
+      "traits": {
+        "unit_system": "us"
+      },
+      "expected": {
+        "from": "kPa",
+        "to": "psi"
+      }
+    },
+    {
+      "quantity": "speed",
+      "traits": {
+        "unit": "°F"
+      },
+      "expected": null
+    },
+    {
+      "quantity": "speed",
+      "traits": {
+        "input_unit": "knots"
+      },
+      "expected": null
+    }
+  ],
+  "round_up": [
+    [
+      49.0,
+      1,
+      49
+    ],
+    [
+      49.0000001,
+      1,
+      50
+    ],
+    [
+      49.5,
+      1,
+      50
+    ],
+    [
+      49.999,
+      1,
+      50
+    ],
+    [
+      50,
+      1,
+      50
+    ],
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0.001,
+      1,
+      1
+    ],
+    [
+      12.3,
+      0.1,
+      12.3
+    ],
+    [
+      12.31,
+      0.1,
+      12.4
+    ],
+    [
+      12.3000001,
+      0.1,
+      12.4
+    ],
+    [
+      -0.5,
+      1,
+      0
+    ],
+    [
+      -1.5,
+      1,
+      -1
+    ],
+    [
+      118,
+      2,
+      118
+    ],
+    [
+      118.2,
+      2,
+      120
+    ]
+  ],
+  "scale": [
+    {
+      "min": 0,
+      "max": 220,
+      "from": "km/h",
+      "to": "mph",
+      "expected": {
+        "min": 0,
+        "max": 136.70166229221346,
+        "reversed": false
+      }
+    },
+    {
+      "min": 40,
+      "max": 130,
+      "from": "°C",
+      "to": "°F",
+      "expected": {
+        "min": 104,
+        "max": 266,
+        "reversed": false
+      }
+    },
+    {
+      "min": 4,
+      "max": 20,
+      "from": "L/100 km",
+      "to": "mpg (US)",
+      "expected": {
+        "min": 11.760729166666666,
+        "max": 58.80364583333333,
+        "reversed": true
+      }
+    },
+    {
+      "min": 0,
+      "max": 20,
+      "from": "L/100 km",
+      "to": "km/L",
+      "expected": {
+        "min": 5,
+        "max": null,
+        "reversed": true
+      }
+    }
+  ]
+}

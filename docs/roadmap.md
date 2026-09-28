@@ -7,12 +7,15 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 
 | Delivered | Notes |
 |---|---|
-| Documentation site | Catalog, safety notice, standards, head-up display guide, integration with CAN & CANopen Studio |
-| Specification 0.5 | 99 requirements in EARS notation, 16 groups; TypeScript front end first, units for every market |
-| Cluster preview | A marimo WebAssembly example composed from anywidget-instruments widgets, labelled a preview |
-| Preview screenshots | Light and dark captures of the preview in the documentation, taken by `scripts/screenshots.py` |
+| Documentation site | Catalog, safety notice, standards, head-up display guide, integration with CAN & CANopen Studio, development guide |
+| Specification 0.6 | 99 requirements in EARS notation, 16 groups; open questions 1 and 2 resolved |
+| 1. Foundations | TypeScript front end on the base view of anywidget-instruments, trait contract and parity cases, Python binding, CI, JupyterLite, documentation images captured in CI |
+| 2. Units and robustness | The unit layer and the missing, stale and invalid states, written and tested in the front end; the dials will apply the units |
+| 3. Tell-tales | `TellTale` and `TellTaleCluster`, 22 functions with original symbols |
+| Cluster preview | A marimo WebAssembly example: the real tell-tales, dials and displays still from anywidget-instruments |
 
-No widget is implemented: the [requirements status](requirements-status.md) shows 0 of 99.
+The [requirements status](requirements-status.md) shows 37 of 99 requirements
+implemented, 32 of them tested.
 
 ## Principles
 
@@ -31,7 +34,7 @@ These hold for every milestone below.
 
 ## Milestones, in order
 
-### 1. Foundations
+### 1. Foundations — done
 
 The toolchain of anywidget-instruments, so the two libraries are built, tested and
 released the same way.
@@ -47,11 +50,11 @@ released the same way.
   an older look than the code. They take the place of the preview screenshots as the
   widgets arrive.
 
-**Decides:** whether the dials extend the `Gauge` view of anywidget-instruments or are
-modules of their own (open question 1 of the specification). If extending it needs a
-change upstream, that change comes first.
+**Decided** (specification 0.6): the dials are modules of their own, deriving from the
+base view of anywidget-instruments and reusing its scale functions; no change upstream
+was needed.
 
-### 2. Units and robustness
+### 2. Units and robustness — done in the front end
 
 The layer every widget uses, written once in the front end.
 
@@ -60,7 +63,7 @@ The layer every widget uses, written once in the front end.
 * Stale and missing values, and the invalid state for rejected traits (ROB, HOST-004).
 * Parity cases for every conversion, so a host binding cannot drift.
 
-### 3. Tell-tales
+### 3. Tell-tales — done
 
 The first widgets, and the ones that need no dial.
 

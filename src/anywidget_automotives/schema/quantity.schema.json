@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/quantity.schema.json",
+  "title": "Quantity",
+  "description": "Traits of the widgets showing a physical quantity (API-005, UNIT-001 .. UNIT-017). The host passes numbers in input_unit; the front end converts them into the displayed unit.",
+  "type": "object",
+  "x-awi-abstract": true,
+  "x-awi-class": "QuantityWidget",
+  "allOf": [{ "$ref": "automotive.schema.json" }],
+  "properties": {
+    "value": {
+      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalFloat",
+      "description": "Current value, in input_unit; null: no value received yet, shown as such rather than as zero (ROB-002).",
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "min": {
+      "type": "number",
+      "description": "Lower end of the scale, in input_unit.",
+      "default": 0,
+      "x-awi-writer": "host"
+    },
+    "max": {
+      "type": "number",
+      "description": "Upper end of the scale, in input_unit.",
+      "default": 100,
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Displayed unit, whatever the unit system; empty: the unit the unit system assigns to the quantity (UNIT-002, UNIT-003).",
+      "default": "",
+      "x-awi-writer": "host"
+    },
+    "input_unit": {
+      "type": "string",
+      "description": "Unit of value, min, max and limits; empty: the metric unit of the quantity (UNIT-010).",
+      "default": "",
+      "x-awi-writer": "host"
+    },
+    "unit_system": {
+      "$ref": "units.schema.json#/$defs/unitSystem",
+      "default": "metric",
+      "x-awi-writer": "host"
+    }
+  }
+}

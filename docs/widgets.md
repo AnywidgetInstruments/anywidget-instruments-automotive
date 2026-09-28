@@ -1,9 +1,9 @@
 # Widget catalog
 
-Every widget below is **planned**: this page describes what it will show and which
-convention it follows, so that the specification can be reviewed before any code is
-written. Each is a TypeScript front-end module extending anywidget-instruments, with its
-common traits (`value`, `label`, `unit`, `min`, `max`, `theme`, `size`, `disabled`,
+The **tell-tales are available**; the other widgets below are **planned**: this page
+describes what they will show and which convention they follow, so that the
+specification can be reviewed before their code is written. Each is a TypeScript
+front-end module extending anywidget-instruments, with its common traits (`value`, `label`, `unit`, `min`, `max`, `theme`, `size`, `disabled`,
 `visible`, `tooltip`). The examples use the Python host binding; from Julia, Rust or a
 web page, the same widgets take the same traits.
 
@@ -62,24 +62,60 @@ hot zone is reached.
 
 ## Tell-tales
 
-### `TellTale`
+### `TellTale` — available
 
-One warning light: a symbol from the ISO 2575 set and a state (`off`, `on`, `blinking`).
-Its colour follows its meaning, not the page's theme (TEL-001):
+One tell-tale: the symbol of a function and a state, `"off"`, `"on"` or `"blinking"`.
 
-| Colour | Meaning | Examples |
-|---|---|---|
-| Red | Danger, stop | Oil pressure, brake system, coolant temperature |
-| Yellow / amber | Warning, check soon | Engine (MIL), low fuel, tyre pressure |
-| Green | A function is on | Direction indicators, low beam |
-| Blue | High beam | Main beam |
+```python
+engine = aa.TellTale("engine", state="on")
+engine.state = "blinking"
+```
 
-A tell-tale also carries its name as text, so that colour is never the only cue.
+![Tell-tales, day theme](img/telltale-light.png#only-light)
+![Tell-tales, night theme](img/telltale-dark.png#only-dark)
 
-### `TellTaleCluster`
+*Oil pressure, engine, dipped beam and main beam lit; brake unlit; ABS with no state
+yet. Captured from the widgets by `npm run images`, in the day and the night theme.*
 
-A row of tell-tales, ordered by priority (red before amber before green) when several are
-lit at once.
+* **Colour from the function, never from the theme** (TEL-001):
+
+    | Colour | Meaning | Functions |
+    |---|---|---|
+    | Red | Danger, stop | `brake`, `oil_pressure`, `coolant_temperature`, `battery`, `seat_belt`, `airbag`, `door_open` |
+    | Amber | Warning, check soon | `engine`, `abs`, `low_fuel`, `tyre_pressure`, `stability_control`, `glow_plug`, `rear_fog` |
+    | Green | A function is on | `turn_left`, `turn_right`, `low_beam`, `position_lamps`, `front_fog`, `cruise_control`, `ready` |
+    | Blue | Main beam | `high_beam` |
+
+    The list is `aa.TELLTALE_FUNCTIONS`, read from the trait contract.
+* **Its name as text** as well as its symbol, so that colour is never the only cue
+  (TEL-003); `label` replaces the name of the function.
+* **Unlit, it is a dim neutral grey** whatever its colour when lit (TEL-005): an unlit
+  red tell-tale cannot be read as a green one.
+* **Blinks at 1.5 Hz** (TEL-007). Under the reduced-motion preference it does not
+  blink: it stays lit and says *BLINKING* (A11Y-002).
+* **No state is not "off"**: a tell-tale created without a state shows *NO VALUE*
+  (ROB-002); a state the contract rejects shows *INVALID* (HOST-004); with `max_age`
+  set, a state not updated in time shows *STALE* (ROB-001).
+* The symbols are original drawings modelled on the published meaning of the ISO 2575
+  symbols, not the figures of the standard, and may differ from a vehicle's own:
+
+![Every tell-tale symbol, day theme](img/telltale-functions-light.png#only-light)
+![Every tell-tale symbol, night theme](img/telltale-functions-dark.png#only-dark)
+
+### `TellTaleCluster` — available
+
+A row of tell-tales. The lit ones come first, red, then amber, then green and blue; the
+others follow in the order given, so that nothing moves among them when one lights up
+(TEL-006). Each item is a dict, a `(function, state)` pair or a `TellTale`; `size` is
+the size of one tell-tale.
+
+```python
+row = aa.TellTaleCluster([("turn_left", "off"), ("low_beam", "on"), ("engine", "on")])
+row.set_telltale("turn_left", "blinking")
+```
+
+![A tell-tale cluster, day theme](img/telltalecluster-light.png#only-light)
+![A tell-tale cluster, night theme](img/telltalecluster-dark.png#only-dark)
 
 ## Digital displays
 

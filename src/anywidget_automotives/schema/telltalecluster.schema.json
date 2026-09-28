@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/telltalecluster.schema.json",
+  "title": "TellTaleCluster",
+  "description": "A row of tell-tales, the lit ones first, red, then amber, then green and blue (TEL-006, TEL-008).",
+  "type": "object",
+  "x-awi-class": "TellTaleCluster",
+  "allOf": [
+    {
+      "$ref": "automotive.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-telltalecluster",
+      "default": "awa-telltalecluster",
+      "x-awi-writer": "host"
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "{\"function\": name, \"state\": \"off\" | \"on\" | \"blinking\" | null, \"label\": text (optional)}",
+        "properties": {
+          "function": {
+            "$ref": "telltale.schema.json#/$defs/function"
+          },
+          "state": {
+            "enum": [
+              "off",
+              "on",
+              "blinking",
+              null
+            ]
+          },
+          "label": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "function",
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "description": "The tell-tales, in the order they are given; an item the schema rejects is shown invalid (HOST-004).",
+      "default": [],
+      "x-awi-writer": "host"
+    },
+    "size": {
+      "default": [
+        56,
+        56
+      ],
+      "description": "[width, height] of each tell-tale, in CSS pixels; the row wraps within the width of the output."
+    }
+  }
+}

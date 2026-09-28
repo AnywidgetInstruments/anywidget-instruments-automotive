@@ -14,8 +14,10 @@ The library is a **TypeScript front end first**: the anywidget front-end modules
 implementation, and Python, Julia (KaimonSlate.jl), Rust and other languages are hosts
 that set traits described by the trait contract.
 
-The repository is at the **design stage**: `docs/` holds the documentation and the EARS
-specification, and no widget is implemented yet.
+The repository is in **early implementation**: the foundations (front end, trait
+contract, units, Python binding, CI) and the tell-tales are written; the dials, digital
+displays and cluster are specified in `docs/` and follow the roadmap
+(`docs/roadmap.md`). `docs/development.md` describes the layout.
 
 ## Rules
 
@@ -38,15 +40,21 @@ specification, and no widget is implemented yet.
 ## Commands
 
 ```bash
-mkdocs serve        # documentation site, from docs/
-python scripts/screenshots.py   # light and dark images of docs/img/, from the preview
+npm install && npm run build    # trait contract + front-end bundle
+npm run lint && npm run typecheck && npm test
+npm run images                  # docs/img/<widget>-light.png and -dark.png, from the widgets
+pip install "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments@<commit of package.json>"
+pip install -e ".[dev]" && pytest && ruff check . && ruff format --check . && mypy src
+mkdocs serve                    # documentation site, from docs/
+python scripts/screenshots.py   # light and dark images of the cluster preview
 ```
 
-The images of `docs/img/` are captures of the running notebook: take them again
-whenever the preview changes, so the site never shows an older look.
+The images of `docs/img/` are captures of the running code: take them again whenever
+a widget or the preview changes, so the site never shows an older look.
 
 ## Conventions
 
 - Comments explain *why*, not *what*.
 - Tests are named as sentences describing the behaviour.
+- Never commit generated files: `js/src/generated/`, `src/anywidget_automotives/static/`.
 - Commit messages state the problem, then the change, and end with `Assisted-by: AI`.

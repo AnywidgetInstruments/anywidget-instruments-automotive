@@ -41,9 +41,19 @@ def wait_for(url: str, timeout: float = 60) -> None:
 def capture(name: str, notebook: Path) -> None:
     port = free_port()
     server = subprocess.Popen(
-        [sys.executable, "-m", "marimo", "run", str(notebook), "--headless",
-         "--port", str(port), "--no-token"],
-        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        [
+            sys.executable,
+            "-m",
+            "marimo",
+            "run",
+            str(notebook),
+            "--headless",
+            "--port",
+            str(port),
+            "--no-token",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
     )
     try:
         url = f"http://127.0.0.1:{port}/"
@@ -52,7 +62,8 @@ def capture(name: str, notebook: Path) -> None:
             browser = p.chromium.launch()
             for scheme in ("light", "dark"):
                 page = browser.new_page(
-                    color_scheme=scheme, viewport={"width": 1100, "height": 900},
+                    color_scheme=scheme,
+                    viewport={"width": 1100, "height": 900},
                     device_scale_factor=2,
                 )
                 page.goto(url)

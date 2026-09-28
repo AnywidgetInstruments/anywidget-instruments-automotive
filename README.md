@@ -10,8 +10,10 @@ end, trait contract and themes it extends. Everything a widget shows, unit conve
 included, is computed in the front end from its traits, so it behaves alike from
 **Python**, **Julia** (KaimonSlate.jl), **Rust** or any host that sets those traits.
 
-> **Status: design.** This repository holds the documentation and the specification.
-> No widget is implemented yet; every widget in the catalog is *planned*.
+> **Status: early implementation.** The front end, the trait contract, the unit layer,
+> the Python binding and the tell-tales (`TellTale`, `TellTaleCluster`) are written;
+> the dials, digital displays and cluster are *planned*. See the
+> [requirements status](docs/requirements-status.md).
 
 > **Safety.** The widgets are for visualization, teaching, simulation and aftermarket
 > dashboards. They are **not vehicle instruments**: not type-approved, and they must not
@@ -42,7 +44,8 @@ aa.Cluster([speed, rpm, engine], hud=False)
 
 Published at <https://s-celles.github.io/anywidget-automotives/>; `mkdocs serve` builds it locally from `docs/`:
 
-* [Widget catalog](docs/widgets.md) — what each planned widget shows and which convention it follows
+* [Widget catalog](docs/widgets.md) — what each widget shows and which convention it follows
+* [Development](docs/development.md) — building, testing, the trait contract
 * [Safety notice](docs/safety.md)
 * [Standards and references](docs/standards.md)
 * [Head-up display mode](docs/hud.md)

@@ -1,7 +1,7 @@
 # Instrument cluster preview for the marimo WebAssembly export of the documentation site.
-# `marimo export html-wasm` runs it in the browser through Pyodide. It is composed from
-# anywidget-instruments widgets, whose wheel is published on that library's site: the
-# automotive widgets themselves are not written yet.
+# `marimo export html-wasm` runs it in the browser through Pyodide. The tell-tales are the
+# widgets of anywidget-automotives; the dials and displays, not written yet, are still
+# anywidget-instruments widgets. Both wheels are published next to the page (public/).
 #
 # The page follows the reader's light or dark preference, as the widgets do; left to
 # its default, marimo would draw dark widgets on a light page.
@@ -34,10 +34,11 @@ def _(mo):
     Move the sliders to drive, flip the switches to light the tell-tales, and turn on
     the **HUD mirror**. Everything runs in your browser.
 
-    > **Preview.** This cluster is composed from **anywidget-instruments** widgets, to
-    > show what anywidget-automotives will offer. The automotive widgets themselves —
-    > `Speedometer`, `Tachometer`, `TellTale`, `Cluster` — are specified but not written
-    > yet ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)). The
+    > **Preview.** The tell-tales are the `TellTaleCluster` of anywidget-automotives.
+    > The dials and the trip computer are still **anywidget-instruments** widgets,
+    > standing in for `Speedometer`, `Tachometer` and `TripComputer`, which are specified
+    > but not written yet
+    > ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)). The
     > figures are simulated.
 
     > **Not a vehicle instrument.** See the
@@ -48,15 +49,16 @@ def _(mo):
 
 @app.cell(hide_code=True)
 async def _(mo, sys):
-    # In the browser the package is not on the package index: install the wheel that
-    # anywidget-instruments publishes next to its own gallery. Locally it is installed.
+    # In the browser the packages are not on the package index: install the wheels built
+    # with the site, anywidget-instruments first, on which the other depends. Locally
+    # they are installed.
     if sys.platform == "emscripten":
         import micropip
         from pyodide.http import pyfetch
 
-        _base = "https://s-celles.github.io/anywidget-instruments/marimo/gallery/public/"
-        _wheel = (await (await pyfetch(_base + "wheel.txt")).string()).strip()
-        await micropip.install(_base + _wheel)
+        _base = mo.notebook_location() / "public"
+        for _wheel in (await (await pyfetch(str(_base / "wheels.txt"))).string()).split():
+            await micropip.install(str(_base / _wheel))
     installed = True
     return (installed,)
 
@@ -66,7 +68,9 @@ def _(installed):
     assert installed
     import anywidget_instruments as ai
 
-    return (ai,)
+    import anywidget_automotives as aa
+
+    return aa, ai
 
 
 @app.cell(hide_code=True)
@@ -86,7 +90,12 @@ def _(mo):
     turn = mo.ui.switch(label="Direction indicator")
     high_beam = mo.ui.switch(label="High beam")
     hud = mo.ui.switch(label="HUD mirror")
-    mo.vstack([mo.md("### Tell-tales and display"), mo.hstack([mil, oil, turn, high_beam, hud], justify="start")])
+    mo.vstack(
+        [
+            mo.md("### Tell-tales and display"),
+            mo.hstack([mil, oil, turn, high_beam, hud], justify="start"),
+        ]
+    )
     return high_beam, hud, mil, oil, turn
 
 
@@ -102,26 +111,50 @@ def _(fuel, rpm, speed):
 
 
 @app.cell(hide_code=True)
-def _(ai, coolant, fuel, fuel_rate_lph, high_beam, hud, low_fuel, mil, mo, oil, per_100km, rpm, speed, turn):
-    # Tell-tale colours follow their meaning (UN Regulation No. 121, ISO 2575): red for
-    # danger, amber for warning, green for a function on, blue for high beam.
-    RED, AMBER, GREEN, BLUE = "#d32f2f", "#ffb300", "#2e7d32", "#1565c0"
-    # An unlit tell-tale is a neutral dim grey, whatever its colour when lit: an unlit
-    # red one must not read as a green one.
-    OFF = "#3a3a3a"
+def _(
+    aa,
+    ai,
+    coolant,
+    fuel,
+    fuel_rate_lph,
+    high_beam,
+    hud,
+    low_fuel,
+    mil,
+    mo,
+    oil,
+    per_100km,
+    rpm,
+    speed,
+    turn,
+):
     # The widgets follow the reader's light or dark preference, as the page does.
     THEME = "system"
+
+    # The TellTaleCluster takes each colour from the function (red for danger, amber
+    # for warning, green for a function on, blue for the main beam), draws an unlit
+    # one in a neutral grey, and puts the lit ones first.
+    def on(lit: bool) -> str:
+        return "on" if lit else "off"
+
     tell_tales = mo.hstack(
         [
-            ai.LED(oil.value, label="Oil pressure", on_color=RED, off_color=OFF, theme=THEME),
-            ai.LED(coolant.value >= 115, label="Coolant hot", on_color=RED, off_color=OFF, theme=THEME),
-            ai.LED(mil.value, label="Engine", on_color=AMBER, off_color=OFF, theme=THEME),
-            ai.LED(low_fuel, label="Low fuel", on_color=AMBER, off_color=OFF, theme=THEME),
-            ai.LED(turn.value, label="Indicator", on_color=GREEN, off_color=OFF, blink=turn.value, theme=THEME),
-            ai.LED(high_beam.value, label="High beam", on_color=BLUE, off_color=OFF, theme=THEME),
+            aa.TellTaleCluster(
+                [
+                    ("oil_pressure", on(oil.value)),
+                    ("coolant_temperature", on(coolant.value >= 115)),
+                    ("engine", on(mil.value)),
+                    ("low_fuel", on(low_fuel)),
+                    ("turn_left", "blinking" if turn.value else "off"),
+                    ("high_beam", on(high_beam.value)),
+                ],
+                theme=THEME,
+            )
         ],
         justify="center",
     )
+    # the amber and red of the dial zones
+    AMBER, RED = "#ffb020", "#ff453a"
     dials = mo.hstack(
         [
             # Rounded up, never down, in the direction UN Regulation No. 39 asks of a
@@ -134,7 +167,10 @@ def _(ai, coolant, fuel, fuel_rate_lph, high_beam, hud, low_fuel, mil, mo, oil, 
                 max=7000,
                 unit="rpm",
                 label="Engine speed",
-                ranges=[{"from": 5500, "to": 6200, "color": AMBER}, {"from": 6200, "to": 7000, "color": RED}],
+                ranges=[
+                    {"from": 5500, "to": 6200, "color": AMBER},
+                    {"from": 6200, "to": 7000, "color": RED},
+                ],
                 theme=THEME,
             ),
         ],
@@ -142,20 +178,42 @@ def _(ai, coolant, fuel, fuel_rate_lph, high_beam, hud, low_fuel, mil, mo, oil, 
     )
     gauges = mo.hstack(
         [
-            ai.Tank(float(fuel.value), min=0, max=100, unit="%", label="Fuel", lo=12, show_limits=True, theme=THEME),
-            ai.Thermometer(float(coolant.value), min=40, max=130, unit="°C", label="Coolant", hi=110, hihi=115, theme=THEME),
+            ai.Tank(
+                float(fuel.value),
+                min=0,
+                max=100,
+                unit="%",
+                label="Fuel",
+                lo=12,
+                show_limits=True,
+                theme=THEME,
+            ),
+            ai.Thermometer(
+                float(coolant.value),
+                min=40,
+                max=130,
+                unit="°C",
+                label="Coolant",
+                hi=110,
+                hihi=115,
+                theme=THEME,
+            ),
         ],
         justify="center",
     )
     trip = mo.hstack(
         [
-            ai.SevenSegment(fuel_rate_lph, digits=4, decimals=1, unit="L/h", label="Fuel rate", theme=THEME),
+            ai.SevenSegment(
+                fuel_rate_lph, digits=4, decimals=1, unit="L/h", label="Fuel rate", theme=THEME
+            ),
             ai.SevenSegment(
                 per_100km if per_100km is not None else 0.0,
                 digits=4,
                 decimals=1,
                 unit="L/100 km",
-                label="Instant consumption" if per_100km is not None else "L/100 km (below 5 km/h: —)",
+                label="Instant consumption"
+                if per_100km is not None
+                else "L/100 km (below 5 km/h: —)",
                 theme=THEME,
             ),
         ],
@@ -163,7 +221,12 @@ def _(ai, coolant, fuel, fuel_rate_lph, high_beam, hud, low_fuel, mil, mo, oil, 
     )
     cluster = mo.vstack([tell_tales, dials, gauges, trip])
     # The HUD mirror flips the cluster on black, for a reflection in the windscreen.
-    hud_style = {"transform": "scaleX(-1)", "background": "#000", "padding": "16px", "border-radius": "8px"}
+    hud_style = {
+        "transform": "scaleX(-1)",
+        "background": "#000",
+        "padding": "16px",
+        "border-radius": "8px",
+    }
     cluster.style(hud_style) if hud.value else cluster
     return
 

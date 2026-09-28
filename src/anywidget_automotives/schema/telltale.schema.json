@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/telltale.schema.json",
+  "title": "TellTale",
+  "description": "A tell-tale: the symbol of a function, lit in the colour of its meaning, with its name as text (TEL-001 .. TEL-005, TEL-007).",
+  "type": "object",
+  "x-awi-class": "TellTale",
+  "allOf": [
+    {
+      "$ref": "automotive.schema.json"
+    }
+  ],
+  "$defs": {
+    "function": {
+      "enum": [
+        "brake",
+        "oil_pressure",
+        "coolant_temperature",
+        "battery",
+        "seat_belt",
+        "airbag",
+        "door_open",
+        "engine",
+        "abs",
+        "low_fuel",
+        "tyre_pressure",
+        "stability_control",
+        "glow_plug",
+        "rear_fog",
+        "turn_left",
+        "turn_right",
+        "low_beam",
+        "position_lamps",
+        "front_fog",
+        "cruise_control",
+        "ready",
+        "high_beam"
+      ],
+      "description": "Function of the tell-tale; it sets the symbol and the colour, never the theme (TEL-001, TEL-002)."
+    },
+    "state": {
+      "enum": [
+        "off",
+        "on",
+        "blinking"
+      ],
+      "description": "State of a tell-tale (TEL-004)."
+    }
+  },
+  "properties": {
+    "_kind": {
+      "const": "awa-telltale",
+      "default": "awa-telltale",
+      "x-awi-writer": "host"
+    },
+    "function": {
+      "$ref": "#/$defs/function",
+      "default": "engine",
+      "x-awi-writer": "host"
+    },
+    "value": {
+      "enum": [
+        "off",
+        "on",
+        "blinking",
+        null
+      ],
+      "description": "State: \"off\", \"on\" or \"blinking\" (TEL-004); null: no state received yet, shown as such (ROB-002).",
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "label": {
+      "description": "Name shown under the symbol; empty: the name of the function (TEL-003)."
+    },
+    "size": {
+      "default": [
+        56,
+        56
+      ]
+    }
+  }
+}

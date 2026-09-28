@@ -8,9 +8,9 @@
 | Author | Sébastien Celles |
 | Document type | Software requirements specification |
 | Notation | EARS (Easy Approach to Requirements Syntax) |
-| Version | 0.5 |
+| Version | 0.6 |
 | Date | 2026-09-28 |
-| Status | Draft for review, before implementation |
+| Status | Draft for review, during implementation |
 
 ---
 
@@ -246,6 +246,12 @@ systems and lets any quantity be set on its own.
 | Fuel economy | L/100 km | mpg (imperial) | mpg (US) |
 | Temperature | °C | °C | °F |
 | Pressure | kPa | psi | psi |
+| Fuel rate | L/h | imperial gal/h | US gal/h |
+
+The names in this table are the unit names of the trait contract and the text shown
+next to a value; the contract also accepts km/L for a fuel economy (UNIT-014) and bar for
+a pressure, and lists every name it accepts (UNIT-017). A gallon is always named
+`imperial gal` or `US gal`, an mpg `mpg (imperial)` or `mpg (US)` (UNIT-005).
 
 ### 11.1 Unit Systems
 
@@ -278,6 +284,10 @@ figures, so every host shows the same result.
 ---
 
 ## 12. Robustness (ROB)
+
+A host binding that sets an unchanged value still updates it, although a trait
+synchronisation only carries changes: it then increments the `_value_seq` trait, from
+which the front end counts `max_age` (ROB-001) as from a change of `value`.
 
 | ID | Pri. | Requirement |
 |---|---|---|
@@ -352,8 +362,8 @@ figures, so every host shows the same result.
 
 ## 18. Open Questions
 
-1. Whether the dials extend the TypeScript `Gauge` view of anywidget-instruments with automotive defaults, or are front-end modules of their own.
-2. How the ISO 2575 symbols are drawn without reproducing the standard's figures: original drawings modelled on the published meaning of each symbol.
+1. *Resolved in 0.6.* The dials are front-end modules of their own, deriving from the base view of anywidget-instruments — its common traits, scheduling, themes and kernel liveness — and reusing its scale functions, not from its `Gauge` view, which is a control with alarm levels, a value entry and peak hold. No change upstream is needed.
+2. *Resolved in 0.6.* The symbols are original drawings on a 24 × 24 grid, modelled on the published meaning of each ISO 2575 symbol and not copied from the figures of the standard; the set is listed in the widget catalog.
 3. The visual angle LEG-001 targets, to be set after reading ISO 15008.
 4. Whether mph and km/h scales on one `Speedometer` (SPD-005) are needed for 1.0.
 5. Whether pressure (tyre) and other quantities beyond the table of section 11 are in scope for 1.0.
@@ -363,6 +373,7 @@ figures, so every host shows the same result.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
+| 0.6 | Open questions 1 (dials derive from the base view of anywidget-instruments) and 2 (original tell-tale drawings) resolved. Unit table: fuel rate added, unit names stated as those of the trait contract and of the display. Section 12: the `_value_seq` trait, by which a host signals an update that does not change the value (ROB-001). |
 | 0.5 | DOC-005 added: every widget pictured in the day and the night theme, captured from the widgets themselves by an automated run. |
 | 0.4 | The library is a TypeScript front end first, used from Python, Julia, Rust and other hosts: GEN rewritten (front-end modules, AFM, everything displayed computed in the front end), HOST-001 .. HOST-006 added (trait contract, contract file, parity cases), API made host-neutral. Unit conversion moved to the front end (UNIT-010 .. UNIT-018); pint is no longer a requirement but an optional convenience of the Python binding, as DynamicQuantities.jl and uom are of theirs. |
 | 0.3 | Units rewritten (UNIT-001 .. UNIT-017): metric, imperial and US unit systems, per-widget override, exact conversion factors, reciprocal fuel economy with converted and reversed scales, rounding after conversion. |

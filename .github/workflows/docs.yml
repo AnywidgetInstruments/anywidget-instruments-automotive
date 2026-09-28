@@ -1,6 +1,8 @@
-# Documentation site, published to GitHub Pages — the workflow of anywidget-instruments,
-# without the package build and JupyterLite, since there is no package yet. The marimo
-# previews install anywidget-instruments from the wheel its own site publishes.
+# Documentation site, published to GitHub Pages, the workflow of anywidget-instruments:
+# the pictures of the widgets captured from the front end of this commit (DOC-005),
+# and in-browser examples (DOC-004) — JupyterLite and marimo WebAssembly — running
+# the wheels built here, of this library and of anywidget-instruments at the commit
+# the front end is built against.
 name: Docs
 
 on:
@@ -21,16 +23,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci && npm run build
+      - name: Documentation images from the widgets themselves (DOC-005)
+        run: |
+          npx playwright install --with-deps chromium
+          npm run images
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install mkdocs-material marimo uv # uv: import analysis of the marimo export
+      - name: Wheels of anywidget-instruments and of this library
+        run: |
+          pip install build uv # uv: import analysis of the marimo export
+          sha=$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")
+          pip wheel --no-deps -w dist "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments@$sha"
+          pip install dist/anywidget_instruments-*.whl
+          python -m build --wheel -o dist
+          pip install -e ".[docs]" jupyter-server jupyterlite-core jupyterlite-pyodide-kernel
+      - name: The wheel ships the bundle, the contract and the schemas
+        run: |
+          python - <<'PY'
+          import glob, zipfile
+          names = zipfile.ZipFile(glob.glob("dist/anywidget_automotives-*.whl")[0]).namelist()
+          for needed in ("static/index.js", "static/index.css", "static/contract.json", "schema/telltale.schema.json", "schema/units.schema.json"):
+              assert any(n.endswith("anywidget_automotives/" + needed) for n in names), needed
+          PY
       - name: MkDocs (offline-capable, strict)
         run: mkdocs build --strict -d site
-      # The preview installs anywidget-instruments in the browser from the wheel that
-      # library publishes on its own site, so nothing is built here.
-      - name: marimo WebAssembly exports
+      - name: JupyterLite with both wheels
+        working-directory: lite
+        run: jupyter lite build --contents content --piplite-wheels ../dist/anywidget_instruments-*.whl --piplite-wheels ../dist/anywidget_automotives-*.whl --output-dir ../site/lite
+      - name: marimo WebAssembly exports with both wheels
         run: |
+          mkdir -p lite/marimo/public
+          cp dist/*.whl lite/marimo/public/
+          # anywidget-instruments first: the other depends on it
+          (cd dist && ls anywidget_instruments-*.whl anywidget_automotives-*.whl) > lite/marimo/public/wheels.txt
           for nb in lite/marimo/*.py; do
             name=$(basename "$nb" .py)
             marimo export html-wasm "$nb" -o "site/marimo/$name" --mode run --show-code

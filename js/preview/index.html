@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>anywidget-automotives preview</title>
+<link rel="stylesheet" href="../../src/anywidget_automotives/static/index.css">
+<style>
+  body { font-family: system-ui, sans-serif; margin: 16px; background: #ffffff; color: #1f2937; }
+  body.dark { background: #111827; color: #e5e7eb; }
+  .shot { display: inline-flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; padding: 12px; margin: 0 16px 16px 0; vertical-align: top; }
+  h2 { font-size: 13px; font-weight: 600; margin: 0 0 4px; }
+</style>
+</head>
+<body>
+<!-- Every widget, drawn by the built front end from plain trait dictionaries, as a
+     host with no kernel would set them. `npm run build`, then serve the repository
+     root and open /js/preview/index.html (?theme=dark for the night theme).
+     js/scripts/docs-images.mjs captures each .shot for the documentation (DOC-005). -->
+<main id="shots"></main>
+<script type="module">
+import widget from "../../src/anywidget_automotives/static/index.js";
+import contract from "../../src/anywidget_automotives/static/contract.json" with { type: "json" };
+
+const theme = new URLSearchParams(location.search).get("theme") === "dark" ? "dark" : "light";
+if (theme === "dark") document.body.classList.add("dark");
+
+function model(state) {
+  const handlers = {};
+  return {
+    get: (k) => state[k],
+    set: (k, v) => { state[k] = v; (handlers[`change:${k}`] || []).forEach((h) => h()); },
+    save_changes: () => {},
+    on: (e, cb) => (handlers[e] ||= []).push(cb),
+    off: (e, cb) => { handlers[e] = (handlers[e] || []).filter((h) => h !== cb); },
+    send: () => {},
+  };
+}
+
+/** A widget from the class defaults of the contract and the given traits. */
+function show(parent, title, traits) {
+  const defaults = Object.fromEntries(Object.entries(contract.widgets[title].traits).map(([k, s]) => [k, s.default]));
+  const el = document.createElement("div");
+  parent.appendChild(el);
+  const m = model({ ...defaults, theme, ...traits });
+  widget.initialize({ model: m });
+  widget.render({ model: m, el });
+}
+
+/** One picture of the documentation: docs/img/<name>-light.png and -dark.png. */
+function shot(name, fill) {
+  const section = document.createElement("section");
+  section.className = "shot";
+  section.dataset.shot = name;
+  document.getElementById("shots").appendChild(section);
+  fill(section);
+}
+
+// A blinking tell-tale would be captured at a random phase: the pictures show
+// steady states, and the blinking one is described in the catalog.
+shot("telltale", (s) => {
+  show(s, "TellTale", { function: "oil_pressure", value: "on" });
+  show(s, "TellTale", { function: "engine", value: "on" });
+  show(s, "TellTale", { function: "low_beam", value: "on" });
+  show(s, "TellTale", { function: "high_beam", value: "on" });
+  show(s, "TellTale", { function: "brake", value: "off" });
+  show(s, "TellTale", { function: "abs", value: null });
+});
+
+shot("telltalecluster", (s) => {
+  show(s, "TellTaleCluster", {
+    label: "Tell-tales",
+    value: [
+      { function: "turn_left", state: "off" },
+      { function: "low_beam", state: "on" },
+      { function: "high_beam", state: "off" },
+      { function: "engine", state: "on" },
+      { function: "low_fuel", state: "on" },
+      { function: "oil_pressure", state: "off" },
+      { function: "seat_belt", state: "on" },
+      { function: "abs", state: "off" },
+      { function: "turn_right", state: "off" },
+    ],
+  });
+});
+
+// every symbol, lit: the catalog shows the set of functions
+shot("telltale-functions", (s) => {
+  show(s, "TellTaleCluster", {
+    size: [44, 44],
+    value: contract.widgets.TellTale.traits.function.values.map((f) => ({ function: f, state: "on" })),
+  });
+  s.style.maxWidth = "760px";
+});
+
+document.body.dataset.ready = "true";
+</script>
+</body>
+</html>
