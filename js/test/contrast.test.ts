@@ -8,7 +8,7 @@ const css = readFileSync("js/src/styles.css", "utf8");
 
 function tokens(selector: string): Record<string, string> {
   const i = css.indexOf(selector);
-  const block = css.slice(css.indexOf("{", i) + 1, css.indexOf("}", i));
+  const block = css.slice(css.indexOf("{", i) + 1, css.indexOf("}", i + selector.length));
   return Object.fromEntries([...block.matchAll(/(--awa-[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
 }
 
@@ -23,7 +23,7 @@ export const contrast = (a: string, b: string) => {
   return (l1 + 0.05) / (l2 + 0.05);
 };
 
-const t = tokens("\n.awa-root {\n");
+const t = { ...tokens("\n.awa-root {\n"), ...tokens(".awa-root { --awa-lcd-bg") };
 
 test.each(["red", "amber", "green", "blue"])("a lit %s tell-tale stands out from its ground by at least 3:1", (c) => {
   expect(contrast(t[`--awa-tt-${c}`], t["--awa-tt-ground"])).toBeGreaterThanOrEqual(3);
@@ -41,4 +41,35 @@ test("an unlit tell-tale can still be seen on its ground", () => {
 
 test("the text of a state flag reads on the ground of a tell-tale", () => {
   expect(contrast(t["--awa-tt-flag-ink"], t["--awa-tt-ground"])).toBeGreaterThanOrEqual(4.5);
+});
+
+// ---- day and night themes (LEG-002 .. LEG-004) ----------------------------------
+const upstreamCss = readFileSync("node_modules/anywidget-instruments/js/src/styles.css", "utf8");
+function block(source: string, selector: string): Record<string, string> {
+  const i = source.indexOf(selector);
+  const body = source.slice(source.indexOf("{", i) + 1, source.indexOf("}", i));
+  return Object.fromEntries([...body.matchAll(/(--aw[ai]-[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+}
+const dark = block(upstreamCss, ".awi-root.awi-root.awi-root.awi-theme-dark {");
+const night = block(css, ".awa-root.awa-root.awa-root.awa-root.awa-night {");
+
+test("the night theme meets the contrast targets: text 4.5:1 on its face and on its displays (LEG-002)", () => {
+  expect(contrast(night["--awi-fg"], night["--awi-face"])).toBeGreaterThanOrEqual(4.5);
+  expect(contrast(night["--awi-muted"], night["--awi-face"])).toBeGreaterThanOrEqual(4.5);
+  expect(contrast(night["--awa-lcd-ink"], night["--awa-lcd-bg"])).toBeGreaterThanOrEqual(4.5);
+  expect(contrast(night["--awa-lcd-dim"], night["--awa-lcd-bg"])).toBeGreaterThanOrEqual(4.5);
+  expect(contrast(night["--awi-needle"], night["--awi-face"])).toBeGreaterThanOrEqual(3);
+});
+
+test("the night theme is of lower luminance than the dark theme, figures and faces (LEG-004)", () => {
+  for (const token of ["--awi-fg", "--awi-muted", "--awi-face"]) expect(lum(night[token]), token).toBeLessThan(lum(dark[token]));
+});
+
+test("the night theme leaves the tell-tale colours alone (TEL-001)", () => {
+  expect(Object.keys(night).filter((k) => k.startsWith("--awa-tt-"))).toEqual([]);
+});
+
+test("the displays of every theme read at 4.5:1", () => {
+  expect(contrast(t["--awa-lcd-ink"], t["--awa-lcd-bg"])).toBeGreaterThanOrEqual(4.5);
+  expect(contrast(t["--awa-lcd-dim"], t["--awa-lcd-bg"])).toBeGreaterThanOrEqual(4.5);
 });

@@ -132,5 +132,13 @@ export class AutomotiveView<T extends object = Traits> extends BaseView<T> {
     const state = this.valueState();
     this._stateNow = state;
     for (const s of ["invalid", "missing", "stale"]) this.root.classList.toggle(`awa-${s}`, state === s);
+    // LEG-003: the day theme is the light one; the night theme, the dark one at a
+    // lower luminance (LEG-004)
+    const theme = this.get("theme");
+    if (theme === "day" || theme === "night") {
+      this.root.classList.toggle("awi-theme-light", theme === "day");
+      this.root.classList.toggle("awi-theme-dark", theme === "night");
+    }
+    this.root.classList.toggle("awa-night", theme === "night");
   }
 }

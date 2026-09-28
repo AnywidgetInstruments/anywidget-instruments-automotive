@@ -146,3 +146,19 @@
   color: var(--awa-hud);
 }
 .awa-root.awa-hud-on .awa-panel .awa-drum { background: #000; color: var(--awa-hud); border: 1px solid var(--awa-hud); }
+
+/* ---- night theme (LEG-003, LEG-004) ------------------------------------------
+ * The dark theme at a lower luminance: dimmer figures on a darker face, still at
+ * the contrast targets (LEG-002), and no large bright area. Tell-tale colours are
+ * not the theme's (TEL-001). */
+.awa-root.awa-root.awa-root.awa-root.awa-night {
+  --awi-fg: #b3bac5;
+  --awi-muted: #8a93a3;
+  --awi-face: #0b0f14;
+  --awi-face-stroke: #4b5563;
+  --awi-needle: #d9480f;
+  --awi-bg: #05070a;
+  --awa-lcd-bg: #05070a;
+  --awa-lcd-ink: #b3bac5;
+  --awa-lcd-dim: #8a93a3;
+}

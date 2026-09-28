@@ -17,13 +17,25 @@ Every widget reads its value in metric units by default and shows it in the unit
 chosen for it — `metric`, `imperial` (UK) or `us` — or in a unit of its own:
 
 ```python
-aa.Cluster([speed, economy], unit_system="us")        # mph, mpg (US), °F
-aa.TripComputer(6.2, unit="mpg (imperial)")           # one widget in its own unit
+aa.Speedometer(87.3, unit_system="us")                # 87.3 km/h in, 55 mph shown
+aa.TemperatureGauge(90, unit_system="us", unit="°C")  # one quantity in a unit of its own
 ```
 
 Fuel economy is the quantity to watch: L/100 km and mpg are reciprocal, so a scale
 converted from one to the other is turned round — its better end stays marked as better
 — and a figure that would be infinite, at a standstill, is not shown.
+
+## Day and night
+
+`theme` takes the values of anywidget-instruments — `"auto"`, `"light"`, `"dark"`,
+`"system"` — and `"day"` and `"night"` (LEG-003): the day theme is the light one; the
+night theme is dark, dimmer than the dark theme, with no large bright area (LEG-004).
+Tell-tale colours do not change with the theme. The pictures of this catalog show the
+day theme, or the night theme with a dark reading preference.
+
+```python
+aa.Speedometer(87.3, theme="night")
+```
 
 ## Dials
 
@@ -219,6 +231,11 @@ An instrument panel: dials on the sides, tell-tales between them and digital dis
 below (CLU-001).
 
 ```python
+rpm, speed = aa.Tachometer(2600, redline=6200), aa.Speedometer(87.3, limit=90)
+lamps = aa.TellTaleCluster([("low_beam", "on"), ("engine", "off")])
+fuel, coolant = aa.FuelGauge(38), aa.TemperatureGauge(90)
+trip, gear = aa.TripComputer({"speed": 87, "fuel_rate": 5.2}), aa.GearIndicator(5)
+
 cluster = aa.Cluster(
     [rpm, lamps, speed, fuel, coolant, trip, gear],
     unit_system="us", theme="dark", brightness=0.8,

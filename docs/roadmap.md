@@ -12,14 +12,14 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | 1. Foundations | TypeScript front end on the base view of anywidget-instruments, trait contract and parity cases, Python binding, CI, JupyterLite, documentation images captured in CI |
 | 2. Units and robustness | The unit layer and the missing, stale and invalid states, applied by every widget |
 | 3. Tell-tales | `TellTale` and `TellTaleCluster`, 22 functions with original symbols |
-| 4. Dials | `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`; legibility (LEG) waits for the visual angle of open question 3 |
+| 4. Dials | `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`; day and night themes; the character size (LEG-001) waits for the visual angle of open question 3 |
 | 5. Digital displays | `TripComputer`, `Odometer`, `GearIndicator`, with the consumption rules of CAN & CANopen Studio |
 | 6. Cluster and head-up display | `Cluster`, one widget holding the trait dictionaries of the others; HUD mode |
 | 7. Hosts, in part | A page with no kernel and marimo tested end to end; pint quantities; a KaimonSlate.jl example and a Rust web view documented |
 | Cluster example | A marimo WebAssembly example: one `Cluster` of every widget, with its head-up display |
 
-The [requirements status](requirements-status.md) shows 90 of 99 requirements
-implemented, 80 of them tested.
+The [requirements status](requirements-status.md) shows 93 of 99 requirements
+implemented, 90 of them tested.
 
 ## Principles
 

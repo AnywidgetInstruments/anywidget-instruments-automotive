@@ -123,3 +123,23 @@ def test_the_contract_lists_every_unit_the_binding_accepts() -> None:
     assert tuple(u for q in CONTRACT["units"].values() for u in q["units"]) == aa.UNITS
     for q in CONTRACT["units"].values():
         assert set(q["systems"]) == set(aa.UNIT_SYSTEMS)
+
+
+def test_every_widget_of_a_quantity_exposes_min_max_unit_and_input_unit() -> None:
+    """API-005."""
+    for name in WIDGET_CLASSES:
+        cls = CLASSES[name]
+        if issubclass(cls, aa.QuantityWidget):
+            for trait in ("min", "max", "unit", "input_unit"):
+                assert trait in cls.class_traits(sync=True), (name, trait)
+
+
+def test_the_front_end_writes_no_trait_the_binding_would_have_to_notify() -> None:
+    """API-006: every trait is the host's; traitlets notifies each of them."""
+    writers = {s["writer"] for w in CONTRACT["widgets"].values() for s in w["traits"].values()}
+    assert writers == {"host"}
+    seen: list[str] = []
+    w = aa.Speedometer(1)
+    w.observe(lambda c: seen.append(c["name"]))
+    w.value, w.limit, w.unit_system = 2, 90, "us"
+    assert seen == ["value", "_value_seq", "limit", "unit_system"]

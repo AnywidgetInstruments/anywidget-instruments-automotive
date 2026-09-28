@@ -14,6 +14,9 @@ from anywidget_instruments._base import InstrumentWidget
 
 _STATIC = pathlib.Path(__file__).parent / "static"
 
+#: The themes of anywidget-instruments, and the day and night themes (LEG-003).
+THEMES = ("auto", "light", "dark", "system", "day", "night")
+
 
 class AutomotiveWidget(InstrumentWidget):
     """Base class of the widgets of anywidget-automotives.
@@ -35,6 +38,7 @@ class AutomotiveWidget(InstrumentWidget):
     _css = _STATIC / "index.css"
 
     mode = t.Enum(["indicator"], default_value="indicator").tag(sync=True)
+    theme = t.Enum(THEMES, default_value="auto").tag(sync=True)
     max_age = t.Float(0.0, min=0.0).tag(sync=True)
     #: On a Cluster, the head-up display mode; on a widget it holds, shown in
     #: that mode (HUD-004).

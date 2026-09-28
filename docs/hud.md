@@ -5,6 +5,7 @@ screen in the windscreen. A phone or a tablet laid flat under the windscreen doe
 same, if what it shows is mirrored: the reflection then reads the right way round.
 
 ```python
+speed, rpm = aa.Speedometer(87.3), aa.Tachometer(2400)
 gear = aa.GearIndicator(4, hud=True)          # shown in the head-up display
 cluster = aa.Cluster([speed, rpm, gear], hud=True, brightness=0.6)
 ```

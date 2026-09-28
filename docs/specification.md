@@ -204,6 +204,10 @@ nested widgets. A host binding may accept its own widget objects and pass their 
 
 ## 8. Legibility (LEG)
 
+The `theme` trait takes, beyond the values of anywidget-instruments, `day` and `night`
+(LEG-003): the day theme is the light theme; the night theme is dark, with a lower
+luminance than the dark theme (LEG-004).
+
 | ID | Pri. | Requirement |
 |---|---|---|
 | LEG-001 | M | The library shall size digits and scale labels from a `viewing_distance` trait, so that their height subtends a set visual angle. |
@@ -381,7 +385,7 @@ which the front end counts `max_age` (ROB-001) as from a change of `value`.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
-| 0.7 | Section 7: a `Cluster` holds its widgets as a list of trait dictionaries and draws them itself. Section 10: the `hud` trait of every widget. |
+| 0.7 | Section 7: a `Cluster` holds its widgets as a list of trait dictionaries and draws them itself. Section 10: the `hud` trait of every widget. Section 8: the `theme` values `day` and `night`. |
 | 0.6 | Open questions 1 (dials derive from the base view of anywidget-instruments) and 2 (original tell-tale drawings) resolved. Unit table: fuel rate added, unit names stated as those of the trait contract and of the display. Section 12: the `_value_seq` trait, by which a host signals an update that does not change the value (ROB-001). |
 | 0.5 | DOC-005 added: every widget pictured in the day and the night theme, captured from the widgets themselves by an automated run. |
 | 0.4 | The library is a TypeScript front end first, used from Python, Julia, Rust and other hosts: GEN rewritten (front-end modules, AFM, everything displayed computed in the front end), HOST-001 .. HOST-006 added (trait contract, contract file, parity cases), API made host-neutral. Unit conversion moved to the front end (UNIT-010 .. UNIT-018); pint is no longer a requirement but an optional convenience of the Python binding, as DynamicQuantities.jl and uom are of theirs. |

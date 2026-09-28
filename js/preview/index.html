@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="../../src/anywidget_automotives/static/index.css">
 <style>
   body { font-family: system-ui, sans-serif; margin: 16px; background: #ffffff; color: #1f2937; }
-  body.dark { background: #111827; color: #e5e7eb; }
+  body.dark { background: #05070a; color: #b3bac5; }
   .shot { display: inline-flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; padding: 12px; margin: 0 16px 16px 0; vertical-align: top; }
   h2 { font-size: 13px; font-weight: 600; margin: 0 0 4px; }
 </style>
@@ -41,7 +41,8 @@ function show(parent, title, traits) {
   const defaults = Object.fromEntries(Object.entries(contract.widgets[title].traits).map(([k, s]) => [k, s.default]));
   const el = document.createElement("div");
   parent.appendChild(el);
-  const m = model({ ...defaults, theme, ...traits });
+  // the documentation shows the day and the night themes (LEG-003, DOC-005)
+  const m = model({ ...defaults, theme: theme === "dark" ? "night" : "day", ...traits });
   widget.initialize({ model: m });
   widget.render({ model: m, el });
 }

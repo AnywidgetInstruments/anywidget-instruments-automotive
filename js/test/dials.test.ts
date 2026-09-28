@@ -112,6 +112,24 @@ describe("common dial behaviour (DIAL-001 .. DIAL-005)", () => {
   });
 });
 
+describe("day and night themes (LEG-003, LEG-004)", () => {
+  test("the day theme is the light one; the night theme, the dark one at a lower luminance", async () => {
+    const day = await dial("Speedometer", { value: 1, theme: "day" });
+    expect(day.root.classList.contains("awi-theme-light")).toBe(true);
+    const night = await dial("Speedometer", { value: 1, theme: "night" });
+    expect(night.root.classList.contains("awi-theme-dark")).toBe(true);
+    expect(night.root.classList.contains("awa-night")).toBe(true);
+    expect(css).toMatch(/\.awa-root\.awa-root\.awa-root\.awa-root\.awa-night \{/);
+  });
+
+  test("a cluster gives its night theme to every widget it holds", async () => {
+    const w = mount(defaults("Cluster", { theme: "night", value: [{ _kind: "awa-speedometer", value: 1 }] }));
+    await frame();
+    await frame();
+    expect(w.el.querySelector(".awa-root.awa-speedometer")!.classList.contains("awa-night")).toBe(true);
+  });
+});
+
 describe("distraction (DIS-002, DIS-003)", () => {
   test("holds each displayed value for 0.5 s when the value changes faster than twice a second (DIS-002)", async () => {
     const d = await dial("Speedometer", { value: 10 });
@@ -147,7 +165,7 @@ describe("distraction (DIS-002, DIS-003)", () => {
   });
 });
 
-describe("speedometer (SPD-001 .. SPD-003, QA-003)", () => {
+describe("speedometer (DIAL-101, SPD-001 .. SPD-003, QA-003)", () => {
   test("shows km/h by default, the unit of the unit system, or its own unit (SPD-002, UNIT-003)", async () => {
     expect((await dial("Speedometer", { value: 1 })).unit()).toBe("km/h");
     expect((await dial("Speedometer", { value: 1, unit_system: "imperial" })).unit()).toBe("mph");

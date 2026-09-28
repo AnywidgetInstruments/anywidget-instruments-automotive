@@ -2,6 +2,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "vitest";
+import { BaseView } from "anywidget-instruments/js/src/core/view.js";
 import widget, { VIEWS } from "../src/index.js";
 import { BY_KIND } from "../src/generated/contract.js";
 import { hostModel } from "./helpers.js";
@@ -11,6 +12,21 @@ const sources = (dir: string): string[] =>
 
 test("every concrete widget of the contract has a view, and every view a contract", () => {
   expect(Object.keys(VIEWS).sort()).toEqual(Object.keys(BY_KIND).sort());
+});
+
+test("every view derives from the base view of anywidget-instruments (GEN-001)", () => {
+  for (const View of Object.values(VIEWS)) expect(View.prototype).toBeInstanceOf(BaseView);
+});
+
+test("the module is an AFM module: a default export with initialize and render (GEN-003)", () => {
+  expect(typeof widget.initialize).toBe("function");
+  expect(typeof widget.render).toBe("function");
+});
+
+test("the front end is bundled into one ES module and one stylesheet, with the parts of anywidget-instruments it uses (GEN-002)", () => {
+  const build = readFileSync("js/build.mjs", "utf8");
+  expect(build).toMatch(/entryPoints: \["js\/src\/index\.ts"\][^\n]*bundle: true, format: "esm"/);
+  expect(build).toMatch(/entryPoints: \["js\/src\/styles\.css"\][^\n]*bundle: true/);
 });
 
 test("an unknown kind is reported as text in the output, not thrown", () => {

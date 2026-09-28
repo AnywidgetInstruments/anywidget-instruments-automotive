@@ -37,6 +37,19 @@
       "description": "On a Cluster: the head-up display mode (HUD-001 .. HUD-006). On a widget held by a Cluster: shown in that mode, with the speed (HUD-004).",
       "default": false,
       "x-awi-writer": "host"
+    },
+    "theme": {
+      "enum": [
+        "auto",
+        "light",
+        "dark",
+        "system",
+        "day",
+        "night"
+      ],
+      "description": "\"day\": the light theme; \"night\": a dark theme of lowered luminance, with no large bright area (LEG-003, LEG-004); the others as in anywidget-instruments. Tell-tale colours do not depend on it (TEL-001).",
+      "default": "auto",
+      "x-awi-writer": "host"
     }
   }
 }

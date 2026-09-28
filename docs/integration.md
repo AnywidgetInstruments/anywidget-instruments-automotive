@@ -27,6 +27,7 @@ feeds it maps the studio's sources onto its fields:
 | `distance` (km) | `trip.distance_km` |
 | `fuel_used` (L) | `trip.fuel_used_l` |
 
+<!-- illustration: not run -->
 ```python
 trip = aa.TripComputer()
 trip.update(speed=speed_kmh, fuel_rate=instant_lph, distance=distance_km, fuel_used=fuel_used_l)
