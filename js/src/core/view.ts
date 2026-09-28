@@ -14,11 +14,17 @@ import { type ValueState, valueState } from "./state.js";
 /** Period of the check of max_age while a widget is displayed (ms). */
 export const AGE_CHECK_MS = 250;
 
+/** Shortest time a displayed value is held when the value changes faster (ms, DIS-002). */
+export const HOLD_MS = 500;
+
 export class AutomotiveView<T extends object = Traits> extends BaseView<T> {
   /** Time of the last update of `value` (ms), null before the first one. */
   protected _updated: number | null;
   private _warned = new Set<string>();
   private _stateNow: ValueState = "missing";
+  /** The value on display and when it was put there (DIS-002). */
+  protected _held: { raw: unknown; t: number };
+  private _holdTimer: ReturnType<typeof setTimeout> | 0 = 0;
 
   constructor(model: AnyModel<T>, el: HTMLElement, traits: string[] = []) {
     super(model, el, [...traits, "value", "max_age", "_value_seq"]);
@@ -28,11 +34,17 @@ export class AutomotiveView<T extends object = Traits> extends BaseView<T> {
     this.root.classList.add("awa-root", this.kind);
     const raw = (model as unknown as AnyModel<Traits>).get("value");
     this._updated = raw === null || raw === undefined ? null : Date.now();
+    // the first value is shown at once; later ones at most every HOLD_MS
+    this._held = { raw, t: -Infinity };
     const touch = () => {
       this._updated = Date.now();
     };
-    this.listen("change:value", touch);
+    this.listen("change:value", () => {
+      touch();
+      this.hold();
+    });
     this.listen("change:_value_seq", touch);
+    this._disposers.push(() => this._holdTimer && clearTimeout(this._holdTimer));
     // max_age is a matter of time, not of trait changes
     const timer = setInterval(() => {
       if (Number(this.get("max_age")) > 0 && this.valueState() !== this._stateNow) this.schedule();
@@ -46,6 +58,32 @@ export class AutomotiveView<T extends object = Traits> extends BaseView<T> {
     }
     // first drawing, one frame later: the subclass has built its elements by then
     this.schedule();
+  }
+
+  /**
+   * DIS-002: a value changing more than twice a second is shown for at least
+   * HOLD_MS each time, the latest one when the time is up, rather than flicker.
+   */
+  private hold(): void {
+    const now = Date.now();
+    const due = this._held.t + HOLD_MS;
+    const take = () => {
+      this._held = { raw: (this.model as unknown as AnyModel<Traits>).get("value"), t: Date.now() };
+    };
+    if (now >= due) take();
+    else if (!this._holdTimer) {
+      this._holdTimer = setTimeout(() => {
+        this._holdTimer = 0;
+        take();
+        this.schedule();
+      }, due - now);
+    }
+  }
+
+  /** The value on display, read through the contract (DIS-002). */
+  shown(): unknown {
+    const spec = this.contract?.traits.value;
+    return spec ? readTrait(spec, this._held.raw) : this._held.raw;
   }
 
   /**
@@ -86,7 +124,7 @@ export class AutomotiveView<T extends object = Traits> extends BaseView<T> {
 
   /** State of the value now (ROB-001, ROB-002, HOST-004). */
   valueState(now = Date.now()): ValueState {
-    return valueState({ invalid: this.invalidTraits(), value: this.get("value"), maxAge: Number(this.get("max_age")) || 0, updated: this._updated, now });
+    return valueState({ invalid: this.invalidTraits(), value: this.shown(), maxAge: Number(this.get("max_age")) || 0, updated: this._updated, now });
   }
 
   override renderCommon(): void {

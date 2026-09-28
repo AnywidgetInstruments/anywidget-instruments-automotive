@@ -3,28 +3,28 @@
 Where the [specification](specification.md) 0.6 stands in the code. A requirement is
 **implemented** when the code does what it says for every widget it concerns, and
 **tested** when an automated test fails without it. A requirement met by one layer but
-not yet by the widgets that need it — the unit conversion before any dial exists — is
+not yet by the widgets that need it — the unit conversion before the trip computer exists — is
 listed as partial and not counted.
 
 | Group | Requirements | Implemented | Tested |
 |---|---|---|---|
 | General (GEN) | 9 | 7 | 7 |
-| Common widget API (API) | 6 | 5 | 4 |
-| Dials (DIAL) | 13 | 0 | 0 |
-| Speed display (SPD) | 5 | 0 | 0 |
+| Common widget API (API) | 6 | 6 | 5 |
+| Dials (DIAL) | 13 | 13 | 13 |
+| Speed display (SPD) | 5 | 4 | 3 |
 | Tell-tales (TEL) | 8 | 8 | 8 |
 | Digital displays (DIG) | 7 | 0 | 0 |
 | Cluster (CLU) | 3 | 0 | 0 |
 | Legibility (LEG) | 5 | 0 | 0 |
-| Distraction (DIS) | 4 | 0 | 0 |
+| Distraction (DIS) | 4 | 3 | 2 |
 | Head-up display (HUD) | 6 | 0 | 0 |
-| Units (UNIT) | 14 | 3 | 3 |
+| Units (UNIT) | 14 | 11 | 11 |
 | Robustness (ROB) | 3 | 3 | 3 |
 | Accessibility (A11Y) | 2 | 2 | 2 |
 | Documentation (DOC) | 5 | 4 | 0 |
-| Quality and verification (QA) | 3 | 1 | 1 |
+| Quality and verification (QA) | 3 | 2 | 2 |
 | Host independence (HOST) | 6 | 4 | 4 |
-| **Total** | **99** | **37** | **32** |
+| **Total** | **99** | **67** | **60** |
 
 ## Implemented
 
@@ -41,13 +41,21 @@ listed as partial and not counted.
 | API-002 | `mode` is the constant `"indicator"`; `"control"` is refused (Python) or shown invalid (front end) | `test_contract.py`, `telltale.test.ts` |
 | API-003 | Pointer and key events stop at the widget body | `telltale.test.ts` |
 | API-004 | Views redraw on every trait change | `telltale.test.ts` |
+| API-005 | `min`, `max`, `unit`, `input_unit` on every widget of a quantity (`quantity.schema.json`) | `test_contract.py` |
 | API-006 | The front end writes no trait; traitlets notifies every trait | — |
+| DIAL-001 .. DIAL-005, DIAL-101 .. DIAL-108 | `js/src/widgets/dial.ts`, `dials.ts`, `_dial.py` | `js/test/dials.test.ts`, `tests/parity/dials.json` |
+| SPD-001 .. SPD-003 | Rounded up after conversion, the limit marked | `dials.test.ts` |
+| SPD-004 | The catalog and the safety notice | — |
+| DIS-002 | Every widget holds a value changing faster than twice a second for 0.5 s (`AutomotiveView`) | `dials.test.ts` |
+| DIS-003 | `animate` on every dial | `dials.test.ts` |
+| DIS-004 | The safety notice | — |
 | TEL-001 .. TEL-008 | `js/src/widgets/telltales.ts`, `telltale.ts` | `telltale.test.ts`, `contrast.test.ts` |
-| UNIT-011, UNIT-012, UNIT-017 | `units.ts`, `units.schema.json` | `units.test.ts`, parity cases, `test_contract.py` |
-| ROB-001 .. ROB-003 | `max_age` and `_value_seq`, `null` values, the kernel liveness of anywidget-instruments | `telltale.test.ts` |
-| A11Y-001, A11Y-002 | Accessible names and states; no blinking under reduced motion | `telltale.test.ts` |
+| UNIT-001 .. UNIT-003, UNIT-005, UNIT-010 .. UNIT-015, UNIT-017 | `units.ts`, `units.schema.json`, applied by the dials | `units.test.ts`, `dials.test.ts`, parity cases, `test_contract.py` |
+| ROB-001 .. ROB-003 | `max_age` and `_value_seq`, `null` values, the kernel liveness of anywidget-instruments | `telltale.test.ts`, `dials.test.ts` |
+| A11Y-001, A11Y-002 | Accessible names and states (a dial is a `meter`); no blinking and no gliding needle under reduced motion | `telltale.test.ts`, `dials.test.ts` |
 | DOC-002 .. DOC-005 | Safety notice, standards, JupyterLite and marimo examples, pictures captured by `npm run images` in CI | — |
 | QA-002 | Every tell-tale function against its colour, in every theme | `telltale.test.ts` |
+| QA-003 | SPD-001 at every boundary of resolutions 1, 0.5, 2 and 0.1, and of mph converted from km/h | `dials.test.ts` |
 | HOST-001 .. HOST-004 | Schemas, `static/contract.json`, `tests/parity/`, invalid state | `test_contract.py`, `units.test.ts`, `telltale.test.ts` |
 
 ## Partial
@@ -55,10 +63,10 @@ listed as partial and not counted.
 | Requirement | What is missing |
 |---|---|
 | GEN-008 | Styles are scoped (tested); the kernel liveness of anywidget-instruments keeps its registry of heartbeats on `globalThis`. |
-| API-005 | The `Quantity` schema has `min`, `max`, `unit` and `input_unit`; no numeric widget uses it yet. |
-| UNIT-001 .. UNIT-003, UNIT-005, UNIT-010, UNIT-013, UNIT-015, UNIT-016 | Written and tested in the front end (`units.ts`); applied once the dials and displays exist. |
+| UNIT-016 | A zero L/100 km gives no mpg (tested); the speed threshold of DIG-002 comes with the trip computer. |
+| UNIT-004 | Comes with the `Cluster`. |
 | LEG-002, LEG-003 | Contrast of the tell-tale colours tested; the light and dark themes are those of anywidget-instruments. |
-| DOC-001 | The catalog shows the tell-tales; the other widgets are still planned. |
+| DOC-001 | The catalog shows the tell-tales and dials; the other widgets are still planned. |
 
 ## Order of work
 

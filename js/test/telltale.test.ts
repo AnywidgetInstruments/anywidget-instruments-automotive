@@ -49,7 +49,7 @@ describe("functions (TEL-001, TEL-002, QA-002)", () => {
 
   test("the colour of a lit tell-tale is set by its function alone, not by a theme rule", () => {
     for (const c of ["red", "amber", "green", "blue"]) {
-      const rules = css.split("\n").filter((l: string) => l.includes(`.awa-${c} {`) || l.includes(`.awa-${c}{`));
+      const rules = css.split("\n").filter((l: string) => l.includes(".awa-tt:") && l.includes(`.awa-${c} {`));
       expect(rules.length).toBe(1);
       expect(rules[0]).not.toMatch(/theme/);
       expect(rules[0]).toContain(`var(--awa-tt-${c})`);

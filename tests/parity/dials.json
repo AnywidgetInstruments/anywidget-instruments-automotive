@@ -1,0 +1,159 @@
+{
+  "description": "Figures of the dials (DIAL-002, SPD-001, SPD-002, UNIT-002, UNIT-003, UNIT-010, UNIT-015, HOST-004): the traits a host sets, and the readout the front end shows (figure and unit). A binding passes the traits through unchanged.",
+  "cases": [
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 87.3
+      },
+      "readout": "88",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 88
+      },
+      "readout": "88",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 88.0001
+      },
+      "readout": "89",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 80.4672,
+        "unit_system": "us"
+      },
+      "readout": "50",
+      "unit": "mph"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 80.5,
+        "unit_system": "imperial"
+      },
+      "readout": "51",
+      "unit": "mph"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 50,
+        "input_unit": "mph",
+        "unit": "km/h"
+      },
+      "readout": "81",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 87.31,
+        "resolution": 0.5
+      },
+      "readout": "87.5",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 0
+      },
+      "readout": "0",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": null
+      },
+      "readout": "NO VALUE",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": "nan"
+      },
+      "readout": "INVALID",
+      "unit": "km/h"
+    },
+    {
+      "widget": "Speedometer",
+      "traits": {
+        "value": 50,
+        "unit": "°F"
+      },
+      "readout": "INVALID",
+      "unit": ""
+    },
+    {
+      "widget": "Tachometer",
+      "traits": {
+        "value": 3217
+      },
+      "readout": "3200",
+      "unit": "rpm"
+    },
+    {
+      "widget": "Tachometer",
+      "traits": {
+        "value": 3230
+      },
+      "readout": "3250",
+      "unit": "rpm"
+    },
+    {
+      "widget": "TemperatureGauge",
+      "traits": {
+        "value": 90
+      },
+      "readout": "90 °C",
+      "unit": "°C"
+    },
+    {
+      "widget": "TemperatureGauge",
+      "traits": {
+        "value": 90,
+        "unit_system": "us"
+      },
+      "readout": "194 °F",
+      "unit": "°F"
+    },
+    {
+      "widget": "TemperatureGauge",
+      "traits": {
+        "value": 90,
+        "unit_system": "imperial"
+      },
+      "readout": "90 °C",
+      "unit": "°C"
+    },
+    {
+      "widget": "FuelGauge",
+      "traits": {
+        "value": 63.6
+      },
+      "readout": "64 %",
+      "unit": "%"
+    },
+    {
+      "widget": "FuelGauge",
+      "traits": {
+        "value": 20,
+        "min": 50,
+        "max": 10
+      },
+      "readout": "INVALID",
+      "unit": "%"
+    }
+  ]
+}

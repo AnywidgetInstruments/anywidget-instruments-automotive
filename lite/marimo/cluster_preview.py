@@ -1,7 +1,8 @@
 # Instrument cluster preview for the marimo WebAssembly export of the documentation site.
-# `marimo export html-wasm` runs it in the browser through Pyodide. The tell-tales are the
-# widgets of anywidget-automotives; the dials and displays, not written yet, are still
-# anywidget-instruments widgets. Both wheels are published next to the page (public/).
+# `marimo export html-wasm` runs it in the browser through Pyodide. The tell-tales and
+# dials are the widgets of anywidget-automotives; the trip computer, not written yet, is
+# still made of anywidget-instruments widgets. Both wheels are published next to the page
+# (public/).
 #
 # The page follows the reader's light or dark preference, as the widgets do; left to
 # its default, marimo would draw dark widgets on a light page.
@@ -34,10 +35,10 @@ def _(mo):
     Move the sliders to drive, flip the switches to light the tell-tales, and turn on
     the **HUD mirror**. Everything runs in your browser.
 
-    > **Preview.** The tell-tales are the `TellTaleCluster` of anywidget-automotives.
-    > The dials and the trip computer are still **anywidget-instruments** widgets,
-    > standing in for `Speedometer`, `Tachometer` and `TripComputer`, which are specified
-    > but not written yet
+    > **Preview.** The tell-tales and the dials are the widgets of
+    > anywidget-automotives; pick a unit system to see them convert. The trip computer
+    > is still made of **anywidget-instruments** widgets, standing in for
+    > `TripComputer`, which is specified but not written yet
     > ([catalog](https://s-celles.github.io/anywidget-automotives/widgets/)). The
     > figures are simulated.
 
@@ -79,8 +80,9 @@ def _(mo):
     rpm = mo.ui.slider(0, 7000, value=2500, step=50, label="Engine speed (rpm)")
     fuel = mo.ui.slider(0, 100, value=35, step=1, label="Fuel level (%)")
     coolant = mo.ui.slider(40, 130, value=90, step=1, label="Coolant (°C)")
-    mo.vstack([mo.md("### Drive"), mo.hstack([speed, rpm]), mo.hstack([fuel, coolant])])
-    return coolant, fuel, rpm, speed
+    units = mo.ui.dropdown(["metric", "imperial", "us"], value="metric", label="Unit system")
+    mo.vstack([mo.md("### Drive"), mo.hstack([speed, rpm]), mo.hstack([fuel, coolant]), units])
+    return coolant, fuel, rpm, speed, units
 
 
 @app.cell(hide_code=True)
@@ -127,6 +129,7 @@ def _(
     rpm,
     speed,
     turn,
+    units,
 ):
     # The widgets follow the reader's light or dark preference, as the page does.
     THEME = "system"
@@ -153,50 +156,21 @@ def _(
         ],
         justify="center",
     )
-    # the amber and red of the dial zones
-    AMBER, RED = "#ffb020", "#ff453a"
     dials = mo.hstack(
         [
-            # Rounded up, never down, in the direction UN Regulation No. 39 asks of a
-            # real speedometer.
-            ai.Gauge(float(speed.value), min=0, max=200, unit="km/h", label="Speed", theme=THEME),
-            # The tachometer's red zone, with an amber band before it.
-            ai.Gauge(
-                float(rpm.value),
-                min=0,
-                max=7000,
-                unit="rpm",
-                label="Engine speed",
-                ranges=[
-                    {"from": 5500, "to": 6200, "color": AMBER},
-                    {"from": 6200, "to": 7000, "color": RED},
-                ],
-                theme=THEME,
+            # Rounded up after conversion, never down; the limit marked on the scale.
+            aa.Speedometer(
+                float(speed.value), max=220, limit=130, unit_system=units.value, theme=THEME
             ),
+            aa.Tachometer(float(rpm.value), redline=6200, shift_light=5800, theme=THEME),
         ],
         justify="center",
     )
     gauges = mo.hstack(
         [
-            ai.Tank(
-                float(fuel.value),
-                min=0,
-                max=100,
-                unit="%",
-                label="Fuel",
-                lo=12,
-                show_limits=True,
-                theme=THEME,
-            ),
-            ai.Thermometer(
-                float(coolant.value),
-                min=40,
-                max=130,
-                unit="°C",
-                label="Coolant",
-                hi=110,
-                hihi=115,
-                theme=THEME,
+            aa.FuelGauge(float(fuel.value), reserve=12, filler_side="right", theme=THEME),
+            aa.TemperatureGauge(
+                float(coolant.value), hot=115, unit_system=units.value, theme=THEME
             ),
         ],
         justify="center",

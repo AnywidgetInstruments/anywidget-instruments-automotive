@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/speedometer.schema.json",
+  "title": "Speedometer",
+  "description": "Vehicle speed on a dial with a digital readout, rounded up to the readout resolution after conversion, never down (DIAL-101, SPD-001 .. SPD-004).",
+  "type": "object",
+  "x-awi-class": "Speedometer",
+  "x-awa-quantity": "speed",
+  "allOf": [
+    {
+      "$ref": "dial.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-speedometer",
+      "default": "awa-speedometer",
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "$ref": "units.schema.json#/$defs/speed"
+    },
+    "input_unit": {
+      "$ref": "units.schema.json#/$defs/speed"
+    },
+    "max": {
+      "default": 220
+    },
+    "limit": {
+      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "description": "Speed limit, in input_unit, marked on the scale; the readout is highlighted while the speed exceeds it (SPD-003). null: none.",
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "label": {
+      "default": "Speed"
+    }
+  }
+}

@@ -3,6 +3,7 @@
 import { watchModel } from "anywidget-instruments/js/src/core/liveness.js";
 import type { AnyModel } from "anywidget-instruments/js/src/core/model.js";
 import type { AutomotiveView } from "./core/view.js";
+import { FuelGaugeView, SpeedometerView, TachometerView, TemperatureGaugeView } from "./widgets/dials.js";
 import { TellTaleClusterView, TellTaleView } from "./widgets/telltale.js";
 
 type ViewClass = new (model: AnyModel<any>, el: HTMLElement) => AutomotiveView<any>;
@@ -10,6 +11,10 @@ type ViewClass = new (model: AnyModel<any>, el: HTMLElement) => AutomotiveView<a
 export const VIEWS: Record<string, ViewClass> = {
   "awa-telltale": TellTaleView,
   "awa-telltalecluster": TellTaleClusterView,
+  "awa-speedometer": SpeedometerView,
+  "awa-tachometer": TachometerView,
+  "awa-fuelgauge": FuelGaugeView,
+  "awa-temperaturegauge": TemperatureGaugeView,
 };
 
 function render({ model, el }: { model: AnyModel; el: HTMLElement }): (() => void) | undefined {

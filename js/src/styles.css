@@ -45,3 +45,47 @@
 .awa-root .awa-tt-list { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: flex-start; }
 .awa-root.awa-telltalecluster .awa-tt { width: calc(var(--awa-tile, 56px) + 40px); }
 .awa-root .awa-row-flag { font-size: 11px; font-weight: 700; color: var(--awi-alarm-hihi); margin-bottom: 4px; }
+
+/* ---- dials ---------------------------------------------------------------- */
+.awa-root {
+  --awa-zone-danger: #e5372c;
+  --awa-zone-warning: #f59e0b;
+  --awa-zone-cold: #3b82f6;
+  --awa-limit: #e5372c;
+}
+.awa-root .awa-face { fill: var(--awi-face); stroke: var(--awi-face-stroke); stroke-width: 1.5; }
+.awa-root .awa-tick-major { stroke: var(--awi-fg); stroke-width: 2; }
+.awa-root .awa-tick-minor { stroke: var(--awi-muted); stroke-width: 1; }
+.awa-root .awa-tick-label { fill: var(--awi-fg); font-size: 13px; font-weight: 600; font-family: var(--awi-font, system-ui, sans-serif); font-variant-numeric: tabular-nums; }
+.awa-root .awa-zone-danger { fill: var(--awa-zone-danger); }
+.awa-root .awa-zone-warning { fill: var(--awa-zone-warning); }
+.awa-root .awa-zone-cold { fill: var(--awa-zone-cold); }
+.awa-root .awa-needle-shape { fill: var(--awi-needle); }
+.awa-root .awa-hub { fill: var(--awi-fg); }
+.awa-root .awa-needle { transform-box: view-box; }
+/* DIS-003, A11Y-002: the needle glides only when asked, never under reduced motion */
+.awa-root.awa-animate .awa-needle { transition: transform 0.3s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .awa-root.awa-animate .awa-needle { transition: none; }
+}
+.awa-root .awa-readout { fill: var(--awi-fg); font-size: 24px; font-weight: 700; font-family: var(--awi-font, system-ui, sans-serif); font-variant-numeric: tabular-nums; }
+.awa-root.awa-fuelgauge .awa-readout, .awa-root.awa-temperaturegauge .awa-readout { font-size: 16px; }
+.awa-root .awa-unit { fill: var(--awi-muted); font-size: 12px; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root.awa-fuelgauge .awa-unit, .awa-root.awa-temperaturegauge .awa-unit { display: none; }
+.awa-root .awa-dial { overflow: visible; }
+.awa-root .awa-note { fill: var(--awi-muted); font-size: 11px; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root .awa-oor { fill: var(--awi-alarm-hihi); }
+.awa-root .awa-limit { stroke: var(--awa-limit); stroke-width: 3.5; stroke-linecap: round; }
+/* SPD-003: above the limit, the readout is drawn in the colour of the limit and underlined */
+.awa-root.awa-over-limit .awa-readout { fill: var(--awa-limit); text-decoration: underline; }
+.awa-root:is(.awa-invalid, .awa-missing) .awa-readout { font-size: 15px; fill: var(--awi-muted); }
+.awa-root.awa-invalid .awa-needle { opacity: 0.3; }
+.awa-root.awa-stale .awa-needle, .awa-root.awa-stale .awa-readout { opacity: 0.5; }
+.awa-root .awa-shift { fill: var(--awa-tt-off); stroke: var(--awi-face-stroke); }
+.awa-root .awa-shift.awa-lit { fill: var(--awa-tt-amber); }
+.awa-root .awa-ready { fill: var(--awa-tt-green); font-size: 13px; font-weight: 700; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root .awa-dial-tt { color: var(--awi-muted); opacity: 0.6; }
+.awa-root .awa-dial-tt.awa-lit { opacity: 1; }
+.awa-root .awa-dial-tt.awa-lit.awa-red { color: var(--awa-tt-red); }
+.awa-root .awa-dial-tt.awa-lit.awa-amber { color: var(--awa-tt-amber); }
+.awa-root .awa-filler { fill: var(--awi-muted); }

@@ -10,6 +10,14 @@ from __future__ import annotations
 
 from ._base import AutomotiveWidget
 from ._contract import TELLTALE_FUNCTIONS, TELLTALE_STATES, UNIT_SYSTEMS, UNITS
+from ._dial import (
+    DialWidget,
+    FuelGauge,
+    QuantityWidget,
+    Speedometer,
+    Tachometer,
+    TemperatureGauge,
+)
 from ._telltale import TellTale, TellTaleCluster
 
 __all__ = [
@@ -18,8 +26,14 @@ __all__ = [
     "UNITS",
     "UNIT_SYSTEMS",
     "AutomotiveWidget",
+    "DialWidget",
+    "FuelGauge",
+    "QuantityWidget",
+    "Speedometer",
+    "Tachometer",
     "TellTale",
     "TellTaleCluster",
+    "TemperatureGauge",
 ]
 
 __version__ = "0.1.0.dev0"

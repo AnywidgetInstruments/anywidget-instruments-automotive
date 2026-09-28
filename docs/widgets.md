@@ -1,6 +1,6 @@
 # Widget catalog
 
-The **tell-tales are available**; the other widgets below are **planned**: this page
+The **dials and tell-tales are available**; the other widgets below are **planned**: this page
 describes what they will show and which convention they follow, so that the
 specification can be reviewed before their code is written. Each is a TypeScript
 front-end module extending anywidget-instruments, with its common traits (`value`, `label`, `unit`, `min`, `max`, `theme`, `size`, `disabled`,
@@ -26,39 +26,86 @@ converted from one to the other is turned round — its better end stays marked 
 
 ## Dials
 
-### `Speedometer`
+Every dial reads its value, its scale, its zones and its limits in `input_unit` (the
+metric unit of its quantity by default) and draws them in the unit of its unit system,
+or in its own `unit`. Common traits:
+
+* `min`, `max` — the scale, with major and minor ticks on round values (DIAL-001);
+* `zones` — coloured arcs, `{"from", "to", "kind"}` with `kind` one of `"danger"`,
+  `"warning"`, `"cold"` (DIAL-005);
+* `resolution` — the step of the readout, the value as text below the needle (DIAL-002);
+* `animate` — the needle glides to a new value; never under the reduced-motion
+  preference (DIS-003, A11Y-002);
+* `max_age` — a value older than this is marked *STALE* (ROB-001).
+
+A value above or below the scale stops the needle at its end and lights a marker there
+(DIAL-003); NaN or an infinity leaves the needle where it was and reads *INVALID*
+(DIAL-004); no value yet reads *NO VALUE*, with no needle (ROB-002). A value changing
+more than twice a second is held half a second at a time rather than flicker (DIS-002).
+
+![Dials with no value, above the scale and invalid, day theme](img/dial-states-light.png#only-light)
+![Dials with no value, above the scale and invalid, night theme](img/dial-states-dark.png#only-dark)
+
+### `Speedometer` — available
 
 Vehicle speed on a dial, with a digital readout.
 
-* The unit of the unit system — km/h in `metric`, mph in `imperial` and `us` — or a
-  unit of its own, with the other shown as an inner scale on request.
-* **Never rounds down** (SPD-001): 49.6 km/h reads 50, not 49 — in the direction
-  UN Regulation No. 39 asks of a real speedometer, although the widget cannot guarantee
-  the accuracy of the value it is given.
-* An optional speed limit marker.
-
 ```python
-aa.Speedometer(87.3, max=220, unit="km/h", limit=90)
+aa.Speedometer(87.3, max=220, limit=90)
+aa.Speedometer(87.3, unit_system="us")          # 55 mph: km/h in, mph shown
 ```
 
-### `Tachometer`
+![Speedometers, day theme](img/speedometer-light.png#only-light)
+![Speedometers, night theme](img/speedometer-dark.png#only-dark)
 
-Engine speed, in rpm or thousands of rpm.
+* The unit of the unit system — km/h in `metric`, mph in `imperial` and `us` — or a
+  unit of its own (SPD-002).
+* **Never rounds down** (SPD-001): 87.3 km/h reads 88, not 87, and the rounding comes
+  after the conversion (UNIT-015) — in the direction UN Regulation No. 39 asks of a
+  real speedometer.
+* `limit` — a mark across the scale; above it, the readout turns red and is underlined
+  (SPD-003).
 
-* `redline`: the start of the red zone.
-* `shift_light`: a light that comes on at a chosen engine speed.
-* Hybrid and electric drivetrains: a `ready` state shown when the engine is stopped but
-  the vehicle can move, so that 0 rpm is not read as "off".
+!!! warning "Not the vehicle's speedometer (SPD-004)"
+    The widget cannot guarantee the accuracy of the value it is given — a speed read
+    over OBD-II is late and may be wrong — and it does not replace the vehicle's own
+    speedometer. See the [safety notice](safety.md).
 
-### `FuelGauge`
+### `Tachometer` — available
 
-Fuel level as a fraction, from empty to full, with the reserve zone and the fuel pump
-symbol (ISO 2575) on the side of the filler flap when it is known.
+Engine speed in rpm, the scale in thousands.
 
-### `TemperatureGauge`
+```python
+aa.Tachometer(3200, redline=6000, shift_light=5800)
+```
 
-Coolant or oil temperature, cold and hot zones, and the temperature tell-tale when the
-hot zone is reached.
+![Tachometers, day theme](img/tachometer-light.png#only-light)
+![Tachometers, night theme](img/tachometer-dark.png#only-dark)
+
+* `redline` — the start of the red zone (DIAL-102).
+* `shift_light` — a lamp lit amber at and above this engine speed (DIAL-103).
+* `ready` — hybrid and electric drivetrains: at 0 rpm the dial says *READY*, so that a
+  stopped engine of a vehicle able to move is not read as off (DIAL-104).
+
+### `FuelGauge` — available
+
+Fuel level from **E** to **F**, in percent of a full tank. The reserve zone (`reserve`,
+12 % by default) is amber, and the fuel pump symbol lights amber in it (DIAL-105); it
+points to the side of the filler flap given by `filler_side` (DIAL-106).
+
+### `TemperatureGauge` — available
+
+Coolant or oil temperature, with a cold zone below `cold` and a hot zone from `hot`,
+where the temperature tell-tale lights red (DIAL-107, DIAL-108). °C, or °F in the `us`
+unit system.
+
+```python
+aa.FuelGauge(8, filler_side="right")
+aa.TemperatureGauge(118, hot=115)
+```
+
+![Fuel and temperature gauges, day theme](img/gauges-light.png#only-light)
+![Fuel and temperature gauges, night theme](img/gauges-dark.png#only-dark)
 
 ## Tell-tales
 

@@ -1,17 +1,18 @@
 # Examples
 
 !!! info "Preview"
-    The tell-tales below are the `TellTaleCluster` of anywidget-automotives. The dials and
-    displays are still [anywidget-instruments](https://s-celles.github.io/anywidget-instruments/)
-    widgets, standing in for the automotive ones, which replace them as they are
+    The tell-tales and dials below are the widgets of anywidget-automotives. The trip
+    computer is still made of [anywidget-instruments](https://s-celles.github.io/anywidget-instruments/)
+    widgets, standing in for the `TripComputer`, which replaces them when it is
     written. The figures are simulated.
 
 ## Instrument cluster
 
 Drive with the sliders — speed, engine speed, fuel level, coolant temperature — light the
-tell-tales, and turn on the **HUD mirror**. The tell-tales take their colour from
-their meaning (red, amber, green, blue) and move to the front when lit; the tachometer has its red zone; the trip
-computer gives the consumption per hour below 5 km/h and per 100 km above.
+tell-tales, pick a unit system, and turn on the **HUD mirror**. The tell-tales take their
+colour from their meaning (red, amber, green, blue) and move to the front when lit; the
+speedometer rounds up after converting; the tachometer has its red zone and shift light;
+the trip computer gives the consumption per hour below 5 km/h and per 100 km above.
 
 ![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
 ![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)

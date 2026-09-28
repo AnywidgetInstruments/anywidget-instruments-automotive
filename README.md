@@ -11,8 +11,9 @@ included, is computed in the front end from its traits, so it behaves alike from
 **Python**, **Julia** (KaimonSlate.jl), **Rust** or any host that sets those traits.
 
 > **Status: early implementation.** The front end, the trait contract, the unit layer,
-> the Python binding and the tell-tales (`TellTale`, `TellTaleCluster`) are written;
-> the dials, digital displays and cluster are *planned*. See the
+> the Python binding, the tell-tales (`TellTale`, `TellTaleCluster`) and the dials
+> (`Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`) are written; the
+> digital displays and the cluster are *planned*. See the
 > [requirements status](docs/requirements-status.md).
 
 > **Safety.** The widgets are for visualization, teaching, simulation and aftermarket

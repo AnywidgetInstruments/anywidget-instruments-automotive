@@ -90,7 +90,7 @@ export class TellTaleView extends AutomotiveView<TellTaleTraits> {
 
   lamp(): Lamp {
     const state = this.valueState();
-    return lampOf(this.get("function"), this.get("value"), this.get("label"), state === "ok" ? null : state);
+    return lampOf(this.get("function"), this.shown(), this.get("label"), state === "ok" ? null : state);
   }
 
   override renderCommon(): void {
@@ -121,7 +121,7 @@ export class TellTaleClusterView extends AutomotiveView<TellTaleClusterTraits> {
 
   /** The raw items: the array schema drops rejected items, a cluster shows them invalid. */
   lamps(): Lamp[] {
-    const raw = (this.model as unknown as AnyModel<Record<string, unknown>>).get("value");
+    const raw = this._held.raw;
     const state = this.valueState();
     const whole = state === "stale" ? "stale" : null;
     if (!Array.isArray(raw)) return [];

@@ -10,12 +10,13 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | Documentation site | Catalog, safety notice, standards, head-up display guide, integration with CAN & CANopen Studio, development guide |
 | Specification 0.6 | 99 requirements in EARS notation, 16 groups; open questions 1 and 2 resolved |
 | 1. Foundations | TypeScript front end on the base view of anywidget-instruments, trait contract and parity cases, Python binding, CI, JupyterLite, documentation images captured in CI |
-| 2. Units and robustness | The unit layer and the missing, stale and invalid states, written and tested in the front end; the dials will apply the units |
+| 2. Units and robustness | The unit layer and the missing, stale and invalid states, applied by every widget |
 | 3. Tell-tales | `TellTale` and `TellTaleCluster`, 22 functions with original symbols |
-| Cluster preview | A marimo WebAssembly example: the real tell-tales, dials and displays still from anywidget-instruments |
+| 4. Dials | `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`; legibility (LEG) waits for the visual angle of open question 3 |
+| Cluster preview | A marimo WebAssembly example: the real tell-tales and dials, the trip computer still from anywidget-instruments |
 
-The [requirements status](requirements-status.md) shows 37 of 99 requirements
-implemented, 32 of them tested.
+The [requirements status](requirements-status.md) shows 67 of 99 requirements
+implemented, 60 of them tested.
 
 ## Principles
 
@@ -54,7 +55,7 @@ released the same way.
 base view of anywidget-instruments and reusing its scale functions; no change upstream
 was needed.
 
-### 2. Units and robustness — done in the front end
+### 2. Units and robustness — done
 
 The layer every widget uses, written once in the front end.
 
@@ -73,7 +74,7 @@ The first widgets, and the ones that need no dial.
   copied from the standard (open question 2).
 * The test that checks every tell-tale colour (QA-002).
 
-### 4. Dials
+### 4. Dials — done, legibility aside
 
 * `Speedometer` with rounding up after conversion, the speed limit marker and its
   boundary tests (SPD, QA-003).

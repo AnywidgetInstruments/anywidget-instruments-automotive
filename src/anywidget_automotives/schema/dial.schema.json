@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/dial.schema.json",
+  "title": "Dial",
+  "description": "Traits shared by the dials: a needle on an arc scale and the value as text below it (DIAL-001 .. DIAL-005, DIS-002, DIS-003).",
+  "type": "object",
+  "x-awi-abstract": true,
+  "x-awi-class": "DialWidget",
+  "allOf": [
+    {
+      "$ref": "quantity.schema.json"
+    }
+  ],
+  "properties": {
+    "ticks": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "About how many major intervals the scale has; the front end puts them on round values of the displayed unit.",
+      "default": 6,
+      "x-awi-writer": "host"
+    },
+    "minor_ticks": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Minor subdivisions per major interval.",
+      "default": 4,
+      "x-awi-writer": "host"
+    },
+    "zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "{\"from\": number, \"to\": number, \"kind\": \"danger\" | \"warning\" | \"cold\"}, in input_unit",
+        "properties": {
+          "from": {
+            "type": "number"
+          },
+          "to": {
+            "type": "number"
+          },
+          "kind": {
+            "enum": [
+              "danger",
+              "warning",
+              "cold"
+            ]
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "kind"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Coloured arcs of the scale, in input_unit, converted with the scale (DIAL-005, UNIT-013); a zone the schema rejects is shown invalid (HOST-004).",
+      "default": [],
+      "x-awi-writer": "host"
+    },
+    "resolution": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "Step of the readout, in the displayed unit.",
+      "default": 1,
+      "x-awi-writer": "host"
+    },
+    "animate": {
+      "type": "boolean",
+      "description": "The needle moves smoothly to a new value; false: it jumps (DIS-003). Never under the reduced-motion preference (A11Y-002).",
+      "default": true,
+      "x-awi-writer": "host"
+    },
+    "size": {
+      "default": [
+        200,
+        200
+      ]
+    }
+  }
+}

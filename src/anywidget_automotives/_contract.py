@@ -38,3 +38,8 @@ TELLTALE_FUNCTIONS: tuple[str, ...] = tuple(schema("telltale")["$defs"]["functio
 
 #: States of a tell-tale (TEL-004).
 TELLTALE_STATES: tuple[str, ...] = tuple(schema("telltale")["$defs"]["state"]["enum"])
+
+
+def units_of(quantity: str) -> tuple[str, ...]:
+    """Unit names a widget of ``quantity`` accepts, ``""`` (the default) first."""
+    return ("", *unit_table()[quantity]["units"])

@@ -92,6 +92,31 @@ shot("telltale-functions", (s) => {
   s.style.maxWidth = "760px";
 });
 
+shot("speedometer", (s) => {
+  show(s, "Speedometer", { value: 87.3, limit: 90 });
+  show(s, "Speedometer", { value: 104, limit: 90, label: "Above the limit" });
+  show(s, "Speedometer", { value: 87.3, unit_system: "us", label: "Speed (us)" });
+});
+
+shot("tachometer", (s) => {
+  show(s, "Tachometer", { value: 3200, redline: 6000, shift_light: 5800 });
+  show(s, "Tachometer", { value: 6100, redline: 6000, shift_light: 5800, label: "Shift light" });
+  show(s, "Tachometer", { value: 0, max: 7000, ready: true, label: "Hybrid, ready" });
+});
+
+shot("gauges", (s) => {
+  show(s, "FuelGauge", { value: 64, filler_side: "right" });
+  show(s, "FuelGauge", { value: 8, filler_side: "right", label: "Fuel, reserve" });
+  show(s, "TemperatureGauge", { value: 90 });
+  show(s, "TemperatureGauge", { value: 118, label: "Coolant, hot" });
+});
+
+shot("dial-states", (s) => {
+  show(s, "Speedometer", { label: "No value yet" });
+  show(s, "Speedometer", { value: 250, label: "Above the scale" });
+  show(s, "Speedometer", { value: "nan", label: "Invalid value" });
+});
+
 document.body.dataset.ready = "true";
 </script>
 </body>

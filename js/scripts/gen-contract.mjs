@@ -170,7 +170,7 @@ export function buildContract() {
     const kind = traits._kind?.type === "const" ? traits._kind.values[0] : "";
     if (!abstract && !kind) throw new Error(`${file}: a concrete widget fixes _kind with a const`);
     if (!abstract && !kind.startsWith("awa-")) throw new Error(`${file}: the _kind of a widget of this library starts with "awa-"`);
-    widgets[title] = { className: schema["x-awi-class"], kind, abstract, schema: file, traits, messages };
+    widgets[title] = { className: schema["x-awi-class"], kind, abstract, schema: file, traits, messages, quantity: schema["x-awa-quantity"] || "" };
     framework = framework.concat(fw);
   }
   if (!units) throw new Error("units.schema.json is missing");
@@ -230,7 +230,7 @@ export function renderTs(contract) {
     out.push("}", "");
   }
   const runtime = Object.fromEntries(names.map((n) => {
-    const { schema: _schema, ...rest } = contract.widgets[n];
+    const { schema: _schema, quantity: _quantity, ...rest } = contract.widgets[n];
     return [n, rest];
   }));
   out.push("/** Flattened contract of every schema, keyed by schema title. */");
@@ -239,6 +239,8 @@ export function renderTs(contract) {
   out.push("export const BY_KIND: Record<string, WidgetContract> = Object.fromEntries(");
   out.push("  Object.values(CONTRACTS).filter((c) => !c.abstract).map((c) => [c.kind, c]),");
   out.push(");", "");
+  out.push("/** Physical quantity shown by each widget of a quantity, keyed by `_kind` (UNIT-002). */");
+  out.push(`export const QUANTITY_OF_KIND: Record<string, keyof typeof UNIT_TABLE> = ${JSON.stringify(Object.fromEntries(Object.values(contract.widgets).filter((w) => w.quantity).map((w) => [w.kind, w.quantity])), null, 2)};`, "");
   out.push("/** Units the front end accepts, by quantity (UNIT-017). */");
   out.push(`export const UNIT_TABLE = ${JSON.stringify(contract.units, null, 2)} as const;`);
   return `${out.join("\n")}\n`;
@@ -252,7 +254,7 @@ function pythonVersion() {
 export function renderJson(contract) {
   const widgets = {};
   for (const [title, w] of Object.entries(contract.widgets)) {
-    widgets[title] = { class: w.className, kind: w.kind, abstract: w.abstract, schema: `schema/${w.schema}`, traits: w.traits, messages: w.messages };
+    widgets[title] = { class: w.className, kind: w.kind, abstract: w.abstract, ...(w.quantity ? { quantity: w.quantity } : {}), schema: `schema/${w.schema}`, traits: w.traits, messages: w.messages };
   }
   return `${JSON.stringify(
     {
