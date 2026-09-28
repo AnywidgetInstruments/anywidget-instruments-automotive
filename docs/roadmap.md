@@ -15,10 +15,11 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | 4. Dials | `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`; legibility (LEG) waits for the visual angle of open question 3 |
 | 5. Digital displays | `TripComputer`, `Odometer`, `GearIndicator`, with the consumption rules of CAN & CANopen Studio |
 | 6. Cluster and head-up display | `Cluster`, one widget holding the trait dictionaries of the others; HUD mode |
+| 7. Hosts, in part | A page with no kernel and marimo tested end to end; pint quantities; a KaimonSlate.jl example and a Rust web view documented |
 | Cluster example | A marimo WebAssembly example: one `Cluster` of every widget, with its head-up display |
 
-The [requirements status](requirements-status.md) shows 87 of 99 requirements
-implemented, 79 of them tested.
+The [requirements status](requirements-status.md) shows 90 of 99 requirements
+implemented, 80 of them tested.
 
 ## Principles
 
@@ -100,7 +101,7 @@ The first widgets, and the ones that need no dial.
   (HUD).
 * The preview example replaced by the real widgets.
 
-### 7. Hosts
+### 7. Hosts — in part: publishing, and the studio's pages, remain
 
 * Python binding published, with examples in JupyterLab, marimo and in the browser
   (JupyterLite, marimo WebAssembly).

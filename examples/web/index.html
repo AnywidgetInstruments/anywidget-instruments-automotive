@@ -1,0 +1,89 @@
+<!doctype html>
+<!--
+  anywidget-automotives in a web page, with no kernel (HOST-005): the page binds each
+  widget to a plain dictionary of traits built from the class defaults of the trait
+  contract (static/contract.json) and the traits it is given, then runs the module's
+  initialize and render — what any host does, KaimonSlate.jl's SlateAFM or a Rust
+  application's web view included.
+
+  From the repository root, after `npm run build`:
+      python -m http.server 8000
+  then open http://localhost:8000/examples/web/  and, in the console:
+      awa.set("speed", { value: 120 })
+      awa.set("cluster", { hud: true })
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>anywidget-automotives without a kernel</title>
+    <link rel="stylesheet" href="../../src/anywidget_automotives/static/index.css" />
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 16px; background: #fff; color: #1f2937; }
+      @media (prefers-color-scheme: dark) { body { background: #111827; color: #e5e7eb; } }
+      main { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+    </style>
+  </head>
+  <body>
+    <h1>No kernel</h1>
+    <p>The widgets below are bound to plain trait dictionaries. Set traits from the console with <code>awa.set(id, traits)</code>.</p>
+    <main id="widgets"></main>
+    <script type="module">
+      const base = new URL("../../src/anywidget_automotives/static/", import.meta.url);
+      const contract = await (await fetch(new URL("contract.json", base))).json();
+      const { default: afm } = await import(new URL("index.js", base));
+
+      /** The AFM model over a dictionary of traits: set fires change events. */
+      function hostModel(traits) {
+        const handlers = {};
+        const fire = (ev, ...a) => (handlers[ev] || []).slice().forEach((h) => h(...a));
+        return {
+          traits,
+          get: (k) => traits[k],
+          set(k, v) {
+            if (JSON.stringify(traits[k]) === JSON.stringify(v)) return;
+            traits[k] = v;
+            fire(`change:${k}`);
+          },
+          save_changes: () => {},
+          on: (ev, cb) => (handlers[ev] ||= []).push(cb),
+          off: (ev, cb) => (handlers[ev] = (handlers[ev] || []).filter((h) => h !== cb)),
+          send: () => {},
+        };
+      }
+
+      const classDefaults = (name) => Object.fromEntries(Object.entries(contract.widgets[name].traits).map(([k, s]) => [k, s.default]));
+      const models = {};
+
+      /** Show a widget of class `name` under `id`, with the given traits. */
+      function show(id, name, traits = {}) {
+        const model = hostModel({ ...classDefaults(name), ...traits });
+        const el = document.createElement("div");
+        el.id = id;
+        document.getElementById("widgets").appendChild(el);
+        afm.initialize({ model });
+        afm.render({ model, el });
+        models[id] = model;
+      }
+
+      /** Set some traits of a widget: it redraws, the others are kept. */
+      function set(id, traits) {
+        for (const [k, v] of Object.entries(traits)) models[id].set(k, v);
+      }
+
+      // `window.awa` is what a host drives: a Rust web view calls it with JSON
+      window.awa = { show, set, models, contract };
+
+      show("speed", "Speedometer", { value: 87.3, limit: 90 });
+      show("lamps", "TellTaleCluster", { value: [{ function: "engine", state: "on" }, { function: "low_beam", state: "on" }, { function: "turn_left", state: "off" }] });
+      show("cluster", "Cluster", {
+        label: "Cluster",
+        value: [
+          { _kind: "awa-tachometer", value: 2400, redline: 6000 },
+          { _kind: "awa-speedometer", value: 64, hud: true },
+          { _kind: "awa-gearindicator", value: "4", hud: true },
+        ],
+      });
+      document.body.dataset.ready = "true";
+    </script>
+  </body>
+</html>

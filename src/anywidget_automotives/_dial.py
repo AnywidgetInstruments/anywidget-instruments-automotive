@@ -15,7 +15,8 @@ import traitlets as t
 from anywidget_instruments._base import float_serializers, size_trait
 
 from ._base import AutomotiveWidget
-from ._contract import UNIT_SYSTEMS, units_of
+from ._contract import UNIT_SYSTEMS, unit_table, units_of
+from ._quantities import is_quantity, magnitude_in
 
 _ZONE_KEYS = {"from", "to", "kind"}
 _ZONE_KINDS = ("danger", "warning", "cold")
@@ -58,8 +59,27 @@ class QuantityWidget(AutomotiveWidget):
     input_unit = t.Unicode("").tag(sync=True)
     unit_system = t.Enum(UNIT_SYSTEMS, default_value="metric").tag(sync=True)
 
-    def __init__(self, value: float | None = None, **kwargs: Any) -> None:
-        super().__init__(value=value, **kwargs)
+    #: Traits given in ``input_unit``: they accept a quantity of a unit library (UNIT-018).
+    _in_input_unit = frozenset(
+        {"value", "min", "max", "limit", "redline", "shift_light", "cold", "hot", "trip", "reserve"}
+    )
+
+    def __init__(self, value: Any = None, **kwargs: Any) -> None:
+        unit = kwargs.get("input_unit", "")
+        kwargs = {k: self._number(k, v, unit) for k, v in kwargs.items()}
+        super().__init__(value=self._number("value", value, unit), **kwargs)
+
+    def _number(self, name: str, value: Any, input_unit: str) -> Any:
+        """A quantity as a number in ``input_unit`` (or the metric unit), anything else as is."""
+        if name not in self._in_input_unit or not is_quantity(value):
+            return value
+        unit = input_unit or unit_table()[self._quantity]["units"][0]
+        return magnitude_in(value, unit, f"{type(self).__name__}.{name}")
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if is_quantity(value):
+            value = self._number(name, value, getattr(self, "input_unit", ""))
+        super().__setattr__(name, value)
 
     @t.validate("min", "max")
     def _validate_range(self, proposal: Any) -> float:

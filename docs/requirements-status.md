@@ -18,13 +18,13 @@ listed as partial and not counted.
 | Legibility (LEG) | 5 | 0 | 0 |
 | Distraction (DIS) | 4 | 4 | 3 |
 | Head-up display (HUD) | 6 | 6 | 6 |
-| Units (UNIT) | 14 | 13 | 13 |
+| Units (UNIT) | 14 | 14 | 14 |
 | Robustness (ROB) | 3 | 3 | 3 |
 | Accessibility (A11Y) | 2 | 2 | 2 |
 | Documentation (DOC) | 5 | 5 | 0 |
 | Quality and verification (QA) | 3 | 2 | 2 |
-| Host independence (HOST) | 6 | 4 | 4 |
-| **Total** | **99** | **87** | **79** |
+| Host independence (HOST) | 6 | 6 | 4 |
+| **Total** | **99** | **90** | **80** |
 
 ## Implemented
 
@@ -60,6 +60,9 @@ listed as partial and not counted.
 | UNIT-016 | No mpg for a zero consumption, per hour below 5 km/h | `units.test.ts`, `digital.test.ts` |
 | QA-002 | Every tell-tale function against its colour, in every theme | `telltale.test.ts` |
 | QA-003 | SPD-001 at every boundary of resolutions 1, 0.5, 2 and 0.1, and of mph converted from km/h | `dials.test.ts` |
+| UNIT-018 | pint quantities for the value and limits of a `QuantityWidget`; DynamicQuantities.jl in the Julia example | `tests/test_quantities.py` |
+| HOST-005 | [Hosts](hosts.md): Python, Julia (KaimonSlate.jl), a page with no kernel | `e2e/web.spec.js`, `e2e/marimo.spec.js` |
+| HOST-006 | [Hosts](hosts.md): a Rust web view | — |
 | HOST-001 .. HOST-004 | Schemas, `static/contract.json`, `tests/parity/`, invalid state | `test_contract.py`, `units.test.ts`, `telltale.test.ts` |
 
 ## Partial
@@ -69,8 +72,7 @@ listed as partial and not counted.
 | GEN-008 | Styles are scoped (tested); the kernel liveness of anywidget-instruments keeps its registry of heartbeats on `globalThis`. |
 | LEG-001 | Waits for the visual angle of ISO 15008 (open question 3). |
 | LEG-002, LEG-003 | Contrast of the tell-tale colours tested; the light and dark themes are those of anywidget-instruments. |
-| GEN-009 | Built on anywidget-instruments, which renders in those hosts; no end-to-end test of this library in them yet. |
-| HOST-005 | Python and a page with no kernel are shown; Julia (KaimonSlate.jl) is not yet. |
+| GEN-009 | Tested in marimo (`e2e/marimo.spec.js`); JupyterLab, Notebook 7, VS Code, Colab and KaimonSlate.jl are the hosts of anywidget-instruments, not yet tested with this library. |
 | QA-001 | Most requirements marked M have a test; see the table above. |
 
 ## Order of work

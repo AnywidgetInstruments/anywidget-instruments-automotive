@@ -21,6 +21,7 @@ nav:
   - Safety notice: safety.md
   - Standards and references: standards.md
   - Guides:
+      - Hosts: hosts.md
       - Head-up display mode: hud.md
       - Use with CAN & CANopen Studio: integration.md
   - Specification: specification.md

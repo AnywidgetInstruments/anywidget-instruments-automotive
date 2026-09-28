@@ -11,7 +11,8 @@
     "typecheck": "node js/scripts/gen-contract.mjs && tsc -p .",
     "pretest": "node js/scripts/gen-contract.mjs",
     "test": "vitest run",
-    "lint": "eslint js",
+    "lint": "eslint js e2e",
+    "test:e2e": "playwright test",
     "check:reproducible": "node js/scripts/check-reproducible.mjs",
     "images": "node js/scripts/docs-images.mjs"
   },

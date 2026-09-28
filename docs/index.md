@@ -63,6 +63,7 @@ aa.Cluster([speed, rpm, engine])
 ```
 
 * [Widget catalog](widgets.md) — every widget, and the convention it follows
+* [Hosts](hosts.md) — Python, a web page, Julia (KaimonSlate.jl), Rust
 * [Development](development.md) — building, testing, the trait contract
 * [Head-up display mode](hud.md) — mirrored, black, one colour
 * [Use with CAN & CANopen Studio](integration.md) — live data from an OBD-II adapter
