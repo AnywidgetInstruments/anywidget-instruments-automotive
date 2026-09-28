@@ -10,8 +10,7 @@ gear = aa.GearIndicator(4, hud=True)          # shown in the head-up display
 cluster = aa.Cluster([speed, rpm, gear], hud=True, brightness=0.6)
 ```
 
-![A cluster in head-up display mode, as drawn on the screen](img/cluster-hud-light.png#only-light)
-![A cluster in head-up display mode, as drawn on the screen](img/cluster-hud-dark.png#only-dark)
+[![A cluster in head-up display mode, as drawn on the screen](img/cluster-hud-light.png#only-light)![A cluster in head-up display mode, as drawn on the screen](img/cluster-hud-dark.png#only-dark)](../marimo/cluster_preview/ "Open it in marimo, in your browser")
 
 *As drawn on the screen: mirrored, so that its reflection reads the right way round.*
 

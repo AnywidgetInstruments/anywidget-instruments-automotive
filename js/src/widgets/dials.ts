@@ -3,7 +3,7 @@ import { setAttr, svg } from "anywidget-instruments/js/src/core/dom.js";
 import type { AnyModel } from "anywidget-instruments/js/src/core/model.js";
 import { polar } from "anywidget-instruments/js/src/core/scale.js";
 import { convert } from "../core/units.js";
-import type { FuelGaugeTraits, SpeedometerTraits, TachometerTraits, TemperatureGaugeTraits } from "../generated/contract.js";
+import type { FuelGaugeTraits, PowerMeterTraits, SpeedometerTraits, StateOfChargeGaugeTraits, TachometerTraits, TemperatureGaugeTraits } from "../generated/contract.js";
 import { DialView, dialTellTale, SMALL, type Zone } from "./dial.js";
 
 const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
@@ -150,5 +150,59 @@ export class TemperatureGaugeView extends DialView<TemperatureGaugeTraits> {
     const hot = num(this.get("hot"));
     // DIAL-108: the temperature tell-tale lights red in the hot zone
     this.lamp.classList.toggle("awa-lit", hot !== null && Number.isFinite(v) && v >= hot);
+  }
+}
+
+export class StateOfChargeGaugeView extends DialView<StateOfChargeGaugeTraits> {
+  readonly lowLamp: SVGElement;
+  readonly plug: SVGElement;
+
+  constructor(model: AnyModel<StateOfChargeGaugeTraits>, el: HTMLElement) {
+    super(model, el, ["low", "charging"], SMALL);
+    const { cx, cy } = this.g;
+    this.lowLamp = dialTellTale(this.decor, "low_charge", cx - 12, cy - 32, 20);
+    this.plug = dialTellTale(this.decor, "charging", cx + 12, cy - 32, 20);
+  }
+
+  override ownZones(): Zone[] {
+    const min = Number(this.get("min"));
+    const low = Number(this.get("low"));
+    return low > min ? [{ from: min, to: low, kind: "warning" }] : [];
+  }
+
+  override drawDecor(v: number): void {
+    // EV-001: the battery symbol lights amber in the low zone
+    this.lowLamp.classList.toggle("awa-lit", Number.isFinite(v) && v <= Number(this.get("low")));
+    // EV-002: charging, by a symbol and in text
+    const charging = !!this.get("charging");
+    this.plug.classList.toggle("awa-lit", charging);
+    this.plug.style.display = charging ? "" : "none";
+    this.note.textContent = charging ? "CHARGING" : "";
+    this.root.classList.toggle("awa-charging", charging);
+  }
+}
+
+export class PowerMeterView extends DialView<PowerMeterTraits> {
+  readonly state: SVGElement;
+
+  constructor(model: AnyModel<PowerMeterTraits>, el: HTMLElement) {
+    super(model, el, ["ready"]);
+    const { cx, cy } = this.g;
+    this.state = svg("text", { class: "awa-ready", x: cx, y: cy + 26, "text-anchor": "middle" });
+    this.decor.appendChild(this.state);
+  }
+
+  // EV-003: below zero, the regeneration zone
+  override ownZones(): Zone[] {
+    const min = Number(this.get("min"));
+    return min < 0 ? [{ from: min, to: 0, kind: "charge" }] : [];
+  }
+
+  override drawDecor(v: number): void {
+    // EV-004: regenerating, said in text as well as by the needle; EV-005: ready at 0 kW
+    const text = Number.isFinite(v) && v < 0 ? "REGEN" : v === 0 && this.get("ready") ? "READY" : "";
+    this.state.textContent = text;
+    this.state.style.display = text ? "" : "none";
+    this.root.classList.toggle("awa-regen", text === "REGEN");
   }
 }

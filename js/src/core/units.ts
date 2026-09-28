@@ -47,18 +47,23 @@ const LINEAR: Record<string, Linear> = {
   psi: { size: KPA_PER_PSI },
   bar: { size: 100 },
   rpm: { size: 1 },
+  kW: { size: 1 },
+  kWh: { size: 1 },
+  "kWh/100 km": { size: 1 },
   "%": { size: 1 },
 };
 
 /**
- * A fuel economy is either per distance (L/100 km, lower is better) or per
- * volume (mpg, km/L, higher is better). `k` relates a per-volume unit to
- * L/100 km: value = k / (L/100 km).
+ * A fuel or energy economy is either per distance (L/100 km, kWh/100 km: lower
+ * is better) or per quantity used (mpg, km/L, mi/kWh: higher is better). `k`
+ * relates a unit of the second kind to the first: value = k / (per 100 km).
  */
 const PER_VOLUME: Record<string, number> = {
   "km/L": 100,
   "mpg (US)": (100 * L_PER_US_GAL) / KM_PER_MI,
   "mpg (imperial)": (100 * L_PER_IMP_GAL) / KM_PER_MI,
+  "km/kWh": 100,
+  "mi/kWh": 100 / KM_PER_MI,
 };
 
 const QUANTITY_OF: Record<string, Quantity> = Object.fromEntries(

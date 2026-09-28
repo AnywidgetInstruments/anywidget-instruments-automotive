@@ -1,8 +1,8 @@
 # anywidget-automotives
 
 Automotive instruments for computational notebooks: speedometer, tachometer, fuel and
-temperature gauges, tell-tales, a trip computer display, gear and shift indicators, and a
-head-up display mode.
+temperature gauges, tell-tales, a trip computer display, gear and shift indicators, the
+indicators of electric and hybrid drivetrains, and a head-up display mode.
 
 A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
 [anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose front
@@ -14,14 +14,14 @@ host: **Python** (JupyterLab, Jupyter Notebook 7, marimo, VS Code, Google Colab)
 and no network access at runtime.
 
 !!! info "Status: early implementation"
-    Every widget of the [catalog](widgets.md) is written, the `Cluster` and its
-    head-up display mode included, and used from Python. Hosts beyond Python, the
+    Every widget of the [catalog](widgets.md) is written — electric and hybrid
+    drivetrains, the `Cluster` and its head-up display mode included — and used from
+    Python; click a picture to open it in a notebook. Hosts beyond Python, the
     legibility rules and a first release are next: the [roadmap](roadmap.md) orders
     them, and the [requirements status](requirements-status.md) shows where each
     requirement of the [specification](specification.md) stands.
 
-![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)
-![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)
+[![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)](marimo/cluster_preview/ "Open it in marimo, in your browser")
 
 *The [cluster example](examples.md): one `Cluster` of the widgets of
 anywidget-automotives. The figures are simulated.*

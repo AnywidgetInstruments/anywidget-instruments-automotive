@@ -31,8 +31,9 @@ def _(mo):
 
     # Instrument cluster
 
-    Move the sliders to drive, flip the switches to light the tell-tales, and turn on
-    the **head-up display**. Everything runs in your browser.
+    Pick a drivetrain — combustion, hybrid or electric — move the sliders to drive, flip
+    the switches to light the tell-tales, and turn on the **head-up display**. Everything
+    runs in your browser.
 
     > **The widgets of anywidget-automotives**, in one `Cluster`: pick a unit system
     > to see them convert, and turn on the head-up display to see the cluster
@@ -64,22 +65,32 @@ async def _(mo, sys):
 @app.cell(hide_code=True)
 def _(installed):
     assert installed
-    import anywidget_instruments as ai
-
     import anywidget_automotives as aa
 
-    return aa, ai
+    return (aa,)
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    speed = mo.ui.slider(0, 200, value=90, step=1, label="Speed (km/h)")
-    rpm = mo.ui.slider(0, 7000, value=2500, step=50, label="Engine speed (rpm)")
-    fuel = mo.ui.slider(0, 100, value=35, step=1, label="Fuel level (%)")
-    coolant = mo.ui.slider(40, 130, value=90, step=1, label="Coolant (°C)")
+    drivetrain = mo.ui.radio(
+        ["combustion", "hybrid", "electric"], value="combustion", label="Drivetrain", inline=True
+    )
+    speed = mo.ui.slider(0, 200, value=90, step=1, label="Speed (km/h)", show_value=True)
+    rpm = mo.ui.slider(0, 7000, value=2500, step=50, label="Engine speed (rpm)", show_value=True)
+    power = mo.ui.slider(-60, 150, value=18, step=1, label="Electric power (kW)", show_value=True)
+    fuel = mo.ui.slider(0, 100, value=35, step=1, label="Fuel or charge (%)", show_value=True)
+    coolant = mo.ui.slider(40, 130, value=90, step=1, label="Coolant (°C)", show_value=True)
     units = mo.ui.dropdown(["metric", "imperial", "us"], value="metric", label="Unit system")
-    mo.vstack([mo.md("### Drive"), mo.hstack([speed, rpm]), mo.hstack([fuel, coolant]), units])
-    return coolant, fuel, rpm, speed, units
+    mo.vstack(
+        [
+            mo.md("### Drive"),
+            drivetrain,
+            mo.hstack([speed, rpm]),
+            mo.hstack([power, fuel]),
+            mo.hstack([coolant, units]),
+        ]
+    )
+    return coolant, drivetrain, fuel, power, rpm, speed, units
 
 
 @app.cell(hide_code=True)
@@ -99,83 +110,92 @@ def _(mo):
 
 
 @app.cell(hide_code=True)
-def _(fuel, rpm, speed):
-    # A simulated fuel rate, rising with engine speed, and a gear from the speed: enough
-    # to show how the displays read, not a model of any vehicle. The consumption per
-    # 100 km, or per hour below 5 km/h, is computed by the trip computer itself.
-    fuel_rate_lph = 0.6 + rpm.value / 1000 * 1.3 if rpm.value > 0 else 0.0
-    gear = next(
-        (g for g, top in ((1, 20), (2, 40), (3, 60), (4, 80), (5, 110)) if speed.value < top), 6
-    )
-    low_fuel = fuel.value < 12
-    # a 50 L tank, at 6 L/100 km
-    range_km = fuel.value / 100 * 50 / 6 * 100
-    return fuel_rate_lph, gear, low_fuel, range_km
+def _(drivetrain, fuel, power, rpm, speed):
+    # Simulated figures: a fuel rate rising with engine speed, the engine power of a
+    # hybrid from its engine speed, a gear from the speed. Enough to show how the
+    # displays read, not a model of any vehicle. Consumptions are computed by the trip
+    # computer itself.
+    electric = drivetrain.value == "electric"
+    engine_on = not electric and rpm.value > 0
+    fuel_rate_lph = 0.6 + rpm.value / 1000 * 1.3 if engine_on else 0.0
+    engine_kw = max(0.0, (rpm.value - 800) / 100) if engine_on else 0.0
+    tops = ((1, 20), (2, 40), (3, 60), (4, 80), (5, 110))
+    gear = next((g for g, top in tops if speed.value < top), 6) if not electric else "D"
+    low = fuel.value < 12
+    # a 50 L tank at 6 L/100 km, or a 60 kWh battery at 16 kWh/100 km
+    range_km = fuel.value / 100 * (60 / 16 if electric else 50 / 6) * 100
+    wheels_kw = engine_kw + power.value
+    return engine_kw, fuel_rate_lph, gear, low, range_km, wheels_kw
 
 
 @app.cell(hide_code=True)
 def _(
     aa,
     coolant,
+    drivetrain,
+    engine_kw,
     fuel,
     fuel_rate_lph,
     gear,
     high_beam,
     hud,
-    low_fuel,
+    low,
     mil,
-    mo,
     oil,
+    power,
     range_km,
     rpm,
     speed,
     turn,
     units,
+    wheels_kw,
 ):
-    # The page follows the reader's light or dark preference, and the cluster with it.
     def on(lit: bool) -> str:
         return "on" if lit else "off"
 
+    kind = drivetrain.value
+    trip = {"speed": speed.value, "distance": 42.0, "elapsed": 1860, "range": range_km}
+    lamps = [
+        ("oil_pressure", on(oil.value and kind != "electric")),
+        ("coolant_temperature", on(coolant.value >= 115)),
+        ("engine", on(mil.value and kind != "electric")),
+        ("low_charge" if kind == "electric" else "low_fuel", on(low)),
+        ("turn_left", "blinking" if turn.value else "off"),
+        ("high_beam", on(high_beam.value)),
+    ]
+    if kind != "combustion":
+        lamps.append(("ready", "on"))
+    tell_tales = aa.TellTaleCluster(lamps, size=(44, 44), hud=True)
+    # rounded up after conversion, never down; the limit marked on the scale
+    speedometer = aa.Speedometer(float(speed.value), limit=130)
+    gear_indicator = aa.GearIndicator(gear if speed.value > 0 else "N", hud=True)
+    if kind == "electric":
+        widgets = [
+            aa.PowerMeter(float(power.value), ready=True),
+            tell_tales,
+            speedometer,
+            aa.StateOfChargeGauge(float(fuel.value)),
+            aa.TemperatureGauge(float(coolant.value), hot=115),
+            aa.TripComputer({**trip, "power": power.value, "energy_used": 6.9}, energy="electric"),
+            gear_indicator,
+        ]
+    else:
+        widgets = [
+            aa.Tachometer(float(rpm.value), redline=6200, shift_light=5800, ready=kind == "hybrid"),
+            tell_tales,
+            speedometer,
+            aa.FuelGauge(float(fuel.value), reserve=12, filler_side="right"),
+            aa.TemperatureGauge(float(coolant.value), hot=115),
+            aa.TripComputer({**trip, "fuel_rate": fuel_rate_lph, "fuel_used": 2.9}),
+            gear_indicator,
+        ]
+        if kind == "hybrid":
+            flow = {"engine": engine_kw, "battery": power.value, "wheels": wheels_kw}
+            widgets[4] = aa.PowerFlow(flow)
     # One Cluster: dials on the sides, tell-tales between, displays below. Its theme,
     # unit system and head-up display mode apply to every widget it holds; in HUD mode
     # it shows the speed and the widgets marked hud=True, mirrored, on black.
-    aa.Cluster(
-        [
-            aa.Tachometer(float(rpm.value), redline=6200, shift_light=5800),
-            # colour from the function, the lit ones first
-            aa.TellTaleCluster(
-                [
-                    ("oil_pressure", on(oil.value)),
-                    ("coolant_temperature", on(coolant.value >= 115)),
-                    ("engine", on(mil.value)),
-                    ("low_fuel", on(low_fuel)),
-                    ("turn_left", "blinking" if turn.value else "off"),
-                    ("high_beam", on(high_beam.value)),
-                ],
-                size=(44, 44),
-                hud=True,
-            ),
-            # rounded up after conversion, never down; the limit marked on the scale
-            aa.Speedometer(float(speed.value), limit=130),
-            aa.FuelGauge(float(fuel.value), reserve=12, filler_side="right"),
-            aa.TemperatureGauge(float(coolant.value), hot=115),
-            # the trip so far is fixed: the sliders drive the instant figures
-            aa.TripComputer(
-                {
-                    "speed": speed.value,
-                    "fuel_rate": fuel_rate_lph,
-                    "distance": 42.0,
-                    "fuel_used": 2.9,
-                    "elapsed": 1860,
-                    "range": range_km,
-                }
-            ),
-            aa.GearIndicator(gear if speed.value > 0 else "N", hud=True),
-        ],
-        hud=hud.value,
-        unit_system=units.value,
-        theme="system",
-    )
+    aa.Cluster(widgets, hud=hud.value, unit_system=units.value, theme="system")
     return
 
 

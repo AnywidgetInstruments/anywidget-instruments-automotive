@@ -14,12 +14,15 @@ from ._contract import TELLTALE_FUNCTIONS, TELLTALE_STATES, UNIT_SYSTEMS, UNITS
 from ._dial import (
     DialWidget,
     FuelGauge,
+    PowerMeter,
     QuantityWidget,
     Speedometer,
+    StateOfChargeGauge,
     Tachometer,
     TemperatureGauge,
 )
 from ._digital import GEARS, TRIP_FIELDS, GearIndicator, Odometer, TripComputer
+from ._powerflow import PowerFlow
 from ._telltale import TellTale, TellTaleCluster
 
 __all__ = [
@@ -35,8 +38,11 @@ __all__ = [
     "FuelGauge",
     "GearIndicator",
     "Odometer",
+    "PowerFlow",
+    "PowerMeter",
     "QuantityWidget",
     "Speedometer",
+    "StateOfChargeGauge",
     "Tachometer",
     "TellTale",
     "TellTaleCluster",

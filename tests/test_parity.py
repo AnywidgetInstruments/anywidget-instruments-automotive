@@ -71,5 +71,6 @@ TRIPS = _load("trip.json")["cases"]
 
 @pytest.mark.parametrize("case", TRIPS, ids=[c["name"] for c in TRIPS])
 def test_the_binding_passes_a_trip_through_unchanged(case: dict[str, Any]) -> None:
-    w = aa.TripComputer(case["trip"], unit_system=case["unit_system"])
+    energy = case.get("energy", "fuel")
+    w = aa.TripComputer(case["trip"], unit_system=case["unit_system"], energy=energy)
     assert _json(w.get_state()["value"]) == _json(case["trip"])

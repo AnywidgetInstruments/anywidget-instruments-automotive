@@ -40,7 +40,7 @@ def test_the_front_end_receives_a_number() -> None:
 
 
 def test_every_linear_unit_of_the_contract_has_a_pint_name_pint_knows() -> None:
-    economy = {"L/100 km", "mpg (imperial)", "mpg (US)", "km/L"}
+    economy = {"L/100 km", "mpg (imperial)", "mpg (US)", "km/L", "kWh/100 km", "mi/kWh", "km/kWh"}
     assert set(PINT_UNITS) == set(UNITS) - economy
     for name in PINT_UNITS.values():
         u.Unit(name)

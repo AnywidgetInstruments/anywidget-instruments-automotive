@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { readFileSync } from "node:fs";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { AVERAGE_FROM_KM, duration, PER_HOUR_BELOW_KMH, readTrip, tripRows } from "../src/core/trip.js";
+import { AVERAGE_FROM_KM, duration, electricRows, PER_HOUR_BELOW_KMH, readTrip, tripRows } from "../src/core/trip.js";
 import { OdometerView } from "../src/widgets/digital.js";
 import { defaults, frame, mount } from "./helpers.js";
 
@@ -26,6 +26,7 @@ describe("trip computer rules (DIG-002, DIG-003, UNIT-016)", () => {
 
   test.each([
     [{ speed: -1 }],
+    [{ fuel_used: -1 }],
     [{ speed: "fast" }],
     [{ speed: "nan" }],
     [{ odometer: 3 }],
@@ -38,7 +39,8 @@ describe("trip computer rules (DIG-002, DIG-003, UNIT-016)", () => {
   const { cases } = JSON.parse(readFileSync("tests/parity/trip.json", "utf8"));
   for (const c of cases) {
     test(`parity: ${c.name} (HOST-003)`, () => {
-      const rows = Object.fromEntries(tripRows(c.trip, c.unit_system).map((r) => [r.key, [r.text, r.unit]]));
+      const rowsOf = c.energy === "electric" ? electricRows : tripRows;
+      const rows = Object.fromEntries(rowsOf(c.trip, c.unit_system).map((r) => [r.key, [r.text, r.unit]]));
       for (const [key, expected] of Object.entries(c.rows)) {
         if (expected === "absent") expect(rows[key]).toBeUndefined();
         else expect(rows[key], key).toEqual(expected);

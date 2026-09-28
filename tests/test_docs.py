@@ -93,3 +93,15 @@ def test_pages_are_to_be_configured_and_read_while_stationary() -> None:
     assert "configure and read the dashboard while stationary" in (DOCS / "safety.md").read_text(
         "utf-8"
     )
+
+
+def test_every_picture_of_a_widget_opens_a_notebook_that_exists() -> None:
+    """A picture is a link to the marimo notebook of what it shows."""
+    notebooks = {p.stem for p in (ROOT / "lite" / "marimo").glob("*.py")}
+    for page in PAGES:
+        text = page.read_text("utf-8")
+        for target in re.findall(r"\]\((?:\.\./)?marimo/([\w-]+)/", text):
+            assert target in notebooks, (page.name, target)
+        pictures = re.findall(r"!\[[^\]]*\]\(img/([\w-]+)-light\.png#only-light\)", text)
+        linked = re.findall(r"\[!\[[^\]]*\]\(img/([\w-]+)-light\.png#only-light\)", text)
+        assert sorted(pictures) == sorted(linked), page.name

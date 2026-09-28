@@ -144,6 +144,36 @@
       "from": "rpm",
       "to": "rpm",
       "expected": 3000
+    },
+    {
+      "value": 16,
+      "from": "kWh/100 km",
+      "to": "mi/kWh",
+      "expected": 3.883569951483337
+    },
+    {
+      "value": 20,
+      "from": "kWh/100 km",
+      "to": "km/kWh",
+      "expected": 5
+    },
+    {
+      "value": 4,
+      "from": "mi/kWh",
+      "to": "kWh/100 km",
+      "expected": 15.534279805933348
+    },
+    {
+      "value": 0,
+      "from": "kWh/100 km",
+      "to": "mi/kWh",
+      "expected": null
+    },
+    {
+      "value": -35,
+      "from": "kW",
+      "to": "kW",
+      "expected": -35
     }
   ],
   "resolve": [
@@ -271,6 +301,26 @@
         "input_unit": "knots"
       },
       "expected": null
+    },
+    {
+      "quantity": "energy_economy",
+      "traits": {
+        "unit_system": "us"
+      },
+      "expected": {
+        "from": "kWh/100 km",
+        "to": "mi/kWh"
+      }
+    },
+    {
+      "quantity": "power",
+      "traits": {
+        "unit_system": "imperial"
+      },
+      "expected": {
+        "from": "kW",
+        "to": "kW"
+      }
     }
   ],
   "round_up": [

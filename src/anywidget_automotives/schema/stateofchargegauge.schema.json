@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/stateofchargegauge.schema.json",
+  "title": "StateOfChargeGauge",
+  "description": "The charge of the traction battery, 0 to 100 %, with a low zone and a battery symbol lit amber in it, and a charging state (EV-001, EV-002).",
+  "type": "object",
+  "x-awi-class": "StateOfChargeGauge",
+  "x-awa-quantity": "level",
+  "allOf": [
+    {
+      "$ref": "dial.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-stateofchargegauge",
+      "default": "awa-stateofchargegauge",
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "$ref": "units.schema.json#/$defs/level"
+    },
+    "input_unit": {
+      "$ref": "units.schema.json#/$defs/level"
+    },
+    "low": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Upper end of the low zone, in percent.",
+      "default": 15,
+      "x-awi-writer": "host"
+    },
+    "charging": {
+      "type": "boolean",
+      "description": "The battery is charging: a charging symbol and the text CHARGING (EV-002).",
+      "default": false,
+      "x-awi-writer": "host"
+    },
+    "ticks": {
+      "default": 2
+    },
+    "minor_ticks": {
+      "default": 1
+    },
+    "size": {
+      "default": [
+        160,
+        130
+      ]
+    },
+    "label": {
+      "default": "Battery"
+    }
+  }
+}

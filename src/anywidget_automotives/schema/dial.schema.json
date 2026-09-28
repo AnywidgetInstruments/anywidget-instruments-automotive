@@ -30,7 +30,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "description": "{\"from\": number, \"to\": number, \"kind\": \"danger\" | \"warning\" | \"cold\"}, in input_unit",
+        "description": "{\"from\": number, \"to\": number, \"kind\": \"danger\" | \"warning\" | \"cold\" | \"charge\"}, in input_unit",
         "properties": {
           "from": {
             "type": "number"
@@ -42,7 +42,8 @@
             "enum": [
               "danger",
               "warning",
-              "cold"
+              "cold",
+              "charge"
             ]
           }
         },

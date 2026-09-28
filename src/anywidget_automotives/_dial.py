@@ -19,7 +19,7 @@ from ._contract import UNIT_SYSTEMS, unit_table, units_of
 from ._quantities import is_quantity, magnitude_in
 
 _ZONE_KEYS = {"from", "to", "kind"}
-_ZONE_KINDS = ("danger", "warning", "cold")
+_ZONE_KINDS = ("danger", "warning", "cold", "charge")
 
 
 def _zone(z: Any) -> dict[str, Any]:
@@ -97,7 +97,7 @@ class DialWidget(QuantityWidget):
 
     zones
         Coloured arcs, ``{"from", "to", "kind"}`` in ``input_unit``; ``kind`` is
-        ``"danger"``, ``"warning"`` or ``"cold"`` (DIAL-005).
+        ``"danger"``, ``"warning"``, ``"cold"`` or ``"charge"`` (DIAL-005).
     resolution
         Step of the readout, in the displayed unit.
     animate
@@ -218,3 +218,45 @@ class TemperatureGauge(DialWidget):
     hot = _optional(115.0)
     size = size_trait(160, 130)
     _default_size = (160, 130)
+
+
+class StateOfChargeGauge(DialWidget):
+    """The charge of the traction battery, 0 to 100 % (EV-001, EV-002).
+
+    low
+        Upper end of the low zone, in percent; the battery symbol lights amber
+        in it.
+    charging
+        The battery is charging: a charging symbol and the text CHARGING.
+    """
+
+    _kind = t.Unicode("awa-stateofchargegauge").tag(sync=True)
+    _quantity = "level"
+    unit = t.Enum(units_of("level"), default_value="").tag(sync=True)
+    input_unit = t.Enum(units_of("level"), default_value="").tag(sync=True)
+    ticks = t.Int(2, min=1).tag(sync=True)
+    minor_ticks = t.Int(1, min=0).tag(sync=True)
+    label = t.Unicode("Battery").tag(sync=True)
+    low = t.Float(15.0, min=0.0).tag(sync=True)
+    charging = t.Bool(False).tag(sync=True)
+    size = size_trait(160, 130)
+    _default_size = (160, 130)
+
+
+class PowerMeter(DialWidget):
+    """The power of the drivetrain in kW (EV-003 .. EV-005).
+
+    Positive while it drives the wheels, negative while it regenerates: the
+    part of the scale below zero is the regeneration zone, and the meter says
+    REGEN. ``ready``: at 0 kW the meter says READY.
+    """
+
+    _kind = t.Unicode("awa-powermeter").tag(sync=True)
+    _quantity = "power"
+    unit = t.Enum(units_of("power"), default_value="").tag(sync=True)
+    input_unit = t.Enum(units_of("power"), default_value="").tag(sync=True)
+    min = t.Float(-60.0).tag(sync=True)
+    max = t.Float(150.0).tag(sync=True)
+    ticks = t.Int(7, min=1).tag(sync=True)
+    label = t.Unicode("Power").tag(sync=True)
+    ready = t.Bool(False).tag(sync=True)

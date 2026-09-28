@@ -8,6 +8,10 @@ front-end module extending anywidget-instruments, with its common traits (`value
 `visible`, `tooltip`). The examples use the Python host binding; from Julia, Rust or a
 web page, the same widgets take the same traits.
 
+!!! tip "Every picture opens a notebook"
+    Click a picture to open the widgets it shows in a [marimo](https://marimo.io)
+    notebook, in your browser, with controls to drive them — no installation.
+
 All widgets are **indicators**: the value is set by the kernel and only displayed. A
 vehicle display is read, not operated, while driving.
 
@@ -56,8 +60,7 @@ A value above or below the scale stops the needle at its end and lights a marker
 (DIAL-004); no value yet reads *NO VALUE*, with no needle (ROB-002). A value changing
 more than twice a second is held half a second at a time rather than flicker (DIS-002).
 
-![Dials with no value, above the scale and invalid, day theme](img/dial-states-light.png#only-light)
-![Dials with no value, above the scale and invalid, night theme](img/dial-states-dark.png#only-dark)
+[![Dials with no value, above the scale and invalid, day theme](img/dial-states-light.png#only-light)![Dials with no value, above the scale and invalid, night theme](img/dial-states-dark.png#only-dark)](../marimo/dials/ "Open it in marimo, in your browser")
 
 ### `Speedometer` — available
 
@@ -68,8 +71,7 @@ aa.Speedometer(87.3, max=220, limit=90)
 aa.Speedometer(87.3, unit_system="us")          # 55 mph: km/h in, mph shown
 ```
 
-![Speedometers, day theme](img/speedometer-light.png#only-light)
-![Speedometers, night theme](img/speedometer-dark.png#only-dark)
+[![Speedometers, day theme](img/speedometer-light.png#only-light)![Speedometers, night theme](img/speedometer-dark.png#only-dark)](../marimo/dials/ "Open it in marimo, in your browser")
 
 * The unit of the unit system — km/h in `metric`, mph in `imperial` and `us` — or a
   unit of its own (SPD-002).
@@ -92,8 +94,7 @@ Engine speed in rpm, the scale in thousands.
 aa.Tachometer(3200, redline=6000, shift_light=5800)
 ```
 
-![Tachometers, day theme](img/tachometer-light.png#only-light)
-![Tachometers, night theme](img/tachometer-dark.png#only-dark)
+[![Tachometers, day theme](img/tachometer-light.png#only-light)![Tachometers, night theme](img/tachometer-dark.png#only-dark)](../marimo/dials/ "Open it in marimo, in your browser")
 
 * `redline` — the start of the red zone (DIAL-102).
 * `shift_light` — a lamp lit amber at and above this engine speed (DIAL-103).
@@ -117,8 +118,7 @@ aa.FuelGauge(8, filler_side="right")
 aa.TemperatureGauge(118, hot=115)
 ```
 
-![Fuel and temperature gauges, day theme](img/gauges-light.png#only-light)
-![Fuel and temperature gauges, night theme](img/gauges-dark.png#only-dark)
+[![Fuel and temperature gauges, day theme](img/gauges-light.png#only-light)![Fuel and temperature gauges, night theme](img/gauges-dark.png#only-dark)](../marimo/dials/ "Open it in marimo, in your browser")
 
 ## Tell-tales
 
@@ -131,8 +131,7 @@ engine = aa.TellTale("engine", state="on")
 engine.state = "blinking"
 ```
 
-![Tell-tales, day theme](img/telltale-light.png#only-light)
-![Tell-tales, night theme](img/telltale-dark.png#only-dark)
+[![Tell-tales, day theme](img/telltale-light.png#only-light)![Tell-tales, night theme](img/telltale-dark.png#only-dark)](../marimo/telltales/ "Open it in marimo, in your browser")
 
 *Oil pressure, engine, dipped beam and main beam lit; brake unlit; ABS with no state
 yet. Captured from the widgets by `npm run images`, in the day and the night theme.*
@@ -159,8 +158,7 @@ yet. Captured from the widgets by `npm run images`, in the day and the night the
 * The symbols are original drawings modelled on the published meaning of the ISO 2575
   symbols, not the figures of the standard, and may differ from a vehicle's own:
 
-![Every tell-tale symbol, day theme](img/telltale-functions-light.png#only-light)
-![Every tell-tale symbol, night theme](img/telltale-functions-dark.png#only-dark)
+[![Every tell-tale symbol, day theme](img/telltale-functions-light.png#only-light)![Every tell-tale symbol, night theme](img/telltale-functions-dark.png#only-dark)](../marimo/telltales/ "Open it in marimo, in your browser")
 
 ### `TellTaleCluster` — available
 
@@ -174,13 +172,11 @@ row = aa.TellTaleCluster([("turn_left", "off"), ("low_beam", "on"), ("engine", "
 row.set_telltale("turn_left", "blinking")
 ```
 
-![A tell-tale cluster, day theme](img/telltalecluster-light.png#only-light)
-![A tell-tale cluster, night theme](img/telltalecluster-dark.png#only-dark)
+[![A tell-tale cluster, day theme](img/telltalecluster-light.png#only-light)![A tell-tale cluster, night theme](img/telltalecluster-dark.png#only-dark)](../marimo/telltales/ "Open it in marimo, in your browser")
 
 ## Digital displays
 
-![Trip computers, odometer and gear indicators, day theme](img/digital-light.png#only-light)
-![Trip computers, odometer and gear indicators, night theme](img/digital-dark.png#only-dark)
+[![Trip computers, odometer and gear indicators, day theme](img/digital-light.png#only-light)![Trip computers, odometer and gear indicators, night theme](img/digital-dark.png#only-dark)](../marimo/digital/ "Open it in marimo, in your browser")
 
 ### `TripComputer` — available
 
@@ -223,6 +219,67 @@ up or down shift arrow with `suggestion` (DIG-006, DIG-007).
 aa.GearIndicator(3, suggestion="up")
 ```
 
+## Electric and hybrid drivetrains
+
+A vehicle driven by an electric motor, alone or with an engine, is read through the
+charge of its battery, the power it draws or regenerates, and an energy consumption
+(EV-001 .. EV-008). Power is positive when the drivetrain drives the wheels, negative
+when it regenerates.
+
+[![Power meters and battery gauges, day theme](img/electric-light.png#only-light)![Power meters and battery gauges, night theme](img/electric-dark.png#only-dark)](../marimo/electric/ "Open it in marimo, in your browser")
+
+### `PowerMeter` — available
+
+The power of the drivetrain in kW, on a scale extending below zero: the green part is
+regeneration, and the meter says *REGEN* while the power is negative (EV-003, EV-004).
+`ready`: at 0 kW it says *READY*, so that a stopped motor of a vehicle able to move is
+not read as off (EV-005).
+
+```python
+aa.PowerMeter(-23, min=-60, max=150)
+```
+
+### `StateOfChargeGauge` — available
+
+The charge of the traction battery, 0 to 100 %, with a low zone (`low`, 15 % by default)
+where the battery symbol lights amber (EV-001); `charging` shows the charging symbol and
+says *CHARGING* (EV-002).
+
+```python
+aa.StateOfChargeGauge(38, charging=True)
+```
+
+### `PowerFlow` — available
+
+Which of the engine, the battery and the wheels deliver and receive power in a hybrid
+drivetrain, by arrows and in text, with the mode a driver reads: *EV*, *HYBRID*,
+*ENGINE*, *CHARGING*, *REGEN* or *IDLE* (EV-007). `battery` is positive while it
+discharges, negative while it charges; `wheels` negative while braking with
+regeneration.
+
+```python
+aa.PowerFlow({"engine": 38, "battery": 12, "wheels": 50})    # HYBRID
+aa.PowerFlow({"engine": 0, "battery": -21, "wheels": -21})   # REGEN
+```
+
+[![Power flows and an electric trip computer, day theme](img/hybrid-light.png#only-light)![Power flows and an electric trip computer, night theme](img/hybrid-dark.png#only-dark)](../marimo/electric/ "Open it in marimo, in your browser")
+
+### The electric `TripComputer` and tell-tales
+
+`TripComputer(..., energy="electric")` takes `power` (kW) and `energy_used` (kWh)
+instead of the fuel figures and gives the energy consumption in kWh/100 km, or mi/kWh
+in `imperial` and `us`, with the same rules: the power below 5 km/h, no average before
+0.1 km (EV-006). While regenerating it shows the power regenerated, never a negative
+consumption.
+
+```python
+aa.TripComputer({"speed": 96, "power": 15.8, "distance": 62.4, "energy_used": 10.3},
+                energy="electric")
+```
+
+The tell-tales of an electric drivetrain are part of the set (EV-008): `ready` and
+`charging` (green), `low_charge` and `reduced_power` (amber), `ev_fault` (red).
+
 ## Layout
 
 ### `Cluster` — available
@@ -244,8 +301,7 @@ speed.value = 104          # shows in the cluster
 cluster.hud = True         # head-up display mode
 ```
 
-![A cluster, day theme](img/cluster-light.png#only-light)
-![A cluster, night theme](img/cluster-dark.png#only-dark)
+[![A cluster, day theme](img/cluster-light.png#only-light)![A cluster, night theme](img/cluster-dark.png#only-dark)](../marimo/cluster_preview/ "Open it in marimo, in your browser")
 
 * `theme`, `brightness` and `unit_system` apply to every widget it holds; a widget with a
   `unit` of its own keeps it (CLU-002, UNIT-004).

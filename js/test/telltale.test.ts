@@ -20,9 +20,9 @@ afterEach(() => {
 
 /** The colour each function is lit in, from its meaning (TEL-001). */
 const EXPECTED_COLOUR: Record<string, string> = {
-  brake: "red", oil_pressure: "red", coolant_temperature: "red", battery: "red", seat_belt: "red", airbag: "red", door_open: "red",
-  engine: "amber", abs: "amber", low_fuel: "amber", tyre_pressure: "amber", stability_control: "amber", glow_plug: "amber", rear_fog: "amber",
-  turn_left: "green", turn_right: "green", low_beam: "green", position_lamps: "green", front_fog: "green", cruise_control: "green", ready: "green",
+  brake: "red", oil_pressure: "red", coolant_temperature: "red", battery: "red", seat_belt: "red", airbag: "red", door_open: "red", ev_fault: "red",
+  engine: "amber", abs: "amber", low_fuel: "amber", tyre_pressure: "amber", stability_control: "amber", glow_plug: "amber", rear_fog: "amber", low_charge: "amber", reduced_power: "amber",
+  turn_left: "green", turn_right: "green", low_beam: "green", position_lamps: "green", front_fog: "green", cruise_control: "green", charging: "green", ready: "green",
   high_beam: "blue",
 };
 
@@ -55,6 +55,10 @@ describe("functions (TEL-001, TEL-002, QA-002)", () => {
       expect(rules[0]).toContain(`var(--awa-tt-${c})`);
     }
     expect(css).not.toMatch(/awi-theme-(light|dark)[^{]*\{[^}]*--awa-tt-(red|amber|green|blue)/);
+  });
+
+  test("the set includes the functions of an electric drivetrain (EV-008)", () => {
+    for (const f of ["ready", "charging", "low_charge", "reduced_power", "ev_fault"]) expect(Object.keys(FUNCTIONS)).toContain(f);
   });
 
   test("every function has a symbol drawn from its own parts", () => {

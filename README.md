@@ -11,7 +11,8 @@ included, is computed in the front end from its traits, so it behaves alike from
 **Python**, **Julia** (KaimonSlate.jl), **Rust** or any host that sets those traits.
 
 > **Status: early implementation.** Every widget of the catalog is written — tell-tales,
-> dials, digital displays and the `Cluster` with its head-up display mode — and used
+> dials, digital displays, the indicators of electric and hybrid drivetrains, and the
+> `Cluster` with its head-up display mode — and used
 > from Python. Not released yet; see the [roadmap](docs/roadmap.md) and the
 > [requirements status](docs/requirements-status.md).
 

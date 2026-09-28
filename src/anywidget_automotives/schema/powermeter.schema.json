@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://s-celles.github.io/anywidget-automotives/schema/powermeter.schema.json",
+  "title": "PowerMeter",
+  "description": "The power of the drivetrain in kW, positive when it drives, negative when it regenerates; the part of the scale below zero is the regeneration zone (EV-003 .. EV-005).",
+  "type": "object",
+  "x-awi-class": "PowerMeter",
+  "x-awa-quantity": "power",
+  "allOf": [
+    {
+      "$ref": "dial.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-powermeter",
+      "default": "awa-powermeter",
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "$ref": "units.schema.json#/$defs/power"
+    },
+    "input_unit": {
+      "$ref": "units.schema.json#/$defs/power"
+    },
+    "min": {
+      "default": -60
+    },
+    "max": {
+      "default": 150
+    },
+    "ticks": {
+      "default": 7
+    },
+    "ready": {
+      "type": "boolean",
+      "description": "The vehicle can move: at 0 kW the meter says READY (EV-005).",
+      "default": false,
+      "x-awi-writer": "host"
+    },
+    "label": {
+      "default": "Power"
+    }
+  }
+}

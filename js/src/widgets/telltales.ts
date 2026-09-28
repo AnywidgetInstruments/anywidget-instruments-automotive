@@ -69,6 +69,11 @@ export const FUNCTIONS: Record<string, TellTaleFunction> = {
     colour: "red",
     symbol: [path("M8 3h8l1 5v11H7V8z"), path("M7 9l-4 3M17 9l4 3"), path("M9 8h6")],
   },
+  ev_fault: {
+    name: "Electric drive fault",
+    colour: "red",
+    symbol: [path("M3.5 14l2.5-6h12l2.5 6v4h-17z"), circle(7.5, 18, 1.6, { class: "awa-fill" }), circle(16.5, 18, 1.6, { class: "awa-fill" }), path("M12 9.5v3.2"), circle(12, 15, 0.9, { class: "awa-fill" })],
+  },
   engine: {
     name: "Engine",
     colour: "amber",
@@ -104,6 +109,16 @@ export const FUNCTIONS: Record<string, TellTaleFunction> = {
     colour: "amber",
     symbol: [path("M9 5a7 7 0 0 1 0 14z", { class: "awa-fill" }), ...beams(18, 23, [7, 12, 17]), wave(20.5)],
   },
+  low_charge: {
+    name: "Low battery charge",
+    colour: "amber",
+    symbol: [path("M3 7h16v11H3z"), path("M19 10.5h2v4h-2"), filled("M5 9h3.5v7H5z")],
+  },
+  reduced_power: {
+    name: "Reduced power",
+    colour: "amber",
+    symbol: [filled("M4 15a7.5 6.5 0 0 1 15 0z"), circle(20.3, 13.2, 1.7, { class: "awa-fill" }), path("M6.5 15v3.5M16.5 15v3.5M2.5 15h19")],
+  },
   turn_left: {
     name: "Turn left",
     colour: "green",
@@ -133,6 +148,11 @@ export const FUNCTIONS: Record<string, TellTaleFunction> = {
     name: "Cruise control",
     colour: "green",
     symbol: [path("M4.5 17a8 8 0 1 1 15 0"), path("M12 13l4-4"), circle(12, 13, 1.3, { class: "awa-fill" }), path("M3 20h18")],
+  },
+  charging: {
+    name: "Charging",
+    colour: "green",
+    symbol: [path("M9.5 3v4.5M14.5 3v4.5"), path("M7 7.5h10v3.5a5 5 0 0 1-10 0z"), path("M12 16v5")],
   },
   ready: {
     name: "Ready",

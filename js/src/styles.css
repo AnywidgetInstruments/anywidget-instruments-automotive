@@ -69,9 +69,9 @@
   .awa-root.awa-animate .awa-needle { transition: none; }
 }
 .awa-root .awa-readout { fill: var(--awi-fg); font-size: 24px; font-weight: 700; font-family: var(--awi-font, system-ui, sans-serif); font-variant-numeric: tabular-nums; }
-.awa-root.awa-fuelgauge .awa-readout, .awa-root.awa-temperaturegauge .awa-readout { font-size: 16px; }
+.awa-root:is(.awa-fuelgauge, .awa-temperaturegauge, .awa-stateofchargegauge) .awa-readout { font-size: 16px; }
 .awa-root .awa-unit { fill: var(--awi-muted); font-size: 12px; font-family: var(--awi-font, system-ui, sans-serif); }
-.awa-root.awa-fuelgauge .awa-unit, .awa-root.awa-temperaturegauge .awa-unit { display: none; }
+.awa-root:is(.awa-fuelgauge, .awa-temperaturegauge, .awa-stateofchargegauge) .awa-unit { display: none; }
 .awa-root .awa-dial { overflow: visible; }
 .awa-root .awa-note { fill: var(--awi-muted); font-size: 11px; font-family: var(--awi-font, system-ui, sans-serif); }
 .awa-root .awa-oor { fill: var(--awi-alarm-hihi); }
@@ -162,3 +162,21 @@
   --awa-lcd-ink: #b3bac5;
   --awa-lcd-dim: #8a93a3;
 }
+
+/* ---- electric and hybrid drivetrains (EV) --------------------------------- */
+.awa-root { --awa-zone-charge: #22c55e; --awa-flow-on: #22c55e; }
+.awa-root .awa-zone-charge { fill: var(--awa-zone-charge); }
+.awa-root .awa-dial-tt.awa-lit.awa-green { color: var(--awa-tt-green); }
+.awa-root.awa-regen .awa-readout { fill: var(--awa-zone-charge); }
+.awa-root.awa-charging .awa-note { fill: var(--awa-tt-green); font-weight: 700; }
+.awa-root.awa-powerflow .awi-body { height: auto !important; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root .awa-flow { height: auto; }
+.awa-root .awa-flow-node rect { fill: var(--awi-face); stroke: var(--awi-face-stroke); stroke-width: 1.5; }
+.awa-root .awa-flow-node.awa-on rect { stroke: var(--awa-flow-on); stroke-width: 2.5; }
+.awa-root .awa-flow-name { fill: var(--awi-fg); font-size: 12px; font-weight: 700; }
+.awa-root .awa-flow-kw { fill: var(--awi-muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+.awa-root .awa-flow-arrow { stroke: var(--awi-face-stroke); stroke-width: 2; stroke-dasharray: 3 4; opacity: 0.45; fill: none; }
+.awa-root .awa-flow-arrow.awa-on { stroke: var(--awa-flow-on); stroke-width: 4; stroke-dasharray: none; opacity: 1; }
+.awa-root .awa-flow-head { fill: var(--awa-flow-on); }
+.awa-root .awa-flow-mode { font-size: 13px; font-weight: 800; text-align: center; color: var(--awi-fg); }
+.awa-root .awa-flow-text { font-size: 11px; text-align: center; color: var(--awi-muted); min-height: 1.2em; }

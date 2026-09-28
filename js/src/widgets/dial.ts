@@ -12,7 +12,7 @@ import { AutomotiveView } from "../core/view.js";
 import { QUANTITY_OF_KIND } from "../generated/contract.js";
 import { FUNCTIONS } from "./telltales.js";
 
-export type ZoneKind = "danger" | "warning" | "cold";
+export type ZoneKind = "danger" | "warning" | "cold" | "charge";
 export interface Zone {
   from: number;
   to: number;
@@ -37,7 +37,7 @@ export interface Geometry {
 export const ROUND: Geometry = { vb: [200, 200], cx: 100, cy: 100, sweep: 240, face: 97, tick: 90, major: 78, minor: 84, label: 65, needle: 78, readout: 154 };
 export const SMALL: Geometry = { vb: [160, 130], cx: 80, cy: 96, sweep: 100, face: null, tick: 80, major: 70, minor: 74, label: 58, needle: 70, readout: 122 };
 
-const KINDS = new Set(["danger", "warning", "cold"]);
+const KINDS = new Set(["danger", "warning", "cold", "charge"]);
 
 /** Zones as the schema describes them; `undefined` when an item is rejected (HOST-004). */
 export function readZones(raw: unknown): Zone[] | undefined {
@@ -91,7 +91,8 @@ export class DialView<T extends object = Traits> extends AutomotiveView<T> {
     this.under = svg("path", { class: "awa-oor awa-oor-under" });
     this.readout = svgText("", { class: "awa-readout", x: cx, y: geometry.readout, "text-anchor": "middle" });
     this.unitText = svgText("", { class: "awa-unit", x: cx, y: geometry.readout + 15, "text-anchor": "middle" });
-    this.note = svgText("", { class: "awa-note", x: cx, y: cy + 24, "text-anchor": "middle" });
+    // under the hub on a round dial; above it on a small gauge, whose readout is just below
+    this.note = svgText("", { class: "awa-note", x: cx, y: geometry === ROUND ? cy + 24 : cy - 13, "text-anchor": "middle" });
     this.svgEl.append(this.staticLayer, this.decor, this.over, this.under, this.needle, this.readout, this.unitText, this.note);
     this.body.appendChild(this.svgEl);
     this.body.setAttribute("role", "meter");

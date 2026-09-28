@@ -126,6 +126,23 @@ shot("digital", (s) => {
   show(s, "GearIndicator", { value: "D", label: "Automatic" });
 });
 
+shot("electric", (s) => {
+  show(s, "PowerMeter", { value: 42, label: "Power" });
+  show(s, "PowerMeter", { value: -23, label: "Power, regenerating" });
+  show(s, "PowerMeter", { value: 0, ready: true, label: "Power, ready" });
+  show(s, "StateOfChargeGauge", { value: 64 });
+  show(s, "StateOfChargeGauge", { value: 9, label: "Battery, low" });
+  show(s, "StateOfChargeGauge", { value: 38, charging: true, label: "Battery, charging" });
+});
+
+shot("hybrid", (s) => {
+  show(s, "PowerFlow", { value: { engine: 38, battery: 12, wheels: 50 }, label: "Hybrid" });
+  show(s, "PowerFlow", { value: { engine: 0, battery: 18, wheels: 18 }, label: "Electric drive" });
+  show(s, "PowerFlow", { value: { engine: 0, battery: -21, wheels: -21 }, label: "Regeneration" });
+  show(s, "TripComputer", { energy: "electric", label: "Trip, electric", value: { speed: 96, power: 15.8, distance: 62.4, energy_used: 10.3, elapsed: 2710, range: 284 } });
+  show(s, "TellTaleCluster", { label: "Electric drivetrain", value: ["ready", "charging", "low_charge", "reduced_power", "ev_fault"].map((f) => ({ function: f, state: "on" })) });
+});
+
 const panel = [
   { _kind: "awa-tachometer", value: 2600, redline: 6200, shift_light: 5800 },
   { _kind: "awa-telltalecluster", size: [40, 40], value: [

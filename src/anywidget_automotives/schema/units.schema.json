@@ -4,29 +4,235 @@
   "title": "Units",
   "description": "Unit names the front end accepts, by quantity, and the unit each unit system assigns to a quantity (UNIT-001, UNIT-002, UNIT-017). A unit name is also the text shown next to a value, so a gallon is always named imperial or US (UNIT-005). The first unit of each quantity is its metric unit, the default of input_unit (UNIT-010).",
   "x-awa-units": {
-    "speed": { "units": ["km/h", "mph"], "systems": { "metric": "km/h", "imperial": "mph", "us": "mph" } },
-    "distance": { "units": ["km", "mi"], "systems": { "metric": "km", "imperial": "mi", "us": "mi" } },
-    "volume": { "units": ["L", "imperial gal", "US gal"], "systems": { "metric": "L", "imperial": "imperial gal", "us": "US gal" } },
-    "fuel_economy": { "units": ["L/100 km", "mpg (imperial)", "mpg (US)", "km/L"], "systems": { "metric": "L/100 km", "imperial": "mpg (imperial)", "us": "mpg (US)" } },
-    "fuel_rate": { "units": ["L/h", "imperial gal/h", "US gal/h"], "systems": { "metric": "L/h", "imperial": "imperial gal/h", "us": "US gal/h" } },
-    "temperature": { "units": ["°C", "°F"], "systems": { "metric": "°C", "imperial": "°C", "us": "°F" } },
-    "pressure": { "units": ["kPa", "psi", "bar"], "systems": { "metric": "kPa", "imperial": "psi", "us": "psi" } },
-    "engine_speed": { "units": ["rpm"], "systems": { "metric": "rpm", "imperial": "rpm", "us": "rpm" } },
-    "level": { "units": ["%"], "systems": { "metric": "%", "imperial": "%", "us": "%" } }
+    "speed": {
+      "units": [
+        "km/h",
+        "mph"
+      ],
+      "systems": {
+        "metric": "km/h",
+        "imperial": "mph",
+        "us": "mph"
+      }
+    },
+    "distance": {
+      "units": [
+        "km",
+        "mi"
+      ],
+      "systems": {
+        "metric": "km",
+        "imperial": "mi",
+        "us": "mi"
+      }
+    },
+    "volume": {
+      "units": [
+        "L",
+        "imperial gal",
+        "US gal"
+      ],
+      "systems": {
+        "metric": "L",
+        "imperial": "imperial gal",
+        "us": "US gal"
+      }
+    },
+    "fuel_economy": {
+      "units": [
+        "L/100 km",
+        "mpg (imperial)",
+        "mpg (US)",
+        "km/L"
+      ],
+      "systems": {
+        "metric": "L/100 km",
+        "imperial": "mpg (imperial)",
+        "us": "mpg (US)"
+      }
+    },
+    "fuel_rate": {
+      "units": [
+        "L/h",
+        "imperial gal/h",
+        "US gal/h"
+      ],
+      "systems": {
+        "metric": "L/h",
+        "imperial": "imperial gal/h",
+        "us": "US gal/h"
+      }
+    },
+    "temperature": {
+      "units": [
+        "°C",
+        "°F"
+      ],
+      "systems": {
+        "metric": "°C",
+        "imperial": "°C",
+        "us": "°F"
+      }
+    },
+    "pressure": {
+      "units": [
+        "kPa",
+        "psi",
+        "bar"
+      ],
+      "systems": {
+        "metric": "kPa",
+        "imperial": "psi",
+        "us": "psi"
+      }
+    },
+    "engine_speed": {
+      "units": [
+        "rpm"
+      ],
+      "systems": {
+        "metric": "rpm",
+        "imperial": "rpm",
+        "us": "rpm"
+      }
+    },
+    "level": {
+      "units": [
+        "%"
+      ],
+      "systems": {
+        "metric": "%",
+        "imperial": "%",
+        "us": "%"
+      }
+    },
+    "power": {
+      "units": [
+        "kW"
+      ],
+      "systems": {
+        "metric": "kW",
+        "imperial": "kW",
+        "us": "kW"
+      }
+    },
+    "energy": {
+      "units": [
+        "kWh"
+      ],
+      "systems": {
+        "metric": "kWh",
+        "imperial": "kWh",
+        "us": "kWh"
+      }
+    },
+    "energy_economy": {
+      "units": [
+        "kWh/100 km",
+        "mi/kWh",
+        "km/kWh"
+      ],
+      "systems": {
+        "metric": "kWh/100 km",
+        "imperial": "mi/kWh",
+        "us": "mi/kWh"
+      }
+    }
   },
   "$defs": {
     "unitSystem": {
-      "enum": ["metric", "imperial", "us"],
+      "enum": [
+        "metric",
+        "imperial",
+        "us"
+      ],
       "description": "Unit system: the unit of each quantity, from the table of the specification (UNIT-001, UNIT-002)."
     },
-    "speed": { "enum": ["", "km/h", "mph"] },
-    "distance": { "enum": ["", "km", "mi"] },
-    "volume": { "enum": ["", "L", "imperial gal", "US gal"] },
-    "fuel_economy": { "enum": ["", "L/100 km", "mpg (imperial)", "mpg (US)", "km/L"] },
-    "fuel_rate": { "enum": ["", "L/h", "imperial gal/h", "US gal/h"] },
-    "temperature": { "enum": ["", "°C", "°F"] },
-    "pressure": { "enum": ["", "kPa", "psi", "bar"] },
-    "engine_speed": { "enum": ["", "rpm"] },
-    "level": { "enum": ["", "%"] }
+    "speed": {
+      "enum": [
+        "",
+        "km/h",
+        "mph"
+      ]
+    },
+    "distance": {
+      "enum": [
+        "",
+        "km",
+        "mi"
+      ]
+    },
+    "volume": {
+      "enum": [
+        "",
+        "L",
+        "imperial gal",
+        "US gal"
+      ]
+    },
+    "fuel_economy": {
+      "enum": [
+        "",
+        "L/100 km",
+        "mpg (imperial)",
+        "mpg (US)",
+        "km/L"
+      ]
+    },
+    "fuel_rate": {
+      "enum": [
+        "",
+        "L/h",
+        "imperial gal/h",
+        "US gal/h"
+      ]
+    },
+    "temperature": {
+      "enum": [
+        "",
+        "°C",
+        "°F"
+      ]
+    },
+    "pressure": {
+      "enum": [
+        "",
+        "kPa",
+        "psi",
+        "bar"
+      ]
+    },
+    "engine_speed": {
+      "enum": [
+        "",
+        "rpm"
+      ]
+    },
+    "level": {
+      "enum": [
+        "",
+        "%"
+      ]
+    },
+    "power": {
+      "enum": [
+        "",
+        "kW"
+      ]
+    },
+    "energy": {
+      "enum": [
+        "",
+        "kWh"
+      ]
+    },
+    "energy_economy": {
+      "enum": [
+        "",
+        "kWh/100 km",
+        "mi/kWh",
+        "km/kWh"
+      ]
+    }
   }
 }

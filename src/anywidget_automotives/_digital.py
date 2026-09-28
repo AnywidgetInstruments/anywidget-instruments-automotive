@@ -18,7 +18,18 @@ from ._contract import UNIT_SYSTEMS, units_of
 from ._dial import QuantityWidget
 
 #: Raw figures of a trip, in metric units.
-TRIP_FIELDS = ("speed", "fuel_rate", "distance", "fuel_used", "elapsed", "range")
+TRIP_FIELDS = (
+    "speed",
+    "fuel_rate",
+    "distance",
+    "fuel_used",
+    "elapsed",
+    "range",
+    "power",
+    "energy_used",
+)
+#: Figures of an electric drivetrain, negative when it regenerates.
+_SIGNED = frozenset({"power", "energy_used"})
 
 
 def _trip(value: Any) -> dict[str, float | None] | None:
@@ -34,8 +45,10 @@ def _trip(value: Any) -> dict[str, float | None] | None:
         if v is None:
             out[k] = None
             continue
-        if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) or v < 0:
-            raise t.TraitError(f"the {k!r} of a trip is a finite number ≥ 0 or None, got {v!r}")
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v):
+            raise t.TraitError(f"the {k!r} of a trip is a finite number or None, got {v!r}")
+        if v < 0 and k not in _SIGNED:
+            raise t.TraitError(f"the {k!r} of a trip is ≥ 0, got {v!r}")
         out[k] = float(v)
     return out
 
@@ -49,12 +62,19 @@ class TripComputer(AutomotiveWidget):
     consumption per hour below 5 km/h, no average before 0.1 km, and every
     figure in the units of ``unit_system``; ``unit`` sets the unit of the
     consumptions (``"L/100 km"``, ``"mpg (US)"``, ``"mpg (imperial)"``, ``"km/L"``).
+
+    With ``energy="electric"`` it shows the energy consumption from ``power``
+    (kW, negative when regenerating) and ``energy_used`` (kWh) instead, in
+    kWh/100 km or mi/kWh (EV-006).
     """
 
     _kind = t.Unicode("awa-tripcomputer").tag(sync=True)
     value = t.Dict(default_value=None, allow_none=True).tag(sync=True)
-    unit = t.Enum(units_of("fuel_economy"), default_value="").tag(sync=True)
+    unit = t.Enum(
+        (*units_of("fuel_economy"), *units_of("energy_economy")[1:]), default_value=""
+    ).tag(sync=True)
     unit_system = t.Enum(UNIT_SYSTEMS, default_value="metric").tag(sync=True)
+    energy = t.Enum(["fuel", "electric"], default_value="fuel").tag(sync=True)
     label = t.Unicode("Trip").tag(sync=True)
     size = size_trait(240, 170)
     _default_size = (240, 170)

@@ -32,7 +32,10 @@
               "awa-telltalecluster",
               "awa-tripcomputer",
               "awa-odometer",
-              "awa-gearindicator"
+              "awa-gearindicator",
+              "awa-stateofchargegauge",
+              "awa-powermeter",
+              "awa-powerflow"
             ]
           }
         },

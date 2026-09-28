@@ -2,8 +2,8 @@
 import { html, setAttr, setText, svg } from "anywidget-instruments/js/src/core/dom.js";
 import type { AnyModel } from "anywidget-instruments/js/src/core/model.js";
 import { STATE_TEXT } from "../core/state.js";
-import { readTrip, type Row, tripRows } from "../core/trip.js";
-import { convert, type UnitSystem, resolveUnits } from "../core/units.js";
+import { electricRows, readTrip, type Row, tripRows } from "../core/trip.js";
+import { convert, quantityOf, type UnitSystem, resolveUnits } from "../core/units.js";
 import { AutomotiveView } from "../core/view.js";
 import type { GearIndicatorTraits, OdometerTraits, TripComputerTraits } from "../generated/contract.js";
 
@@ -22,7 +22,7 @@ export class TripComputerView extends AutomotiveView<TripComputerTraits> {
   private _rows = new Map<string, { dt: HTMLElement; num: HTMLElement; unit: HTMLElement; why: HTMLElement }>();
 
   constructor(model: AnyModel<TripComputerTraits>, el: HTMLElement) {
-    super(model, el, ["unit", "unit_system"]);
+    super(model, el, ["unit", "unit_system", "energy"]);
     this.state = stateLine(this.body);
     this.list = html("dl", { cls: "awa-trip" });
     this.body.appendChild(this.list);
@@ -30,13 +30,22 @@ export class TripComputerView extends AutomotiveView<TripComputerTraits> {
     this.body.setAttribute("aria-labelledby", this.labelEl.id);
   }
 
+  private electric(): boolean {
+    return this.get("energy") === "electric";
+  }
+
   protected override extraInvalid(): string[] {
-    return readTrip(this._held.raw) === undefined ? ["value"] : [];
+    const out = readTrip(this._held.raw) === undefined ? ["value"] : [];
+    // a consumption unit of the other energy is not a unit of this display
+    const unit = String(this.get("unit") || "");
+    if (unit && (quantityOf(unit) === "energy_economy") !== this.electric()) out.push("unit");
+    return out;
   }
 
   rows(): Row[] {
     const trip = readTrip(this._held.raw) ?? {};
-    return tripRows(trip, system(this.get("unit_system")), String(this.get("unit") || ""));
+    const unit = String(this.get("unit") || "");
+    return (this.electric() ? electricRows : tripRows)(trip, system(this.get("unit_system")), unit);
   }
 
   override renderCommon(): void {

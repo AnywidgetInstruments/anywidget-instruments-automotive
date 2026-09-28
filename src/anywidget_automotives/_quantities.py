@@ -14,7 +14,7 @@ from typing import Any
 import traitlets as t
 
 #: pint's name for each unit of the trait contract that converts linearly.
-#: A fuel economy is reciprocal between its units: give it as a number.
+#: A fuel or energy economy is reciprocal between its units: give it as a number.
 PINT_UNITS: dict[str, str] = {
     "km/h": "kilometer / hour",
     "mph": "mile / hour",
@@ -33,6 +33,8 @@ PINT_UNITS: dict[str, str] = {
     "bar": "bar",
     "rpm": "revolution / minute",
     "%": "percent",
+    "kW": "kilowatt",
+    "kWh": "kilowatt_hour",
 }
 
 

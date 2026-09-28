@@ -1,6 +1,6 @@
 # Requirements status
 
-Where the [specification](specification.md) 0.6 stands in the code. A requirement is
+Where the [specification](specification.md) 0.8 stands in the code. A requirement is
 **implemented** when the code does what it says for every widget it concerns, and
 **tested** when an automated test fails without it. A requirement met by one layer but
 not yet by the widgets that need it — the units of a cluster before the `Cluster` exists — is
@@ -24,7 +24,8 @@ listed as partial and not counted.
 | Documentation (DOC) | 5 | 5 | 4 |
 | Quality and verification (QA) | 3 | 2 | 2 |
 | Host independence (HOST) | 6 | 6 | 4 |
-| **Total** | **99** | **93** | **90** |
+| Electric and hybrid drivetrains (EV) | 8 | 8 | 8 |
+| **Total** | **107** | **101** | **98** |
 
 ## Implemented
 
@@ -64,6 +65,7 @@ listed as partial and not counted.
 | UNIT-018 | pint quantities for the value and limits of a `QuantityWidget`; DynamicQuantities.jl in the Julia example | `tests/test_quantities.py` |
 | HOST-005 | [Hosts](hosts.md): Python, Julia (KaimonSlate.jl), a page with no kernel | `e2e/web.spec.js`, `e2e/marimo.spec.js` |
 | HOST-006 | [Hosts](hosts.md): a Rust web view | — |
+| EV-001 .. EV-008 | `StateOfChargeGauge`, `PowerMeter`, `PowerFlow`, the electric `TripComputer`, five tell-tales | `js/test/electric.test.ts`, `tests/test_electric.py`, `tests/parity/trip.json`, `e2e/marimo.spec.js` |
 | HOST-001 .. HOST-004 | Schemas, `static/contract.json`, `tests/parity/`, invalid state | `test_contract.py`, `units.test.ts`, `telltale.test.ts` |
 
 ## Partial

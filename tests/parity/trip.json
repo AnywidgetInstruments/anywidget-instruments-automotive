@@ -1,5 +1,5 @@
 {
-  "description": "Rows of a trip computer (DIG-001 .. DIG-004, UNIT-016): the raw figures of a trip (metric) and a unit system in, the text of each row out. null: no figure, a dash with its reason.",
+  "description": "Rows of a trip computer (DIG-001 .. DIG-004, UNIT-016): the raw figures of a trip (metric), its energy (fuel by default) and a unit system in, the text of each row out. null: no figure, a dash with its reason.",
   "cases": [
     {
       "name": "cruising",
@@ -198,6 +198,112 @@
       "unit_system": "metric",
       "rows": {
         "range": "absent"
+      }
+    },
+    {
+      "name": "electric cruising",
+      "energy": "electric",
+      "trip": {
+        "speed": 100,
+        "power": 16,
+        "distance": 50,
+        "energy_used": 8,
+        "elapsed": 1800
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "16.0",
+          "kWh/100 km"
+        ],
+        "average": [
+          "16.0",
+          "kWh/100 km"
+        ],
+        "energy_used": [
+          "8.00",
+          "kWh"
+        ],
+        "distance": [
+          "50.0",
+          "km"
+        ],
+        "fuel_used": "absent"
+      }
+    },
+    {
+      "name": "electric in the us: mi/kWh",
+      "energy": "electric",
+      "trip": {
+        "speed": 100,
+        "power": 16
+      },
+      "unit_system": "us",
+      "rows": {
+        "instant": [
+          "3.9",
+          "mi/kWh"
+        ]
+      }
+    },
+    {
+      "name": "electric, regenerating: the power, never a negative consumption",
+      "energy": "electric",
+      "trip": {
+        "speed": 60,
+        "power": -12.5
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "12.5",
+          "kW"
+        ]
+      }
+    },
+    {
+      "name": "electric below 5 km/h: the power",
+      "energy": "electric",
+      "trip": {
+        "speed": 3,
+        "power": 1.2
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "1.2",
+          "kW"
+        ]
+      }
+    },
+    {
+      "name": "electric, no average under 0.1 km",
+      "energy": "electric",
+      "trip": {
+        "distance": 0.05,
+        "energy_used": 0.01
+      },
+      "unit_system": "metric",
+      "rows": {
+        "average": [
+          null,
+          "kWh/100 km"
+        ]
+      }
+    },
+    {
+      "name": "electric, net regeneration has no average",
+      "energy": "electric",
+      "trip": {
+        "distance": 2,
+        "energy_used": -0.1
+      },
+      "unit_system": "metric",
+      "rows": {
+        "average": [
+          null,
+          "kWh/100 km"
+        ]
       }
     }
   ]
