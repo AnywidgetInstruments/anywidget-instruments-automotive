@@ -1,5 +1,7 @@
-# Captures the documentation images of docs/img/ in the light and the dark colour
-# scheme, from the running notebook, so that the site shows what the reader will get.
+# Captures the pictures of the cluster example, docs/img/cluster-preview-*.png, in the
+# light and the dark colour scheme, from the running notebook, so that the site shows
+# what the reader will get. The pictures of each widget come from the widgets themselves
+# (`npm run images`, DOC-005).
 #
 #   pip install marimo playwright anywidget-instruments
 #   playwright install chromium

@@ -6,8 +6,9 @@
 //   npm run build && npm run images
 //
 // Each <section data-shot="name"> of js/preview/index.html gives
-// docs/img/<name>-light.png and docs/img/<name>-dark.png.
-import { createReadStream, existsSync, statSync } from "node:fs";
+// docs/img/<name>-light.png and docs/img/<name>-dark.png; a name may hold a
+// folder, as widgets/<page> for the page of each widget.
+import { createReadStream, existsSync, mkdirSync, statSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -47,6 +48,7 @@ try {
     for (const section of await page.locator("section[data-shot]").all()) {
       const name = await section.getAttribute("data-shot");
       const out = join("docs", "img", `${name}-${theme}.png`);
+      mkdirSync(join(ROOT, out, ".."), { recursive: true });
       await section.screenshot({ path: join(ROOT, out) });
       console.log(out);
     }

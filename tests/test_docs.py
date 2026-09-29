@@ -17,7 +17,7 @@ ROOT = pathlib.Path(__file__).parent.parent
 DOCS = ROOT / "docs"
 WIDGETS = (DOCS / "widgets.md").read_text("utf-8")
 BLOCK = re.compile(r"(<!-- illustration: not run -->\n)?```python\n(.*?)```", re.S)
-PAGES = sorted([*DOCS.glob("*.md"), ROOT / "README.md"])
+PAGES = sorted([*DOCS.glob("*.md"), *DOCS.glob("widgets/*.md"), ROOT / "README.md"])
 WIDGET_CLASSES = sorted(
     n
     for n, c in vars(aa).items()
@@ -37,13 +37,22 @@ def test_the_python_examples_of_the_documentation_run(page: pathlib.Path) -> Non
         exec(compile(code, str(page), "exec"), namespace)
 
 
-def test_the_catalog_shows_every_widget_with_an_example() -> None:
-    """DOC-001."""
+def _page_of(name: str) -> pathlib.Path:
+    """docs/widgets/<page>.md of a widget class: TellTaleCluster -> tell-tale-cluster."""
+    slug = re.sub(r"(?<!^)(?=[A-Z])", "-", name).lower()
+    return DOCS / "widgets" / f"{slug}.md"
+
+
+def test_the_catalog_gives_every_widget_a_page_with_its_picture_and_an_example() -> None:
+    """DOC-001, DOC-005."""
     for name in WIDGET_CLASSES:
-        section = WIDGETS.split(f"### `{name}`", 1)
-        assert len(section) == 2, name
-        body = section[1].split("\n### ", 1)[0]
-        assert f"aa.{name}(" in body or f"aa.{name}(" in WIDGETS, name
+        page = _page_of(name)
+        assert page.exists(), name
+        text = page.read_text("utf-8")
+        assert f"aa.{name}(" in text, name
+        assert re.search(r"img/[\w/-]+-light\.png#only-light", text), name
+        assert f"widgets/{page.stem}.md" in WIDGETS, name
+        assert "Planned" not in text and "not written yet" not in text, name
 
 
 def test_every_widget_is_pictured_in_the_day_and_the_night_theme() -> None:
@@ -83,7 +92,7 @@ def test_no_page_claims_conformity_with_a_standard() -> None:
 
 def test_the_speedometer_is_said_not_to_replace_the_vehicle_s() -> None:
     """SPD-004."""
-    body = WIDGETS.split("### `Speedometer`", 1)[1].split("\n### ", 1)[0]
+    body = _page_of("Speedometer").read_text("utf-8")
     assert "cannot guarantee the accuracy of the value it is given" in body
     assert "does not replace the vehicle's own" in body
 
@@ -98,10 +107,14 @@ def test_pages_are_to_be_configured_and_read_while_stationary() -> None:
 def test_every_picture_of_a_widget_opens_a_notebook_that_exists() -> None:
     """A picture is a link to the marimo notebook of what it shows."""
     notebooks = {p.stem for p in (ROOT / "lite" / "marimo").glob("*.py")}
+    # pictures of this library's widgets; a picture of another project stays a picture
+    ours = re.compile(r"(?:\.\./)?img/((?:widgets/)?[\w-]+)-light\.png#only-light")
     for page in PAGES:
         text = page.read_text("utf-8")
-        for target in re.findall(r"\]\((?:\.\./)?marimo/([\w-]+)/", text):
+        for target in re.findall(r"\]\((?:\.\./)*marimo/([\w-]+)/", text):
             assert target in notebooks, (page.name, target)
-        pictures = re.findall(r"!\[[^\]]*\]\(img/([\w-]+)-light\.png#only-light\)", text)
-        linked = re.findall(r"\[!\[[^\]]*\]\(img/([\w-]+)-light\.png#only-light\)", text)
+        pictures = [
+            p for p in re.findall(r"!\[[^\]]*\]\(" + ours.pattern, text) if "grafana" not in p
+        ]
+        linked = re.findall(r"\[!\[[^\]]*\]\(" + ours.pattern, text)
         assert sorted(pictures) == sorted(linked), page.name

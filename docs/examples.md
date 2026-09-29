@@ -75,4 +75,18 @@ A notebook lighting the tell-tales from Python, in the browser, with no installa
 
 <a class="md-button" href="../lite/lab/index.html?path=telltales.ipynb">▶ Open it in JupyterLite</a>
 
+## In Grafana
+
+[afm-host-panel](https://s-celles.github.io/afm-host-panel/automotives/), a Grafana panel
+plugin that hosts anywidget front-end modules, shows the earlier cluster preview, drawn with anywidget-instruments widgets, on a
+dashboard: the dials follow Grafana queries and the tell-tale a dashboard variable. The
+panels are named after the widgets of this library (`anywidget_automotives:Speedometer`,
+...), so that a dashboard keeps working when the panel hosts them.
+
+![Instrument cluster preview in Grafana, light theme](img/grafana-cluster-light.png#only-light)
+![Instrument cluster preview in Grafana, dark theme](img/grafana-cluster-dark.png#only-dark)
+
+*The cluster preview on the demonstration dashboard of afm-host-panel, fed by simulated
+data.*
+
 See the [safety notice](safety.md): these are not vehicle instruments.

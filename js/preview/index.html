@@ -160,6 +160,26 @@ const panel = [
 shot("cluster", (s) => show(s, "Cluster", { value: panel }));
 shot("cluster-hud", (s) => show(s, "Cluster", { value: panel, hud: true, label: "Head-up display" }));
 
+// one picture per widget, for its page of the catalog (docs/widgets/<page>.md)
+const single = {
+  speedometer: ["Speedometer", { value: 87.3, limit: 90 }],
+  tachometer: ["Tachometer", { value: 3200, redline: 6000, shift_light: 5800 }],
+  "fuel-gauge": ["FuelGauge", { value: 38, filler_side: "right" }],
+  "temperature-gauge": ["TemperatureGauge", { value: 90 }],
+  "tell-tale": ["TellTale", { function: "engine", value: "on" }],
+  "tell-tale-cluster": ["TellTaleCluster", { size: [44, 44], value: [
+    { function: "turn_left", state: "off" }, { function: "turn_right", state: "off" }, { function: "low_beam", state: "on" },
+    { function: "engine", state: "on" }, { function: "seat_belt", state: "on" }, { function: "abs", state: "off" },
+  ] }],
+  "trip-computer": ["TripComputer", { value: { speed: 92, fuel_rate: 5.6, distance: 48.3, fuel_used: 3.1, elapsed: 1930, range: 420 } }],
+  odometer: ["Odometer", { value: 48213.7, trip: 48.36 }],
+  "gear-indicator": ["GearIndicator", { value: "3", suggestion: "up" }],
+  "power-meter": ["PowerMeter", { value: -23 }],
+  "state-of-charge-gauge": ["StateOfChargeGauge", { value: 38, charging: true }],
+  "power-flow": ["PowerFlow", { value: { engine: 38, battery: 12, wheels: 50 } }],
+};
+for (const [page, [title, traits]] of Object.entries(single)) shot(`widgets/${page}`, (s) => show(s, title, traits));
+
 document.body.dataset.ready = "true";
 </script>
 </body>
