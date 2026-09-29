@@ -24,3 +24,4 @@ lite/marimo/public/
 
 # Playwright
 blob-report/
+e2e/notebooks/.ipynb_checkpoints/

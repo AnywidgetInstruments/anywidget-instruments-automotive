@@ -59,6 +59,9 @@ class Cluster(AutomotiveWidget):
     children
         The widgets of the panel: widgets of this library, or trait dictionaries
         with a ``_kind``. A change to a widget shows in the panel.
+
+    Traits
+    ------
     hud
         Head-up display mode: mirrored, on black, figures in one colour with the
         tell-tale colours kept, no animation, and only the speedometer and the

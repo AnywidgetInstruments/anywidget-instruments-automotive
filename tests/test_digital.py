@@ -56,3 +56,10 @@ def test_a_shift_suggestion_is_up_or_down() -> None:
     assert aa.GearIndicator(3, suggestion="up").suggestion == "up"
     with pytest.raises(t.TraitError):
         aa.GearIndicator(3, suggestion="left")
+
+
+@pytest.mark.parametrize("traits", [{"value": -1.0}, {"value": 5.0, "trip": -0.1}])
+def test_an_odometer_refuses_a_negative_distance(traits: dict[str, float]) -> None:
+    """The front end shows it invalid (HOST-004); the binding refuses it."""
+    with pytest.raises(t.TraitError):
+        aa.Odometer(**traits)

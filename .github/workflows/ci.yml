@@ -70,7 +70,7 @@ jobs:
       - run: pytest
 
   # The built front end in a real browser: a page with no kernel, and marimo with
-  # a Python kernel (HOST-005, GEN-009).
+  # a Python kernel in marimo, JupyterLab and Notebook 7 (HOST-005, GEN-009).
   e2e:
     needs: frontend
     runs-on: ubuntu-latest
@@ -89,7 +89,7 @@ jobs:
           cache: npm
       - name: anywidget-instruments, at the commit the front end is built against
         run: pip install "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments@$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")"
-      - run: pip install -e . marimo
+      - run: pip install -e . marimo jupyterlab notebook
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test --reporter=list

@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software in teaching material, a publication or a
+  product, please cite it as below.
+title: "anywidget-automotives: automotive instruments for computational notebooks"
+type: software
+authors:
+  - family-names: Celles
+    given-names: Sébastien
+    orcid: "https://orcid.org/0000-0001-9987-4338"
+    affiliation: "Université de Poitiers"
+version: 0.1.0.dev0
+license: BSD-3-Clause
+repository-code: "https://github.com/s-celles/anywidget-automotives"
+url: "https://s-celles.github.io/anywidget-automotives/"
+abstract: >-
+  Speedometer, tachometer, fuel and temperature gauges, tell-tales, trip
+  computer, odometer, gear indicator, the indicators of electric and hybrid
+  drivetrains, and an instrument cluster with a head-up display mode, for
+  Jupyter, marimo and other anywidget hosts. A TypeScript front end computes
+  everything a widget shows, units included, from traits described by a
+  contract in JSON Schema, so that Python, Julia, Rust and web pages show
+  the same figures. For visualization, teaching and simulation: not vehicle
+  instruments.
+keywords:
+  - automotive
+  - instrument cluster
+  - dashboard
+  - widgets
+  - notebooks
+  - anywidget
+  - electric vehicles
+  - education
+references:
+  - type: software
+    title: "anywidget-instruments: instrumentation widgets for computational notebooks"
+    authors:
+      - family-names: Celles
+        given-names: Sébastien
+    repository-code: "https://github.com/s-celles/anywidget-instruments"

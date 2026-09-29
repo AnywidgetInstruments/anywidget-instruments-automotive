@@ -110,7 +110,13 @@ export class OdometerView extends AutomotiveView<OdometerTraits> {
   }
 
   protected override extraInvalid(): string[] {
-    return this.units() ? [] : ["unit"];
+    const out = this.units() ? [] : ["unit"];
+    // a distance covered is never negative: shown invalid, not as zeros (HOST-004)
+    const total = this.shown();
+    if (typeof total === "number" && total < 0) out.push("value");
+    const trip = this.get("trip");
+    if (typeof trip === "number" && trip < 0) out.push("trip");
+    return out;
   }
 
   /** Drums of a counter: whole units of the distance covered, never rounded up. */
@@ -148,7 +154,8 @@ export class OdometerView extends AutomotiveView<OdometerTraits> {
     this.trip.parentElement!.hidden = tripRaw === null;
     this.fill(this.trip, Number.isFinite(trip) ? OdometerView.drums(trip, 4, 1) : "-----", 1);
     const text = Number.isFinite(total) ? `${Math.floor(total + 1e-9)} ${to}` : STATE_TEXT[state === "ok" ? "missing" : (state as "invalid")].toLowerCase();
-    setAttr(this.body, "aria-label", `${String(this.get("label") || "Odometer")}: ${text}${Number.isFinite(trip) ? `, trip ${(Math.floor(trip * 10 + 1e-9) / 10).toFixed(1)} ${to}` : ""}`);
+    const tripText = Number.isFinite(trip) ? `, trip ${(Math.floor(trip * 10 + 1e-9) / 10).toFixed(1)} ${to}` : "";
+    setAttr(this.body, "aria-label", `${String(this.get("label") || "Odometer")}: ${text}${tripText}${state === "stale" ? ", stale" : ""}`);
   }
 }
 
@@ -156,13 +163,16 @@ export class GearIndicatorView extends AutomotiveView<GearIndicatorTraits> {
   readonly gear: HTMLElement;
   readonly arrow: SVGElement;
   readonly arrowPath: SVGElement;
+  readonly state: HTMLElement;
 
   constructor(model: AnyModel<GearIndicatorTraits>, el: HTMLElement) {
     super(model, el, ["suggestion"]);
     this.arrowPath = svg("path", { class: "awa-shift-arrow" });
     this.arrow = svg("svg", { class: "awa-gear-arrow", viewBox: "0 0 20 20", "aria-hidden": "true" }, [this.arrowPath]);
     this.gear = html("div", { cls: "awa-gear" });
-    this.body.append(this.arrow as unknown as HTMLElement, this.gear);
+    this.state = html("div", { cls: "awa-state-line awa-gear-state", attrs: { role: "status" } });
+    // the arrow beside the gear, the state line below them
+    this.body.append(html("div", { cls: "awa-gear-row" }, [this.arrow as unknown as HTMLElement, this.gear]), this.state);
     this.body.setAttribute("role", "img");
   }
 
@@ -170,10 +180,14 @@ export class GearIndicatorView extends AutomotiveView<GearIndicatorTraits> {
     super.renderCommon();
     const state = this.valueState();
     const g = this.shown();
-    const gear = state === "ok" || state === "stale" ? String(g) : state === "missing" ? "–" : "?";
-    setText(this.gear, gear);
+    const known = state === "ok" || state === "stale";
+    setText(this.gear, known ? String(g) : "–");
+    // the state in text, as every widget gives it, never only a dash (ROB-001, ROB-002, HOST-004)
+    setText(this.state, state === "ok" ? "" : STATE_TEXT[state]);
+    this.state.hidden = state === "ok";
     this.root.classList.toggle("awa-gear-reverse", g === "R" && state === "ok");
-    const s = this.get("suggestion");
+    // a shift suggestion without a known gear would be a guess
+    const s = known ? this.get("suggestion") : "";
     // DIG-007: an arrow up or down, beside the gear
     setAttr(this.arrowPath, "d", s === "up" ? "M10 2L18 12H13V18H7V12H2Z" : s === "down" ? "M10 18L18 8H13V2H7V8H2Z" : null);
     (this.arrow as unknown as HTMLElement).style.visibility = s ? "visible" : "hidden";

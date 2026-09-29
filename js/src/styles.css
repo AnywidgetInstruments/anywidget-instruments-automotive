@@ -56,7 +56,7 @@
 .awa-root .awa-face { fill: var(--awi-face); stroke: var(--awi-face-stroke); stroke-width: 1.5; }
 .awa-root .awa-tick-major { stroke: var(--awi-fg); stroke-width: 2; }
 .awa-root .awa-tick-minor { stroke: var(--awi-muted); stroke-width: 1; }
-.awa-root .awa-tick-label { fill: var(--awi-fg); font-size: 13px; font-weight: 600; font-family: var(--awi-font, system-ui, sans-serif); font-variant-numeric: tabular-nums; }
+.awa-root .awa-tick-label { fill: var(--awi-fg); font-size: 13px; font-weight: 600; font-family: var(--awi-font, system-ui, sans-serif); }
 .awa-root .awa-zone-danger { fill: var(--awa-zone-danger); }
 .awa-root .awa-zone-warning { fill: var(--awa-zone-warning); }
 .awa-root .awa-zone-cold { fill: var(--awa-zone-cold); }
@@ -68,7 +68,7 @@
 @media (prefers-reduced-motion: reduce) {
   .awa-root.awa-animate .awa-needle { transition: none; }
 }
-.awa-root .awa-readout { fill: var(--awi-fg); font-size: 24px; font-weight: 700; font-family: var(--awi-font, system-ui, sans-serif); font-variant-numeric: tabular-nums; }
+.awa-root .awa-readout { fill: var(--awi-fg); font-size: 24px; font-weight: 700; font-family: var(--awi-font, system-ui, sans-serif); }
 .awa-root:is(.awa-fuelgauge, .awa-temperaturegauge, .awa-stateofchargegauge) .awa-readout { font-size: 16px; }
 .awa-root .awa-unit { fill: var(--awi-muted); font-size: 12px; font-family: var(--awi-font, system-ui, sans-serif); }
 .awa-root:is(.awa-fuelgauge, .awa-temperaturegauge, .awa-stateofchargegauge) .awa-unit { display: none; }
@@ -108,7 +108,9 @@
 .awa-root .awa-drums-trip .awa-drum { font-size: 15px; }
 .awa-root .awa-drum-tenth { background: var(--awa-lcd-ink); color: var(--awa-lcd-bg); }
 .awa-root .awa-odo-unit { font-size: 11px; color: var(--awa-lcd-dim); min-width: 2em; }
-.awa-root.awa-gearindicator .awi-body { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.awa-root.awa-gearindicator .awi-body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.awa-root .awa-gear-row { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.awa-root .awa-gear-state { text-align: center; }
 .awa-root .awa-gear { font-size: 56px; font-weight: 800; line-height: 1; min-width: 0.8em; text-align: center; }
 .awa-root.awa-gear-reverse .awa-gear { color: var(--awa-tt-amber); }
 .awa-root .awa-gear-arrow { width: 22px; height: 22px; }
@@ -174,9 +176,13 @@
 .awa-root .awa-flow-node rect { fill: var(--awi-face); stroke: var(--awi-face-stroke); stroke-width: 1.5; }
 .awa-root .awa-flow-node.awa-on rect { stroke: var(--awa-flow-on); stroke-width: 2.5; }
 .awa-root .awa-flow-name { fill: var(--awi-fg); font-size: 12px; font-weight: 700; }
-.awa-root .awa-flow-kw { fill: var(--awi-muted); font-size: 10px; font-variant-numeric: tabular-nums; }
+.awa-root .awa-flow-kw { fill: var(--awi-muted); font-size: 10px; }
 .awa-root .awa-flow-arrow { stroke: var(--awi-face-stroke); stroke-width: 2; stroke-dasharray: 3 4; opacity: 0.45; fill: none; }
 .awa-root .awa-flow-arrow.awa-on { stroke: var(--awa-flow-on); stroke-width: 4; stroke-dasharray: none; opacity: 1; }
 .awa-root .awa-flow-head { fill: var(--awa-flow-on); }
 .awa-root .awa-flow-mode { font-size: 13px; font-weight: 800; text-align: center; color: var(--awi-fg); }
 .awa-root .awa-flow-text { font-size: 11px; text-align: center; color: var(--awi-muted); min-height: 1.2em; }
+
+/* LEG-005: every figure a driver reads has digits of equal width, and a zero with a
+ * slash, so that it is not read as an eight; the typeface is the page's own. */
+.awa-root :is(.awa-readout, .awa-tick-label, .awa-trip, .awa-drum, .awa-gear, .awa-flow-kw, .awa-note) { font-variant-numeric: tabular-nums slashed-zero; }

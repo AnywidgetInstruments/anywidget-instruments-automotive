@@ -124,6 +124,21 @@ describe("Odometer (DIG-005)", () => {
     expect((w.el.querySelector(".awa-odo-trip") as HTMLElement).hidden).toBe(true);
   });
 
+  test("shows a negative distance invalid, not as zeros (HOST-004)", async () => {
+    const w = await odo({ value: -12, trip: 3 });
+    expect(w.total()).toBe("------");
+    expect(w.el.querySelector(".awa-state-line")!.textContent).toBe("INVALID");
+    const t = await odo({ value: 12, trip: -3 });
+    expect(t.el.querySelector(".awa-state-line")!.textContent).toBe("INVALID");
+  });
+
+  test("says STALE when its value is older than max_age (ROB-001)", async () => {
+    const w = await odo({ value: 100, trip: 1.5, max_age: 1 });
+    await vi.advanceTimersByTimeAsync(1500);
+    expect(w.total()).toBe("000100");
+    expect(w.body.getAttribute("aria-label")).toBe("Odometer: 100 km, trip 1.5 km, stale");
+  });
+
   test("shows dashes, not zeros, with no value (ROB-002)", async () => {
     const w = await odo({});
     expect(w.total()).toBe("------");
@@ -151,8 +166,21 @@ describe("GearIndicator (DIG-006, DIG-007)", () => {
     expect((none.el.querySelector(".awa-gear-arrow") as unknown as HTMLElement).style.visibility).toBe("hidden");
   });
 
-  test("an unknown gear is not guessed (HOST-004, ROB-002)", async () => {
-    expect((await gear({ value: "9" })).gear()).toBe("?");
-    expect((await gear({})).gear()).toBe("–");
+  test("an unknown gear is not guessed, and says why in text (HOST-004, ROB-002)", async () => {
+    const bad = await gear({ value: "9", suggestion: "up" });
+    expect(bad.gear()).toBe("–");
+    expect(bad.el.querySelector(".awa-gear-state")!.textContent).toBe("INVALID");
+    const none = await gear({ suggestion: "up" });
+    expect(none.el.querySelector(".awa-gear-state")!.textContent).toBe("NO VALUE");
+    // no shift suggestion without a known gear
+    expect((none.el.querySelector(".awa-gear-arrow") as unknown as HTMLElement).style.visibility).toBe("hidden");
+  });
+
+  test("a gear not updated within max_age says STALE (ROB-001)", async () => {
+    const g = await gear({ value: "4", max_age: 1 });
+    await vi.advanceTimersByTimeAsync(1500);
+    expect(g.gear()).toBe("4");
+    expect(g.el.querySelector(".awa-gear-state")!.textContent).toBe("STALE");
+    expect(g.body.getAttribute("aria-label")).toBe("Gear: gear 4, stale");
   });
 });

@@ -112,6 +112,14 @@ class Odometer(QuantityWidget):
     size = size_trait(200, 90)
     _default_size = (200, 90)
 
+    @t.validate("value", "trip")
+    def _validate_distance(self, proposal: Any) -> float | None:
+        # a distance covered is never negative; the front end shows it invalid too
+        v = proposal["value"]
+        if v is not None and v < 0:
+            raise t.TraitError(f"Odometer.{proposal['trait'].name} is a distance ≥ 0, got {v!r}")
+        return v
+
 
 #: Gears a GearIndicator shows (DIG-006).
 GEARS = ("P", "R", "N", "D", "1", "2", "3", "4", "5", "6", "7", "8")

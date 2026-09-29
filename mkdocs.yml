@@ -43,6 +43,7 @@ nav:
       - Layout:
           - Cluster: widgets/cluster.md
   - Examples: examples.md
+  - API reference: api.md
   - Safety notice: safety.md
   - Standards and references: standards.md
   - Guides:
@@ -53,8 +54,21 @@ nav:
   - Requirements status: requirements-status.md
   - Roadmap: roadmap.md
   - Development: development.md
+  - License and citation: citing.md
 plugins:
   - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: false
+            members_order: source
+            docstring_style: numpy
+            show_root_heading: true
+            show_signature_annotations: true
+            separate_signature: true
+            filters: ["!^_"]
 markdown_extensions:
   - admonition
   - tables

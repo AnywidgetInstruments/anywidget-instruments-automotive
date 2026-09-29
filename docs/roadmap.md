@@ -16,7 +16,8 @@ sequenced by dependency, not dated: each one rests on the ones before it.
 | 5. Digital displays | `TripComputer`, `Odometer`, `GearIndicator`, with the consumption rules of CAN & CANopen Studio |
 | 6. Cluster and head-up display | `Cluster`, one widget holding the trait dictionaries of the others; HUD mode |
 | Electric and hybrid drivetrains | `StateOfChargeGauge`, `PowerMeter`, `PowerFlow`, electric trip computer and tell-tales (specification 0.8) |
-| 7. Hosts, in part | A page with no kernel and marimo tested end to end; pint quantities; a KaimonSlate.jl example and a Rust web view documented |
+| 7. Hosts, in part | JupyterLab, Notebook 7, marimo and a page with no kernel tested end to end; pint quantities; a KaimonSlate.jl example and a Rust web view documented |
+| 8. Version 1.0, prepared | API reference, citation metadata, release workflow; LEG-001 and publishing remain |
 | Examples | marimo WebAssembly notebooks, opened by clicking the pictures of the documentation: a cluster with a combustion, hybrid or electric drivetrain, tell-tales, dials, digital displays, electric and hybrid |
 
 The [requirements status](requirements-status.md) shows 102 of 108 requirements
@@ -52,8 +53,7 @@ released the same way.
   JupyterLite.
 * Documentation images (DOC-005): a day and a night capture of every widget, taken by
   Playwright from the built front end in continuous integration, so the site never shows
-  an older look than the code. They take the place of the preview screenshots as the
-  widgets arrive.
+  an older look than the code; each widget's page opens with its own.
 
 **Decided** (specification 0.6): the dials are modules of their own, deriving from the
 base view of anywidget-instruments and reusing its scale functions; no change upstream
@@ -72,8 +72,9 @@ The layer every widget uses, written once in the front end.
 
 The first widgets, and the ones that need no dial.
 
-* `TellTale` and `TellTaleCluster` (TEL-001 .. TEL-008): colour from function, name as
-  text as well as symbol, blinking at 1 to 2 Hz, priority order.
+* `TellTale` and `TellTaleCluster` (TEL-001 .. TEL-009): colour from function, name as
+  text as well as symbol, blinking at 1 to 2 Hz, priority order, the direction
+  indicators side by side.
 * Symbols drawn originally from the published meaning of each ISO 2575 symbol, never
   copied from the standard (open question 2).
 * The test that checks every tell-tale colour (QA-002).
@@ -85,8 +86,9 @@ The first widgets, and the ones that need no dial.
 * `Tachometer` with red zone, shift light and the ready state of hybrid and electric
   drivetrains.
 * `FuelGauge` and `TemperatureGauge` (DIAL).
-* Legibility from the viewing distance, day and night themes (LEG), once the visual angle
-  is set from ISO 15008 (open question 3).
+* Day and night themes, contrast, digits of equal width and a slashed zero (LEG-002 ..
+  LEG-005); the size of characters from the viewing distance (LEG-001) once the visual
+  angle is set from ISO 15008 (open question 3).
 
 ### 5. Digital displays — done
 
@@ -100,23 +102,28 @@ The first widgets, and the ones that need no dial.
   switch (CLU, DIS).
 * Head-up display mode: mirrored, black, one colour, tell-tale colours kept, brightness
   (HUD).
-* The preview example replaced by the real widgets.
+* The cluster example made of the real widgets, with a combustion, hybrid or electric
+  drivetrain.
 
 ### 7. Hosts — in part: publishing, and the studio's pages, remain
 
-* Python binding published, with examples in JupyterLab, marimo and in the browser
-  (JupyterLite, marimo WebAssembly).
+* Python binding with examples in marimo and in the browser (JupyterLite, marimo
+  WebAssembly), tested end to end in JupyterLab, Notebook 7, marimo and a page with no
+  kernel; published with the release (milestone 8).
 * Julia: a KaimonSlate.jl example, with quantities from DynamicQuantities.jl passed as a
   number and a unit name (HOST-005, UNIT-018).
 * Rust: a documented embedding through a web view, traits as JSON (HOST-006).
 * CAN & CANopen Studio: dashboard pages using `anywidget_automotives:` widgets, fed by
   its trip computer.
 
-### 8. Version 1.0
+### 8. Version 1.0 — prepared
 
-* Every requirement marked **M** implemented and covered by a test (QA-001).
-* Accessibility (A11Y) and documentation (DOC) complete.
-* A release on the package index, with citation metadata.
+* Every requirement marked **M** implemented and covered by a test (QA-001): all but
+  LEG-001, checked by `tests/test_traceability.py`.
+* Accessibility (A11Y) and documentation (DOC) complete, with an API reference.
+* A release on the package index, with citation metadata: `CITATION.cff` and the release
+  workflow are ready; publishing waits for anywidget-instruments on the package index,
+  on which this package depends.
 
 ## After 1.0
 

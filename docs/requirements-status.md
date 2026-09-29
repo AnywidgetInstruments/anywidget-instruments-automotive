@@ -74,9 +74,9 @@ listed as partial and not counted.
 |---|---|
 | GEN-008 | Styles are scoped (tested); the kernel liveness of anywidget-instruments keeps its registry of heartbeats on `globalThis`. |
 | LEG-001 | Waits for the visual angle of ISO 15008 (open question 3). |
-| GEN-009 | Tested in marimo (`e2e/marimo.spec.js`); JupyterLab, Notebook 7, VS Code, Colab and KaimonSlate.jl are the hosts of anywidget-instruments, not yet tested with this library. |
+| GEN-009 | Tested in JupyterLab, Notebook 7 and marimo (`e2e/jupyter.spec.js`, `e2e/marimo.spec.js`); VS Code, Colab and KaimonSlate.jl, hosts of anywidget-instruments, are not tested with this library. |
 | QA-001 | `tests/test_traceability.py` checks that a test cites every requirement marked M; LEG-001 is the one left. |
-| LEG-005 | The typeface is the system's; no check that it tells 0 from 8 and 1 from 7. |
+| LEG-005 | Every figure asks for a slashed zero and digits of equal width (tested); whether 1 and 7 differ, and whether the zero is slashed, depends on the typeface of the page, which the library does not ship (GEN-005, no font from the network). |
 
 ## Order of work
 

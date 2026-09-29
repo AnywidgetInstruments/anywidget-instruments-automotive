@@ -13,7 +13,8 @@ type, bounds and default, and every unit name.
 | marimo in the browser (WebAssembly) | built with the site | the [cluster example](examples.md) |
 | JupyterLite (Pyodide) | built with the site | the tell-tale notebook of the [examples](examples.md) |
 | A web page with no kernel | tested | `e2e/web.spec.js`: `examples/web/index.html` |
-| JupyterLab, Notebook 7, VS Code, Colab | expected | the anywidget hosts of anywidget-instruments; no test of this library in them yet (GEN-009) |
+| JupyterLab 4, Notebook 7 | tested | `e2e/jupyter.spec.js`: widgets rendered and driven from the kernel |
+| VS Code, Google Colab | expected | anywidget hosts, as for anywidget-instruments; not covered by automated tests (GEN-009) |
 | Julia, [KaimonSlate.jl](https://github.com/kahliburke/KaimonSlate.jl) | expected, front end only | `examples/kaimonslate/drive.jl`, not run in CI |
 | Rust, through a web view | documented | below; not built in CI |
 

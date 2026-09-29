@@ -73,3 +73,9 @@ test("the displays of every theme read at 4.5:1", () => {
   expect(contrast(t["--awa-lcd-ink"], t["--awa-lcd-bg"])).toBeGreaterThanOrEqual(4.5);
   expect(contrast(t["--awa-lcd-dim"], t["--awa-lcd-bg"])).toBeGreaterThanOrEqual(4.5);
 });
+
+test("every figure a driver reads asks for digits of equal width and a slashed zero (LEG-005)", () => {
+  const rule = css.slice(css.indexOf(".awa-root :is(.awa-readout"));
+  expect(rule.slice(0, rule.indexOf("}"))).toMatch(/font-variant-numeric: tabular-nums slashed-zero/);
+  for (const cls of ["awa-readout", "awa-tick-label", "awa-trip", "awa-drum", "awa-gear"]) expect(rule.slice(0, rule.indexOf("{"))).toContain(`.${cls}`);
+});

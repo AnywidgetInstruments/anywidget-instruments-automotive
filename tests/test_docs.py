@@ -118,3 +118,9 @@ def test_every_picture_of_a_widget_opens_a_notebook_that_exists() -> None:
         ]
         linked = re.findall(r"\[!\[[^\]]*\]\(" + ours.pattern, text)
         assert sorted(pictures) == sorted(linked), page.name
+
+
+def test_the_api_reference_documents_every_widget() -> None:
+    api = (DOCS / "api.md").read_text("utf-8")
+    for name in [*WIDGET_CLASSES, "AutomotiveWidget", "QuantityWidget", "DialWidget"]:
+        assert f"::: anywidget_automotives.{name}\n" in api, name

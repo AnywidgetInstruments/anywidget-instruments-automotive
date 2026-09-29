@@ -17,7 +17,7 @@ front end of which it builds.
 | `src/anywidget_automotives/` | The Python host binding: classes that set traits, nothing more |
 | `tests/` | pytest tests, and `parity/*.json`, the cases shared by the front end and every host binding |
 | `js/preview/index.html` | Every widget from plain trait dictionaries; the source of the documentation images |
-| `e2e/` | Playwright tests: `examples/web/` with no kernel, the marimo cluster example with a Python kernel |
+| `e2e/` | Playwright tests: `examples/web/` with no kernel; the marimo cluster example, and `e2e/notebooks/` in JupyterLab and Notebook 7, with a Python kernel |
 | `examples/` | A web page with no kernel, a KaimonSlate.jl notebook |
 
 ## Commands
@@ -31,7 +31,8 @@ npm run lint && npm run typecheck   # eslint, tsc
 npm test                            # vitest
 npm run check:reproducible          # byte-identical rebuild
 npm run images                      # docs/img/<widget>-light.png and -dark.png (DOC-005)
-npm run test:e2e                    # Playwright: a page with no kernel, marimo (needs pip install -e . marimo)
+npm run test:e2e                    # Playwright: a page with no kernel, marimo, JupyterLab, Notebook 7
+                                    # (needs pip install -e . marimo jupyterlab notebook)
 
 pip install "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments@<commit of package.json>"
 pip install -e ".[dev]"

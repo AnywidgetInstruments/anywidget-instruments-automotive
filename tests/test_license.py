@@ -19,3 +19,14 @@ def test_the_package_metadata_names_the_same_license() -> None:
     pyproject = (ROOT / "pyproject.toml").read_text("utf-8")
     assert re.search(r'^license = "BSD-3-Clause"$', pyproject, re.M)
     assert '"license": "BSD-3-Clause"' in (ROOT / "package.json").read_text("utf-8")
+
+
+def test_the_citation_names_the_version_and_the_license_of_the_package() -> None:
+    cff = (ROOT / "CITATION.cff").read_text("utf-8")
+    version = re.search(
+        r'^version = "([^"]+)"$', (ROOT / "pyproject.toml").read_text("utf-8"), re.M
+    )
+    assert version is not None
+    assert f"version: {version.group(1)}\n" in cff
+    assert "license: BSD-3-Clause\n" in cff
+    assert version.group(1) in (ROOT / "docs" / "citing.md").read_text("utf-8")
