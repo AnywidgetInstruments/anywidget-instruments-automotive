@@ -18,6 +18,14 @@ included, is computed in the front end from its traits, so it behaves alike from
 > replace a vehicle's speedometer, odometer or tell-tales. Read the
 > [safety notice](docs/safety.md).
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/cluster-preview-dark.png">
+  <img alt="Instrument cluster preview" src="docs/img/cluster-preview-light.png">
+</picture>
+
+*The cluster preview, composed from anywidget-instruments widgets; the automotive widgets
+are not written yet.*
+
 ## Why a separate library
 
 anywidget-instruments follows industrial conventions (ISA-101, IEC 60073). A vehicle
@@ -50,6 +58,14 @@ Published at <https://s-celles.github.io/anywidget-automotives/>; `mkdocs serve`
 * [Specification](docs/specification.md) — requirements in EARS notation
 * [Requirements status](docs/requirements-status.md)
 * [Roadmap](docs/roadmap.md) — milestones in order of dependency
+
+## Related projects
+
+| Project | What it is | Documentation |
+|---|---|---|
+| [anywidget-instruments](https://github.com/s-celles/anywidget-instruments) | Instrumentation widgets for notebooks: gauges, tanks, LEDs, switches, charts, alarms, SCADA objects | <https://s-celles.github.io/anywidget-instruments/> |
+| [anywidget-automotives](https://github.com/s-celles/anywidget-automotives) | Automotive instruments built on anywidget-instruments (design stage) | <https://s-celles.github.io/anywidget-automotives/> |
+| [afm-host-panel](https://github.com/s-celles/afm-host-panel) | Grafana panel plugin that runs anywidget modules, with both libraries built in | <https://s-celles.github.io/afm-host-panel/> |
 
 ## License
 

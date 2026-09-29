@@ -32,3 +32,17 @@ marimo edit lite/marimo/cluster_preview.py
 ```
 
 See the [safety notice](safety.md): these are not vehicle instruments.
+
+## In Grafana
+
+[afm-host-panel](https://s-celles.github.io/afm-host-panel/automotives/), a Grafana panel
+plugin that hosts anywidget front-end modules, shows the same preview on a dashboard: the
+dials follow Grafana queries and the tell-tale a dashboard variable. The panels are named
+after the planned widgets (`anywidget_automotives:Speedometer`, ...), so a dashboard keeps
+working when the real widgets replace the preview.
+
+![Instrument cluster preview in Grafana, light theme](img/grafana-cluster-light.png#only-light)
+![Instrument cluster preview in Grafana, dark theme](img/grafana-cluster-dark.png#only-dark)
+
+*The cluster preview on the demonstration dashboard of afm-host-panel, fed by simulated
+data.*
