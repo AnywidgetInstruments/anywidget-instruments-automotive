@@ -22,7 +22,22 @@ theme:
       toggle: { icon: material/weather-night, name: Switch to system preference }
 nav:
   - Home: index.md
-  - Widget catalog: widgets.md
+  - Widget catalog:
+      - Overview: widgets.md
+      - Dials:
+          - Speedometer: widgets/speedometer.md
+          - Tachometer: widgets/tachometer.md
+          - FuelGauge: widgets/fuel-gauge.md
+          - TemperatureGauge: widgets/temperature-gauge.md
+      - Tell-tales:
+          - TellTale: widgets/tell-tale.md
+          - TellTaleCluster: widgets/tell-tale-cluster.md
+      - Digital displays:
+          - TripComputer: widgets/trip-computer.md
+          - Odometer: widgets/odometer.md
+          - GearIndicator: widgets/gear-indicator.md
+      - Layout:
+          - Cluster: widgets/cluster.md
   - Examples: examples.md
   - Safety notice: safety.md
   - Standards and references: standards.md
@@ -38,6 +53,7 @@ markdown_extensions:
   - admonition
   - tables
   - attr_list
+  - md_in_html
   - toc: { permalink: true }
   - pymdownx.highlight
   - pymdownx.superfences
