@@ -37,7 +37,7 @@ listed as partial and not counted.
 | GEN-004 | `js/src/core/units.ts`, `state.ts`: conversion, rounding, states in the front end | `js/test/units.test.ts` |
 | GEN-005 | No network access in the front end | `js/test/entry.test.ts` |
 | GEN-006 | `LICENSE`, package metadata | `tests/test_license.py` |
-| GEN-007 | `src/anywidget_automotives/`, depending on anywidget-instruments, CPython 3.10 to 3.13 | `tests/`, CI matrix |
+| GEN-007 | `src/anywidget_instruments_automotive/`, depending on anywidget-instruments, CPython 3.10 to 3.13 | `tests/`, CI matrix |
 | API-001 | The schemas extend the instrument schema of anywidget-instruments | `tests/test_contract.py` |
 | API-002 | `mode` is the constant `"indicator"`; `"control"` is refused (Python) or shown invalid (front end) | `test_contract.py`, `telltale.test.ts` |
 | API-003 | Pointer and key events stop at the widget body | `telltale.test.ts` |

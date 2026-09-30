@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/fuelgauge.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/fuelgauge.schema.json",
   "title": "FuelGauge",
   "description": "Fuel level from empty to full, with a reserve zone and the fuel pump symbol, lit amber in the reserve (DIAL-105, DIAL-106).",
   "type": "object",

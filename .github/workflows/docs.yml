@@ -39,7 +39,7 @@ jobs:
         run: |
           pip install build uv # uv: import analysis of the marimo export
           sha=$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")
-          pip wheel --no-deps -w dist "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments@$sha"
+          pip wheel --no-deps -w dist "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments-industrial@$sha"
           pip install dist/anywidget_instruments-*.whl
           python -m build --wheel -o dist
           pip install -e ".[docs]" jupyter-server jupyterlite-core jupyterlite-pyodide-kernel
@@ -47,21 +47,21 @@ jobs:
         run: |
           python - <<'PY'
           import glob, zipfile
-          names = zipfile.ZipFile(glob.glob("dist/anywidget_automotives-*.whl")[0]).namelist()
+          names = zipfile.ZipFile(glob.glob("dist/anywidget_instruments_automotive-*.whl")[0]).namelist()
           for needed in ("static/index.js", "static/index.css", "static/contract.json", "schema/telltale.schema.json", "schema/units.schema.json"):
-              assert any(n.endswith("anywidget_automotives/" + needed) for n in names), needed
+              assert any(n.endswith("anywidget_instruments_automotive/" + needed) for n in names), needed
           PY
       - name: MkDocs (offline-capable, strict)
         run: mkdocs build --strict -d site
       - name: JupyterLite with both wheels
         working-directory: lite
-        run: jupyter lite build --contents content --piplite-wheels ../dist/anywidget_instruments-*.whl --piplite-wheels ../dist/anywidget_automotives-*.whl --output-dir ../site/lite
+        run: jupyter lite build --contents content --piplite-wheels ../dist/anywidget_instruments-*.whl --piplite-wheels ../dist/anywidget_instruments_automotive-*.whl --output-dir ../site/lite
       - name: marimo WebAssembly exports with both wheels
         run: |
           mkdir -p lite/marimo/public
           cp dist/*.whl lite/marimo/public/
           # anywidget-instruments first: the other depends on it
-          (cd dist && ls anywidget_instruments-*.whl anywidget_automotives-*.whl) > lite/marimo/public/wheels.txt
+          (cd dist && ls anywidget_instruments-*.whl anywidget_instruments_automotive-*.whl) > lite/marimo/public/wheels.txt
           for nb in lite/marimo/*.py; do
             name=$(basename "$nb" .py)
             marimo export html-wasm "$nb" -o "site/marimo/$name" --mode run --show-code

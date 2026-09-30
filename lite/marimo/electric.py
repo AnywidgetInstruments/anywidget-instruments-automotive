@@ -26,7 +26,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md("""
-    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-automotives/widgets/#electric-and-hybrid-drivetrains)
+    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-instruments-automotive/widgets/#electric-and-hybrid-drivetrains)
 
     # Electric and hybrid
 
@@ -36,7 +36,7 @@ def _(mo):
     energy consumption.
 
     > **Not a vehicle instrument.** See the
-    > [safety notice](https://s-celles.github.io/anywidget-automotives/safety/).
+    > [safety notice](https://s-celles.github.io/anywidget-instruments-automotive/safety/).
     """)
     return
 
@@ -60,7 +60,7 @@ async def _(mo, sys):
 @app.cell(hide_code=True)
 def _(installed):
     assert installed
-    import anywidget_automotives as aa
+    import anywidget_instruments_automotive as aa
 
     return (aa,)
 

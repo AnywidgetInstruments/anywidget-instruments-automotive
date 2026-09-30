@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/temperaturegauge.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/temperaturegauge.schema.json",
   "title": "TemperatureGauge",
   "description": "Coolant or oil temperature, with cold and hot zones; the temperature tell-tale is lit red in the hot zone (DIAL-107, DIAL-108).",
   "type": "object",

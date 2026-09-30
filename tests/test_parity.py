@@ -15,7 +15,7 @@ import pytest
 import traitlets as t
 from anywidget_instruments._base import _float_to_json
 
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 PARITY = pathlib.Path(__file__).parent / "parity"
 

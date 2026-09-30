@@ -3,7 +3,7 @@ requires = ["hatchling", "hatch-jupyter-builder>=0.8"]
 build-backend = "hatchling.build"
 
 [project]
-name = "anywidget-automotives"
+name = "anywidget-instruments-automotive"
 version = "0.1.0.dev0"
 description = "Automotive instruments (speedometer, tachometer, gauges, tell-tales, trip computer, cluster, head-up display) for computational notebooks, built on anywidget-instruments."
 readme = "README.md"
@@ -33,27 +33,27 @@ dev = ["pytest>=8", "jsonschema>=4.18", "ruff>=0.6", "mypy>=1.10", "pint>=0.22",
 docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9.5", "mkdocstrings[python]>=0.26", "marimo>=0.14"]
 
 [project.urls]
-Homepage = "https://github.com/s-celles/anywidget-automotives"
-Issues = "https://github.com/s-celles/anywidget-automotives/issues"
-Documentation = "https://s-celles.github.io/anywidget-automotives/"
-Specification = "https://s-celles.github.io/anywidget-automotives/specification/"
+Homepage = "https://github.com/s-celles/anywidget-instruments-automotive"
+Issues = "https://github.com/s-celles/anywidget-instruments-automotive/issues"
+Documentation = "https://s-celles.github.io/anywidget-instruments-automotive/"
+Specification = "https://s-celles.github.io/anywidget-instruments-automotive/specification/"
 
 [tool.hatch.build]
 only-packages = true
 # data directories are not Python packages: only-packages would leave them out
 artifacts = [
-  "src/anywidget_automotives/static/*",
-  "src/anywidget_automotives/schema/*.json",
+  "src/anywidget_instruments_automotive/static/*",
+  "src/anywidget_instruments_automotive/schema/*.json",
 ]
 
 [tool.hatch.build.hooks.jupyter-builder]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
-  "src/anywidget_automotives/static/index.js",
-  "src/anywidget_automotives/static/index.css",
-  "src/anywidget_automotives/static/contract.json",
+  "src/anywidget_instruments_automotive/static/index.js",
+  "src/anywidget_instruments_automotive/static/index.css",
+  "src/anywidget_instruments_automotive/static/contract.json",
 ]
-skip-if-exists = ["src/anywidget_automotives/static/index.js"]
+skip-if-exists = ["src/anywidget_instruments_automotive/static/index.js"]
 dependencies = ["hatch-jupyter-builder>=0.8"]
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]

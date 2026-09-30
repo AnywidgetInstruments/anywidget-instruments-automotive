@@ -5,37 +5,37 @@ traits: what a widget shows is computed by its front end, the same from every ho
 
 ## Base classes
 
-::: anywidget_automotives.AutomotiveWidget
-::: anywidget_automotives.QuantityWidget
-::: anywidget_automotives.DialWidget
+::: anywidget_instruments_automotive.AutomotiveWidget
+::: anywidget_instruments_automotive.QuantityWidget
+::: anywidget_instruments_automotive.DialWidget
 
 ## Dials
 
-::: anywidget_automotives.Speedometer
-::: anywidget_automotives.Tachometer
-::: anywidget_automotives.FuelGauge
-::: anywidget_automotives.TemperatureGauge
+::: anywidget_instruments_automotive.Speedometer
+::: anywidget_instruments_automotive.Tachometer
+::: anywidget_instruments_automotive.FuelGauge
+::: anywidget_instruments_automotive.TemperatureGauge
 
 ## Tell-tales
 
-::: anywidget_automotives.TellTale
-::: anywidget_automotives.TellTaleCluster
+::: anywidget_instruments_automotive.TellTale
+::: anywidget_instruments_automotive.TellTaleCluster
 
 ## Digital displays
 
-::: anywidget_automotives.TripComputer
-::: anywidget_automotives.Odometer
-::: anywidget_automotives.GearIndicator
+::: anywidget_instruments_automotive.TripComputer
+::: anywidget_instruments_automotive.Odometer
+::: anywidget_instruments_automotive.GearIndicator
 
 ## Electric and hybrid drivetrains
 
-::: anywidget_automotives.PowerMeter
-::: anywidget_automotives.StateOfChargeGauge
-::: anywidget_automotives.PowerFlow
+::: anywidget_instruments_automotive.PowerMeter
+::: anywidget_instruments_automotive.StateOfChargeGauge
+::: anywidget_instruments_automotive.PowerFlow
 
 ## Layout
 
-::: anywidget_automotives.Cluster
+::: anywidget_instruments_automotive.Cluster
 
 ## Names from the trait contract
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/quantity.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/quantity.schema.json",
   "title": "Quantity",
   "description": "Traits of the widgets showing a physical quantity (API-005, UNIT-001 .. UNIT-017). The host passes numbers in input_unit; the front end converts them into the displayed unit.",
   "type": "object",

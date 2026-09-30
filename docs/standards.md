@@ -1,11 +1,11 @@
 # Standards and references
 
-The design of anywidget-automotives draws on the regulations, standards and guidelines
+The design of anywidget-instruments-automotive draws on the regulations, standards and guidelines
 listed below: they shape the colours, the symbols, the legibility and the restraint of
 the widgets. This page names them so that readers can go to the original texts.
 
 !!! warning "Disclaimer"
-    * **No claim of conformity.** anywidget-automotives does not claim to conform to,
+    * **No claim of conformity.** anywidget-instruments-automotive does not claim to conform to,
       comply with, or implement any of these documents, in whole or in part. It has not
       been assessed, tested or certified against them by anyone, and the organizations
       that publish them have neither reviewed nor endorsed it.

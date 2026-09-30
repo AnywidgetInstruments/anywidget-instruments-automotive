@@ -41,7 +41,8 @@ def item_of(widget: AutomotiveWidget | Mapping[str, Any]) -> dict[str, Any]:
             raise t.TraitError(f"a Cluster holds widgets of the kinds {KINDS}, got {widget!r}")
         return dict(widget)
     if not isinstance(widget, AutomotiveWidget) or widget._kind not in KINDS:
-        raise t.TraitError(f"a Cluster holds the widgets of anywidget-automotives, got {widget!r}")
+        msg = f"a Cluster holds the widgets of anywidget-instruments-automotive, got {widget!r}"
+        raise t.TraitError(msg)
     # only the widget's own traits: serializing a framework trait such as `layout`
     # needs a live comm, which a widget held by a cluster may never get
     return widget.get_state(key=_traits_of(widget))

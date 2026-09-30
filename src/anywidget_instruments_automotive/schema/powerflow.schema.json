@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/powerflow.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/powerflow.schema.json",
   "title": "PowerFlow",
   "description": "Which of the engine, the battery and the wheels deliver and receive power in a hybrid drivetrain, by arrows and in text (EV-007).",
   "type": "object",

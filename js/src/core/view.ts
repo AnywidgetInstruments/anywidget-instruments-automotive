@@ -101,7 +101,7 @@ export class AutomotiveView<T extends object = Traits> extends BaseView<T> {
     return readTrait(spec, raw, () => {
       if (this._warned.has(name)) return;
       this._warned.add(name);
-      console.warn(`anywidget-automotives: ${this.kind}.${name}: invalid value ${JSON.stringify(raw)}`);
+      console.warn(`anywidget-instruments-automotive: ${this.kind}.${name}: invalid value ${JSON.stringify(raw)}`);
     });
   }
 

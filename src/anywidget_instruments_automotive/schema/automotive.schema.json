@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/automotive.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/automotive.schema.json",
   "title": "Automotive",
-  "description": "Traits shared by every widget of anywidget-automotives (API-001, API-002, ROB-001). The common traits of anywidget-instruments are kept; every widget is an indicator.",
+  "description": "Traits shared by every widget of anywidget-instruments-automotive (API-001, API-002, ROB-001). The common traits of anywidget-instruments are kept; every widget is an indicator.",
   "type": "object",
   "x-awi-abstract": true,
   "x-awi-class": "AutomotiveWidget",

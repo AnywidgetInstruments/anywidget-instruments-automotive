@@ -1,12 +1,12 @@
-# anywidget-automotives
+# anywidget-instruments-automotive
 
 Automotive instruments for computational notebooks: speedometer, tachometer, fuel and
 temperature gauges, tell-tales, a trip computer display, gear and shift indicators, the
 indicators of electric and hybrid drivetrains, and a head-up display mode.
 
 A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose front
-end, [trait contract](https://s-celles.github.io/anywidget-instruments/trait-contract/)
+[anywidget-instruments](https://github.com/s-celles/anywidget-instruments-industrial), whose front
+end, [trait contract](https://s-celles.github.io/anywidget-instruments-industrial/trait-contract/)
 and themes it extends. The front end computes everything a widget shows — unit
 conversion included — from a dictionary of traits, so the widgets behave alike in every
 host: **Python** (JupyterLab, Jupyter Notebook 7, marimo, VS Code, Google Colab),
@@ -24,7 +24,7 @@ and no network access at runtime.
 [![Instrument cluster preview, light theme](img/cluster-preview-light.png#only-light)![Instrument cluster preview, dark theme](img/cluster-preview-dark.png#only-dark)](marimo/cluster_preview/ "Open it in marimo, in your browser")
 
 *The [cluster example](examples.md): one `Cluster` of the widgets of
-anywidget-automotives. The figures are simulated.*
+anywidget-instruments-automotive. The figures are simulated.*
 
 !!! warning "Safety"
     The widgets are for visualization, teaching, simulation and aftermarket dashboards.
@@ -53,7 +53,7 @@ rather than bending it.
 ## Use
 
 ```python
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 speed = aa.Speedometer(0, max=220, unit="km/h")
 rpm = aa.Tachometer(0, max=7000, redline=6000)
@@ -73,6 +73,6 @@ aa.Cluster([speed, rpm, engine])
 
 | Project | What it is | Documentation |
 |---|---|---|
-| [anywidget-instruments](https://github.com/s-celles/anywidget-instruments) | Instrumentation widgets for notebooks: gauges, tanks, LEDs, switches, charts, alarms, SCADA objects | <https://s-celles.github.io/anywidget-instruments/> |
-| [anywidget-automotives](https://github.com/s-celles/anywidget-automotives) | Automotive instruments built on anywidget-instruments (design stage) | <https://s-celles.github.io/anywidget-automotives/> |
+| [anywidget-instruments](https://github.com/s-celles/anywidget-instruments-industrial) | Instrumentation widgets for notebooks: gauges, tanks, LEDs, switches, charts, alarms, SCADA objects | <https://s-celles.github.io/anywidget-instruments-industrial/> |
+| [anywidget-instruments-automotive](https://github.com/s-celles/anywidget-instruments-automotive) | Automotive instruments built on anywidget-instruments (design stage) | <https://s-celles.github.io/anywidget-instruments-automotive/> |
 | [afm-host-panel](https://github.com/s-celles/afm-host-panel) | Grafana panel plugin that runs anywidget modules, with both libraries built in | <https://s-celles.github.io/afm-host-panel/> |

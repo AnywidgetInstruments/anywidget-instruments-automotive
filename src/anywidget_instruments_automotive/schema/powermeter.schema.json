@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/powermeter.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/powermeter.schema.json",
   "title": "PowerMeter",
   "description": "The power of the drivetrain in kW, positive when it drives, negative when it regenerates; the part of the scale below zero is the regeneration zone (EV-003 .. EV-005).",
   "type": "object",

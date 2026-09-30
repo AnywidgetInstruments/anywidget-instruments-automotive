@@ -16,8 +16,8 @@ from typing import Any
 import pytest
 import traitlets as t
 
-import anywidget_automotives as aa
-from anywidget_automotives import _base
+import anywidget_instruments_automotive as aa
+from anywidget_instruments_automotive import _base
 
 PKG = pathlib.Path(aa.__file__).parent
 CONTRACT_FILE = PKG / "static" / "contract.json"

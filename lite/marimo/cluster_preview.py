@@ -27,7 +27,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md("""
-    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-automotives/examples/)
+    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-instruments-automotive/examples/)
 
     # Instrument cluster
 
@@ -35,13 +35,13 @@ def _(mo):
     the switches to light the tell-tales, and turn on the **head-up display**. Everything
     runs in your browser.
 
-    > **The widgets of anywidget-automotives**, in one `Cluster`: pick a unit system
+    > **The widgets of anywidget-instruments-automotive**, in one `Cluster`: pick a unit system
     > to see them convert, and turn on the head-up display to see the cluster
     > mirrored for a windscreen, showing only the speed and what is marked for it.
     > The figures are simulated.
 
     > **Not a vehicle instrument.** See the
-    > [safety notice](https://s-celles.github.io/anywidget-automotives/safety/).
+    > [safety notice](https://s-celles.github.io/anywidget-instruments-automotive/safety/).
     """)
     return
 
@@ -65,7 +65,7 @@ async def _(mo, sys):
 @app.cell(hide_code=True)
 def _(installed):
     assert installed
-    import anywidget_automotives as aa
+    import anywidget_instruments_automotive as aa
 
     return (aa,)
 

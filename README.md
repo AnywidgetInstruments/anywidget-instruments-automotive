@@ -1,11 +1,11 @@
-# anywidget-automotives
+# anywidget-instruments-automotive
 
 Automotive instruments for computational notebooks: speedometer, tachometer, fuel and
 temperature gauges, tell-tales, trip computer, gear and shift indicators, and a
 head-up display mode.
 
 A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose front
+[anywidget-instruments](https://github.com/s-celles/anywidget-instruments-industrial), whose front
 end, trait contract and themes it extends. Everything a widget shows, unit conversion
 included, is computed in the front end from its traits, so it behaves alike from
 **Python**, **Julia** (KaimonSlate.jl), **Rust** or any host that sets those traits.
@@ -42,14 +42,14 @@ in their own package, one that depends on anywidget-instruments rather than bend
 Not on the package index yet. From a clone, with Node.js 22 for the front end:
 
 ```bash
-pip install "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments@293aeea4190979218da5b515b25a1fabedd82901"
+pip install "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments-industrial@293aeea4190979218da5b515b25a1fabedd82901"
 npm install && npm run build && pip install -e .
 ```
 
 ## Use
 
 ```python
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 rpm = aa.Tachometer(0, max=7000, redline=6000)
 speed = aa.Speedometer(0, max=220, unit="km/h")
@@ -60,7 +60,7 @@ aa.Cluster([speed, rpm, engine], hud=False)
 
 ## Documentation
 
-Published at <https://s-celles.github.io/anywidget-automotives/>; `mkdocs serve` builds it locally from `docs/`:
+Published at <https://s-celles.github.io/anywidget-instruments-automotive/>; `mkdocs serve` builds it locally from `docs/`:
 
 * [Widget catalog](docs/widgets.md) — what each widget shows and which convention it follows
 * [Hosts](docs/hosts.md) — Python, a web page, Julia (KaimonSlate.jl), Rust
@@ -77,8 +77,8 @@ Published at <https://s-celles.github.io/anywidget-automotives/>; `mkdocs serve`
 
 | Project | What it is | Documentation |
 |---|---|---|
-| [anywidget-instruments](https://github.com/s-celles/anywidget-instruments) | Instrumentation widgets for notebooks: gauges, tanks, LEDs, switches, charts, alarms, SCADA objects | <https://s-celles.github.io/anywidget-instruments/> |
-| [anywidget-automotives](https://github.com/s-celles/anywidget-automotives) | Automotive instruments built on anywidget-instruments (design stage) | <https://s-celles.github.io/anywidget-automotives/> |
+| [anywidget-instruments](https://github.com/s-celles/anywidget-instruments-industrial) | Instrumentation widgets for notebooks: gauges, tanks, LEDs, switches, charts, alarms, SCADA objects | <https://s-celles.github.io/anywidget-instruments-industrial/> |
+| [anywidget-instruments-automotive](https://github.com/s-celles/anywidget-instruments-automotive) | Automotive instruments built on anywidget-instruments (design stage) | <https://s-celles.github.io/anywidget-instruments-automotive/> |
 | [afm-host-panel](https://github.com/s-celles/afm-host-panel) | Grafana panel plugin that runs anywidget modules, with both libraries built in | <https://s-celles.github.io/afm-host-panel/> |
 
 ## License

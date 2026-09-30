@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/dial.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/dial.schema.json",
   "title": "Dial",
   "description": "Traits shared by the dials: a needle on an arc scale and the value as text below it (DIAL-001 .. DIAL-005, DIS-002, DIS-003).",
   "type": "object",

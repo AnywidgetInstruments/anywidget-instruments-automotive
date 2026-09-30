@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>anywidget-automotives preview</title>
-<link rel="stylesheet" href="../../src/anywidget_automotives/static/index.css">
+<title>anywidget-instruments-automotive preview</title>
+<link rel="stylesheet" href="../../src/anywidget_instruments_automotive/static/index.css">
 <style>
   body { font-family: system-ui, sans-serif; margin: 16px; background: #ffffff; color: #1f2937; }
   body.dark { background: #05070a; color: #b3bac5; }
@@ -18,8 +18,8 @@
      js/scripts/docs-images.mjs captures each .shot for the documentation (DOC-005). -->
 <main id="shots"></main>
 <script type="module">
-import widget from "../../src/anywidget_automotives/static/index.js";
-import contract from "../../src/anywidget_automotives/static/contract.json" with { type: "json" };
+import widget from "../../src/anywidget_instruments_automotive/static/index.js";
+import contract from "../../src/anywidget_instruments_automotive/static/contract.json" with { type: "json" };
 
 const theme = new URLSearchParams(location.search).get("theme") === "dark" ? "dark" : "light";
 if (theme === "dark") document.body.classList.add("dark");

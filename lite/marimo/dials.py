@@ -26,7 +26,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md("""
-    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-automotives/widgets/#dials)
+    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-instruments-automotive/widgets/#dials)
 
     # Dials
 
@@ -35,7 +35,7 @@ def _(mo):
     at 5800 rpm; the hybrid switch shows READY on a stopped engine.
 
     > **Not a vehicle instrument.** See the
-    > [safety notice](https://s-celles.github.io/anywidget-automotives/safety/).
+    > [safety notice](https://s-celles.github.io/anywidget-instruments-automotive/safety/).
     """)
     return
 
@@ -59,7 +59,7 @@ async def _(mo, sys):
 @app.cell(hide_code=True)
 def _(installed):
     assert installed
-    import anywidget_automotives as aa
+    import anywidget_instruments_automotive as aa
 
     return (aa,)
 

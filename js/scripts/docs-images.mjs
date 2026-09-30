@@ -17,7 +17,7 @@ import { chromium } from "@playwright/test";
 const ROOT = join(fileURLToPath(import.meta.url), "..", "..", "..");
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".map": "application/json" };
 
-if (!existsSync(join(ROOT, "src/anywidget_automotives/static/index.js"))) {
+if (!existsSync(join(ROOT, "src/anywidget_instruments_automotive/static/index.js"))) {
   console.error("the front end is not built: run `npm run build` first");
   process.exit(1);
 }

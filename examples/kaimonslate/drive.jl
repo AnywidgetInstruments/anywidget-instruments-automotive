@@ -2,12 +2,12 @@ try; import KaimonSlate; catch; error("This is a Kaimon Slate notebook — runni
 
 #%% md id=intro
 @md"""
-# A drive — anywidget-automotives in Julia
+# A drive — anywidget-instruments-automotive in Julia
 
 An instrument cluster driven by **Julia**: a simulated car accelerates, cruises and brakes, and
 the cluster shows its speed, engine speed, fuel, coolant temperature, trip and tell-tales.
 
-The widgets are the front-end modules of the Python package `anywidget-automotives`, hosted by
+The widgets are the front-end modules of the Python package `anywidget-instruments-automotive`, hosted by
 the **SlateAFM** extension: no Python kernel runs. Julia sets the traits — numbers in metric
 units, unit names from the trait contract — and the front end converts, rounds up the speed and
 applies the head-up display mode, as it does for Python. The speeds of the model are
@@ -23,7 +23,7 @@ Not a vehicle instrument: see the safety notice of the documentation.
 `pypi_afm` installs the Python package with the system `pip`, reads each widget's front-end
 module and trait defaults, and serves them; nothing Python runs afterwards. Until the packages
 are published, install the wheel of anywidget-instruments with that `pip` first, and point
-`AWA_PACKAGE` at the wheel of anywidget-automotives (both are built by the documentation
+`AWA_PACKAGE` at the wheel of anywidget-instruments-automotive (both are built by the documentation
 workflow, or with `python -m build` in each repository).
 """
 
@@ -31,8 +31,8 @@ workflow, or with `python -m build` in each repository).
 using SlateAFM
 using DynamicQuantities
 
-const AWA = get(ENV, "AWA_PACKAGE", "anywidget-automotives")
-awa(class; traits...) = pypi_afm(AWA; import_as = "anywidget_automotives", class = class, traits...)
+const AWA = get(ENV, "AWA_PACKAGE", "anywidget-instruments-automotive")
+awa(class; traits...) = pypi_afm(AWA; import_as = "anywidget_instruments_automotive", class = class, traits...)
 
 "Current traits of the bound widget `name`, as a plain Dict."
 traits(name::Symbol) = Dict{String,Any}(String(k) => v for (k, v) in getfield(@__MODULE__, name))

@@ -10,7 +10,7 @@ import { build } from "esbuild";
 import { fileURLToPath } from "node:url";
 import { generate } from "./scripts/gen-contract.mjs";
 
-const OUT = "src/anywidget_automotives/static";
+const OUT = "src/anywidget_instruments_automotive/static";
 
 // The base view of anywidget-instruments looks a widget up in the contract of
 // its own widgets, which is most of its bundle; ours carry their own contract

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/gearindicator.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/gearindicator.schema.json",
   "title": "GearIndicator",
   "description": "The engaged gear, and an up or down shift suggestion (DIG-006, DIG-007).",
   "type": "object",

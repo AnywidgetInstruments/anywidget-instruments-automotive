@@ -19,7 +19,7 @@ THEMES = ("auto", "light", "dark", "system", "day", "night")
 
 
 class AutomotiveWidget(InstrumentWidget):
-    """Base class of the widgets of anywidget-automotives.
+    """Base class of the widgets of anywidget-instruments-automotive.
 
     It keeps the common traits of anywidget-instruments (``label``, ``tooltip``,
     ``visible``, ``disabled``, ``size``, ``style``, ``theme``) and adds:

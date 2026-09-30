@@ -1,4 +1,4 @@
-/* anywidget-automotives styles, on top of those of anywidget-instruments.
+/* anywidget-instruments-automotive styles, on top of those of anywidget-instruments.
  * Every rule is scoped under .awa-root, which is also an .awi-root (GEN-008),
  * and every colour is a custom property that a page may override. */
 @import "anywidget-instruments/js/src/styles.css";

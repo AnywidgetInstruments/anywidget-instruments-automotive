@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  anywidget-automotives in a web page, with no kernel (HOST-005): the page binds each
+  anywidget-instruments-automotive in a web page, with no kernel (HOST-005): the page binds each
   widget to a plain dictionary of traits built from the class defaults of the trait
   contract (static/contract.json) and the traits it is given, then runs the module's
   initialize and render — what any host does, KaimonSlate.jl's SlateAFM or a Rust
@@ -15,8 +15,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>anywidget-automotives without a kernel</title>
-    <link rel="stylesheet" href="../../src/anywidget_automotives/static/index.css" />
+    <title>anywidget-instruments-automotive without a kernel</title>
+    <link rel="stylesheet" href="../../src/anywidget_instruments_automotive/static/index.css" />
     <style>
       body { font-family: system-ui, sans-serif; margin: 16px; background: #fff; color: #1f2937; }
       @media (prefers-color-scheme: dark) { body { background: #111827; color: #e5e7eb; } }
@@ -28,7 +28,7 @@
     <p>The widgets below are bound to plain trait dictionaries. Set traits from the console with <code>awa.set(id, traits)</code>.</p>
     <main id="widgets"></main>
     <script type="module">
-      const base = new URL("../../src/anywidget_automotives/static/", import.meta.url);
+      const base = new URL("../../src/anywidget_instruments_automotive/static/", import.meta.url);
       const contract = await (await fetch(new URL("contract.json", base))).json();
       const { default: afm } = await import(new URL("index.js", base));
 

@@ -1,6 +1,6 @@
 # Roadmap
 
-Where anywidget-automotives is, and the order in which it gets built. Milestones are
+Where anywidget-instruments-automotive is, and the order in which it gets built. Milestones are
 sequenced by dependency, not dated: each one rests on the ones before it.
 
 ## Where the project is
@@ -113,7 +113,7 @@ The first widgets, and the ones that need no dial.
 * Julia: a KaimonSlate.jl example, with quantities from DynamicQuantities.jl passed as a
   number and a unit name (HOST-005, UNIT-018).
 * Rust: a documented embedding through a web view, traits as JSON (HOST-006).
-* CAN & CANopen Studio: dashboard pages using `anywidget_automotives:` widgets, fed by
+* CAN & CANopen Studio: dashboard pages using `anywidget_instruments_automotive:` widgets, fed by
   its trip computer.
 
 ### 8. Version 1.0 — prepared

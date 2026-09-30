@@ -21,7 +21,7 @@ type, bounds and default, and every unit name.
 ## Python
 
 ```python
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 speed = aa.Speedometer(0, limit=90)
 speed.value = 87.3                    # km/h: shows 88
@@ -74,7 +74,7 @@ item("speedometer"; value = kmh(car.speed), limit = 130)
 
 Until the packages are on the package index, install the wheel of anywidget-instruments
 with the `pip` KaimonSlate uses, and point `AWA_PACKAGE` at the wheel of
-anywidget-automotives. The notebook is not run in continuous integration.
+anywidget-instruments-automotive. The notebook is not run in continuous integration.
 
 ## Rust: a web view (HOST-006)
 

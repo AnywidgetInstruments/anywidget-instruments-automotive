@@ -1,7 +1,7 @@
 # Safety notice
 
 !!! danger "Not a vehicle instrument"
-    anywidget-automotives is a library for **visualization, teaching, simulation and
+    anywidget-instruments-automotive is a library for **visualization, teaching, simulation and
     aftermarket dashboards in notebooks**. Its widgets are not type-approved vehicle
     components, are not designed or verified according to automotive functional safety
     (ISO 26262), and **must not be used in place of a vehicle's own instruments**.

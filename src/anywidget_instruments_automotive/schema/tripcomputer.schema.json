@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-automotives/schema/tripcomputer.schema.json",
+  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/tripcomputer.schema.json",
   "title": "TripComputer",
   "description": "The figures of a trip: instant and average consumption, fuel used, distance, elapsed time and range, computed by the front end from the raw figures of the trip (DIG-001 .. DIG-004, UNIT-016).",
   "type": "object",

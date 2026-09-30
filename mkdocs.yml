@@ -1,7 +1,7 @@
-site_name: anywidget-automotives
+site_name: anywidget-instruments-automotive
 site_description: Automotive instruments for computational notebooks
-site_url: https://s-celles.github.io/anywidget-automotives/
-repo_url: https://github.com/s-celles/anywidget-automotives
+site_url: https://s-celles.github.io/anywidget-instruments-automotive/
+repo_url: https://github.com/s-celles/anywidget-instruments-automotive
 edit_uri: ""
 # Buildable offline — no Google Fonts, no CDN assets, as anywidget-instruments.
 theme:

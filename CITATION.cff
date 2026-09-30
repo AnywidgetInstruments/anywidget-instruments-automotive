@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: >-
   If you use this software in teaching material, a publication or a
   product, please cite it as below.
-title: "anywidget-automotives: automotive instruments for computational notebooks"
+title: "anywidget-instruments-automotive: automotive instruments for computational notebooks"
 type: software
 authors:
   - family-names: Celles
@@ -11,8 +11,8 @@ authors:
     affiliation: "Université de Poitiers"
 version: 0.1.0.dev0
 license: BSD-3-Clause
-repository-code: "https://github.com/s-celles/anywidget-automotives"
-url: "https://s-celles.github.io/anywidget-automotives/"
+repository-code: "https://github.com/s-celles/anywidget-instruments-automotive"
+url: "https://s-celles.github.io/anywidget-instruments-automotive/"
 abstract: >-
   Speedometer, tachometer, fuel and temperature gauges, tell-tales, trip
   computer, odometer, gear indicator, the indicators of electric and hybrid
@@ -37,4 +37,4 @@ references:
     authors:
       - family-names: Celles
         given-names: Sébastien
-    repository-code: "https://github.com/s-celles/anywidget-instruments"
+    repository-code: "https://github.com/s-celles/anywidget-instruments-industrial"

@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 import traitlets as t
 
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 
 def test_a_tell_tale_takes_its_function_and_its_state() -> None:

@@ -7,7 +7,7 @@ import math
 import pytest
 import traitlets as t
 
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 
 def test_a_state_of_charge_gauge_takes_a_charge_a_low_zone_and_a_charging_state() -> None:

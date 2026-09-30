@@ -5,9 +5,9 @@ from __future__ import annotations
 import pytest
 import traitlets as t
 
-import anywidget_automotives as aa
-from anywidget_automotives._contract import UNITS
-from anywidget_automotives._quantities import PINT_UNITS
+import anywidget_instruments_automotive as aa
+from anywidget_instruments_automotive._contract import UNITS
+from anywidget_instruments_automotive._quantities import PINT_UNITS
 
 pint = pytest.importorskip("pint")
 u = pint.UnitRegistry()

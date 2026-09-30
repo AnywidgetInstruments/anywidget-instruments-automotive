@@ -11,7 +11,7 @@ build/
 .ruff_cache/
 node_modules/
 # Built front-end bundle and contract (`npm run build`)
-src/anywidget_automotives/static/
+src/anywidget_instruments_automotive/static/
 # Trait contract generated from the JSON Schemas (`npm run gen`)
 js/src/generated/
 test-results/

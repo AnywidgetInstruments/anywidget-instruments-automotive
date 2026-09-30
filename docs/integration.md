@@ -10,8 +10,8 @@ id: cluster
 title: Cluster
 columns: 3
 instruments:
-  - {widget: "anywidget_automotives:Speedometer", source: trip.speed_kmh, max: 220}
-  - {widget: "anywidget_automotives:Tachometer", source: trip.rpm, max: 7000}
+  - {widget: "anywidget_instruments_automotive:Speedometer", source: trip.speed_kmh, max: 220}
+  - {widget: "anywidget_instruments_automotive:Tachometer", source: trip.rpm, max: 7000}
 ```
 
 `just dashboard` in the studio opens the pages in marimo, with its own HUD switch.

@@ -7,7 +7,7 @@ import math
 import pytest
 import traitlets as t
 
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 
 def test_a_speedometer_passes_its_value_unconverted() -> None:

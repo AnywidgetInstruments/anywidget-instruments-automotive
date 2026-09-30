@@ -4,11 +4,11 @@
 
 | Field | Value |
 |-------|-------|
-| Project | anywidget-automotives |
+| Project | anywidget-instruments-automotive |
 | Author | Sébastien Celles |
 | Document type | Software requirements specification |
 | Notation | EARS (Easy Approach to Requirements Syntax) |
-| Version | 0.9 |
+| Version | 0.10 |
 | Date | 2026-09-28 |
 | Status | Draft for review, during implementation |
 
@@ -82,7 +82,7 @@ to run for a widget to behave as specified.
 | Viewing distance | The distance from the driver's eye to the display, from which character sizes are derived. |
 | Visual angle | The angle a character subtends at the eye; ISO 15008 expresses legibility with it. |
 | Unit system | A consistent choice of units for every quantity: metric, imperial (UK) or US customary. |
-| Library | The anywidget-automotives package as a whole. |
+| Library | The anywidget-instruments-automotive package as a whole. |
 
 ### 1.6 Requirement Identifiers and Priority
 
@@ -410,6 +410,7 @@ when the drivetrain drives the wheels and negative when it regenerates.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
+| 0.10 | The project renamed anywidget-instruments-automotive, in the family of anywidget-instruments with anywidget-instruments-industrial; no requirement changed. |
 | 0.9 | TEL-009 added: the direction indicators side by side, left before right, at the start of a tell-tale row; TEL-006 orders the other tell-tales. |
 | 0.8 | Section 17 added: electric and hybrid drivetrains (EV-001 .. EV-008). Unit table: power, energy and energy economy; UNIT-012 extended to energy economy. Former sections 17 and 18 renumbered 18 and 19. |
 | 0.7 | Section 7: a `Cluster` holds its widgets as a list of trait dictionaries and draws them itself. Section 10: the `hud` trait of every widget. Section 8: the `theme` values `day` and `night`. |

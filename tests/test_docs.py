@@ -11,7 +11,7 @@ import re
 
 import pytest
 
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 ROOT = pathlib.Path(__file__).parent.parent
 DOCS = ROOT / "docs"
@@ -123,4 +123,4 @@ def test_every_picture_of_a_widget_opens_a_notebook_that_exists() -> None:
 def test_the_api_reference_documents_every_widget() -> None:
     api = (DOCS / "api.md").read_text("utf-8")
     for name in [*WIDGET_CLASSES, "AutomotiveWidget", "QuantityWidget", "DialWidget"]:
-        assert f"::: anywidget_automotives.{name}\n" in api, name
+        assert f"::: anywidget_instruments_automotive.{name}\n" in api, name

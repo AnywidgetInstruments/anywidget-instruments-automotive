@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 import traitlets as t
 
-import anywidget_automotives as aa
+import anywidget_instruments_automotive as aa
 
 
 def test_a_cluster_holds_the_traits_of_its_widgets() -> None:
