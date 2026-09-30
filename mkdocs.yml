@@ -43,6 +43,7 @@ nav:
       - Layout:
           - Cluster: widgets/cluster.md
   - Examples: examples.md
+  - Try it in the browser: try.md
   - API reference: api.md
   - Safety notice: safety.md
   - Standards and references: standards.md
