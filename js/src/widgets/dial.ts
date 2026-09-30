@@ -41,6 +41,8 @@ const KINDS = new Set(["danger", "warning", "cold", "charge"]);
 
 /** Zones as the schema describes them; `undefined` when an item is rejected (HOST-004). */
 export function readZones(raw: unknown): Zone[] | undefined {
+  // not set by the host: the default of the schema, no zone
+  if (raw === undefined) return [];
   if (!Array.isArray(raw)) return undefined;
   const out: Zone[] = [];
   for (const z of raw) {

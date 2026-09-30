@@ -104,6 +104,18 @@ describe("common dial behaviour (DIAL-001 .. DIAL-005)", () => {
     expect(d.root.classList.contains("awa-invalid")).toBe(true);
   });
 
+  test.each(["Speedometer", "Tachometer", "FuelGauge", "TemperatureGauge", "StateOfChargeGauge", "PowerMeter"] as const)(
+    "%s shows its value when a host sets only the value, leaving the other traits to their defaults",
+    async (title) => {
+      // a JSON-only host (a dashboard panel) sets a few traits; the others are undefined
+      const w = mount({ _kind: CONTRACTS[title].kind, value: 50 });
+      await frame();
+      expect(w.root.classList.contains("awa-invalid")).toBe(false);
+      expect(w.el.querySelector(".awa-readout")?.textContent).not.toBe("INVALID");
+      w.cleanup();
+    },
+  );
+
   test("is a meter to assistive technologies, with its value as text (A11Y-001)", async () => {
     const d = await dial("Speedometer", { value: 50 });
     expect(d.body.getAttribute("role")).toBe("meter");
