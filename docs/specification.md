@@ -8,8 +8,8 @@
 | Author | Sébastien Celles |
 | Document type | Software requirements specification |
 | Notation | EARS (Easy Approach to Requirements Syntax) |
-| Version | 0.10 |
-| Date | 2026-09-28 |
+| Version | 0.11 |
+| Date | 2026-09-30 |
 | Status | Draft for review, during implementation |
 
 ---
@@ -97,13 +97,13 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 
 | ID | Pri. | Requirement |
 |---|---|---|
-| GEN-001 | M | The library shall implement every widget as an anywidget front-end module written in TypeScript, building on the front end of anywidget-instruments. |
+| GEN-001 | M | The library shall implement every widget as an anywidget front-end module written in TypeScript, building on the anywidget-instruments core (base view, trait contract and its generator, themes, liveness) and on no other widget library of the family. |
 | GEN-002 | M | The library shall ship its front end as pre-bundled ES modules, so that no host needs a JavaScript toolchain. |
 | GEN-003 | M | The library shall keep each front-end module compliant with the anywidget Front-End Module (AFM) specification, so that any AFM host can load it. |
 | GEN-004 | M | The library shall compute in the front end everything a widget displays — unit conversion, rounding, zones, stale and missing states — so that every host shows the same figures for the same traits. |
 | GEN-005 | M | The library shall load no resource from the network at runtime. |
 | GEN-006 | M | The library shall be released under the BSD 3-Clause license. |
-| GEN-007 | M | The library shall provide a Python host binding, distributed as a package depending on anywidget-instruments, and supporting CPython 3.10 and later. |
+| GEN-007 | M | The library shall provide a Python host binding, distributed as a package depending on the anywidget-instruments core, and supporting CPython 3.10 and later. |
 | GEN-008 | M | When a widget is loaded, the front end shall not modify global page state or register global CSS outside its own widget roots. |
 | GEN-009 | S | The library shall render in the hosts anywidget-instruments supports: JupyterLab, Jupyter Notebook 7, marimo, VS Code notebooks, Google Colab and KaimonSlate.jl. |
 
@@ -410,6 +410,7 @@ when the drivetrain drives the wheels and negative when it regenerates.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
+| 0.11 | GEN-001, GEN-007: the library builds on the anywidget-instruments core alone, which now holds the base view, the base schema (its `$id` under anywidgetinstruments.github.io/anywidget-instruments/schema/), the contract generator, themes and liveness; it no longer depends on anywidget-instruments-industrial. |
 | 0.10 | The project renamed anywidget-instruments-automotive, in the family of anywidget-instruments with anywidget-instruments-industrial; no requirement changed. |
 | 0.9 | TEL-009 added: the direction indicators side by side, left before right, at the start of a tell-tale row; TEL-006 orders the other tell-tales. |
 | 0.8 | Section 17 added: electric and hybrid drivetrains (EV-001 .. EV-008). Unit table: power, energy and energy economy; UNIT-012 extended to energy economy. Former sections 17 and 18 renumbered 18 and 19. |

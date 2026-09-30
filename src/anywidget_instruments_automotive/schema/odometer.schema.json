@@ -21,7 +21,7 @@
       "description": "Total distance, in input_unit; null: not known (ROB-002)."
     },
     "trip": {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
       "description": "Trip distance, in input_unit; null: no trip meter.",
       "default": null,
       "x-awi-writer": "host"

@@ -7,7 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 import traitlets as t
-from anywidget_instruments._base import size_trait
+from anywidget_instruments import size_trait
 
 from ._base import AutomotiveWidget
 

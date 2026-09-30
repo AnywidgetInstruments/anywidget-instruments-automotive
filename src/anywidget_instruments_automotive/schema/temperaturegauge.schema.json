@@ -30,13 +30,13 @@
       "default": 130
     },
     "cold": {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
       "description": "Upper end of the cold zone, in input_unit; null: none.",
       "default": 60,
       "x-awi-writer": "host"
     },
     "hot": {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
       "description": "Start of the hot zone, in input_unit, where the temperature tell-tale lights (DIAL-108); null: none.",
       "default": 115,
       "x-awi-writer": "host"

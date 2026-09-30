@@ -27,7 +27,7 @@
       "default": 220
     },
     "limit": {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
       "description": "Speed limit, in input_unit, marked on the scale; the readout is highlighted while the speed exceeds it (SPD-003). null: none.",
       "default": null,
       "x-awi-writer": "host"

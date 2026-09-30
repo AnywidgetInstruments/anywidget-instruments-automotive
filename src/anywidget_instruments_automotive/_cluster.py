@@ -9,13 +9,12 @@ them shows in the cluster.
 from __future__ import annotations
 
 import json
-import pathlib
 from collections.abc import Iterable, Mapping
 from typing import Any
 
 import anywidget_instruments
 import traitlets as t
-from anywidget_instruments._base import size_trait
+from anywidget_instruments import size_trait
 
 from ._base import AutomotiveWidget
 from ._contract import UNIT_SYSTEMS, schema
@@ -25,9 +24,7 @@ KINDS: tuple[str, ...] = tuple(
     schema("cluster")["properties"]["value"]["items"]["properties"]["_kind"]["enum"]
 )
 
-_INSTRUMENT = (
-    pathlib.Path(anywidget_instruments.__file__).parent / "schema" / "instrument.schema.json"
-)
+_INSTRUMENT = anywidget_instruments.SCHEMA_DIR / "instrument.schema.json"
 #: Traits of the widget framework, not of the widget: never part of an item.
 _FRAMEWORK = frozenset(json.loads(_INSTRUMENT.read_text("utf-8"))["x-awi-framework-traits"])
 #: The liveness of the widgets held is the cluster's own.

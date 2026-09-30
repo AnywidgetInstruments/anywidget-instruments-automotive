@@ -12,7 +12,7 @@ from collections.abc import Mapping
 from typing import Any
 
 import traitlets as t
-from anywidget_instruments._base import float_serializers, size_trait
+from anywidget_instruments import float_serializers, size_trait
 
 from ._base import AutomotiveWidget
 from ._contract import UNIT_SYSTEMS, unit_table, units_of

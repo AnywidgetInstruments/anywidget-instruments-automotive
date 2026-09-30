@@ -4,11 +4,9 @@
 // needs: the trait contract of this library, indicators only (API-002, API-003),
 // the state of the value (ROB-001, ROB-002) and the invalid state for rejected
 // traits (HOST-004).
-import type { WidgetContract } from "anywidget-instruments/js/src/contract/spec.js";
 import { readTrait, readValue } from "anywidget-instruments/js/src/contract/traits.js";
 import type { AnyModel, Traits } from "anywidget-instruments/js/src/core/model.js";
 import { BaseView } from "anywidget-instruments/js/src/core/view.js";
-import { BY_KIND } from "../generated/contract.js";
 import { type ValueState, valueState } from "./state.js";
 
 /** Period of the check of max_age while a widget is displayed (ms). */
@@ -28,9 +26,6 @@ export class AutomotiveView<T extends object = Traits> extends BaseView<T> {
 
   constructor(model: AnyModel<T>, el: HTMLElement, traits: string[] = []) {
     super(model, el, [...traits, "value", "max_age", "_value_seq"]);
-    // the base view looks the kind up in the contract of anywidget-instruments;
-    // ours extends it, with the same shape
-    (this as unknown as { contract: WidgetContract | undefined }).contract = BY_KIND[this.kind];
     this.root.classList.add("awa-root", this.kind);
     const raw = (model as unknown as AnyModel<Traits>).get("value");
     this._updated = raw === null || raw === undefined ? null : Date.now();

@@ -5,7 +5,7 @@ temperature gauges, tell-tales, trip computer, gear and shift indicators, and a
 head-up display mode.
 
 A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial), whose front
+[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments), whose front
 end, trait contract and themes it extends. Everything a widget shows, unit conversion
 included, is computed in the front end from its traits, so it behaves alike from
 **Python**, **Julia** (KaimonSlate.jl), **Rust** or any host that sets those traits.
@@ -31,7 +31,7 @@ simulated.*
 
 ## Why a separate library
 
-anywidget-instruments follows industrial conventions (ISA-101, IEC 60073). A vehicle
+anywidget-instruments-industrial follows industrial conventions (ISA-101, IEC 60073). A vehicle
 display follows others: tell-tale colours and symbols from UN Regulation No. 121 and
 ISO 2575, legibility from ISO 15008, a speedometer that errs on the high side
 (UN Regulation No. 39), and glance-time limits against driver distraction. Those belong
@@ -42,7 +42,7 @@ in their own package, one that depends on anywidget-instruments rather than bend
 Not on the package index yet. From a clone, with Node.js 22 for the front end:
 
 ```bash
-pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@293aeea4190979218da5b515b25a1fabedd82901"
+pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments@516d3967f186a5bbc03f54454e44656a8288a5be"
 npm install && npm run build && pip install -e .
 ```
 
@@ -77,6 +77,7 @@ Published at <https://anywidgetinstruments.github.io/anywidget-instruments-autom
 
 | Project | What it is | Documentation |
 |---|---|---|
+| [anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments) | Core of the family: base view and class, trait contract, themes, liveness | <https://anywidgetinstruments.github.io/anywidget-instruments/> |
 | [anywidget-instruments-industrial](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial) | Instrumentation widgets for notebooks: gauges, tanks, LEDs, switches, charts, alarms, SCADA objects | <https://anywidgetinstruments.github.io/anywidget-instruments-industrial/> |
 | [anywidget-instruments-automotive](https://github.com/AnywidgetInstruments/anywidget-instruments-automotive) | Automotive instruments built on anywidget-instruments | <https://anywidgetinstruments.github.io/anywidget-instruments-automotive/> |
 | [afm-host-panel](https://github.com/AnywidgetInstruments/afm-host-panel) | Grafana panel plugin that runs anywidget modules, with both libraries built in | <https://anywidgetinstruments.github.io/afm-host-panel/> |

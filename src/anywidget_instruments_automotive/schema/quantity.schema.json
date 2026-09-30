@@ -9,7 +9,7 @@
   "allOf": [{ "$ref": "automotive.schema.json" }],
   "properties": {
     "value": {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalFloat",
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalFloat",
       "description": "Current value, in input_unit; null: no value received yet, shown as such rather than as zero (ROB-002).",
       "default": null,
       "x-awi-writer": "host"

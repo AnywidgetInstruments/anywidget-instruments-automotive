@@ -30,13 +30,13 @@
       "default": 7
     },
     "redline": {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
       "description": "Start of the red zone, in rpm; null: no red zone (DIAL-102).",
       "default": null,
       "x-awi-writer": "host"
     },
     "shift_light": {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
       "description": "Engine speed at and above which the shift light is lit; null: no shift light (DIAL-103).",
       "default": null,
       "x-awi-writer": "host"

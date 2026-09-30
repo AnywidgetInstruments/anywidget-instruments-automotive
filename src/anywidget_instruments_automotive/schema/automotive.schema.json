@@ -8,7 +8,7 @@
   "x-awi-class": "AutomotiveWidget",
   "allOf": [
     {
-      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json"
+      "$ref": "https://anywidgetinstruments.github.io/anywidget-instruments/schema/instrument.schema.json"
     }
   ],
   "properties": {

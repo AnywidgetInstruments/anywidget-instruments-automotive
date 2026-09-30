@@ -10,7 +10,7 @@ from collections.abc import Iterable, Mapping
 from typing import Any, cast
 
 import traitlets as t
-from anywidget_instruments._base import size_trait
+from anywidget_instruments import size_trait
 
 from ._base import AutomotiveWidget
 from ._contract import TELLTALE_FUNCTIONS, TELLTALE_STATES

@@ -5,7 +5,7 @@ temperature gauges, tell-tales, a trip computer display, gear and shift indicato
 indicators of electric and hybrid drivetrains, and a head-up display mode.
 
 A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial), whose front
+[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments), whose front
 end, [trait contract](https://anywidgetinstruments.github.io/anywidget-instruments-industrial/trait-contract/)
 and themes it extends. The front end computes everything a widget shows — unit
 conversion included — from a dictionary of traits, so the widgets behave alike in every
@@ -73,6 +73,7 @@ aa.Cluster([speed, rpm, engine])
 
 | Project | What it is | Documentation |
 |---|---|---|
+| [anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments) | Core of the family: base view and class, trait contract, themes, liveness | <https://anywidgetinstruments.github.io/anywidget-instruments/> |
 | [anywidget-instruments-industrial](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial) | Instrumentation widgets for notebooks: gauges, tanks, LEDs, switches, charts, alarms, SCADA objects | <https://anywidgetinstruments.github.io/anywidget-instruments-industrial/> |
 | [anywidget-instruments-automotive](https://github.com/AnywidgetInstruments/anywidget-instruments-automotive) | Automotive instruments built on anywidget-instruments | <https://anywidgetinstruments.github.io/anywidget-instruments-automotive/> |
 | [afm-host-panel](https://github.com/AnywidgetInstruments/afm-host-panel) | Grafana panel plugin that runs anywidget modules, with both libraries built in | <https://anywidgetinstruments.github.io/afm-host-panel/> |

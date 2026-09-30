@@ -7,14 +7,13 @@ Guidance for AI coding agents (and humans) working on this repository.
 `anywidget-instruments-automotive`: automotive instruments (speedometer, tachometer, gauges,
 tell-tales, trip computer, cluster, head-up display mode) for computational notebooks,
 built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial), whose base
-class, trait contract, themes and hosts it reuses.
+[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments), the core of the
+family, whose base view, base class, trait contract and its generator, themes and
+liveness it reuses.
 
-The family: `anywidget-instruments` is becoming the shared base (base view, trait
-contract, themes, liveness), with `anywidget-instruments-industrial` (industrial
-widgets) and this library as its two widget libraries. Until the base is extracted,
-the code this library builds on lives in anywidget-instruments-industrial, still as the
-package `anywidget-instruments`, pinned at a commit (`package.json`).
+The family: `anywidget-instruments` is the core, with `anywidget-instruments-industrial`
+(industrial widgets) and this library as its two widget libraries. This library depends on
+the core only, pinned at a commit (`package.json`), never on the industrial library.
 
 The library is a **TypeScript front end first**: the anywidget front-end modules are the
 implementation, and Python, Julia (KaimonSlate.jl), Rust and other languages are hosts
@@ -50,7 +49,7 @@ the layout.
 npm install && npm run build    # trait contract + front-end bundle
 npm run lint && npm run typecheck && npm test
 npm run images                  # docs/img/<widget>-light.png and -dark.png, from the widgets
-pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@<commit of package.json>"
+pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments@<commit of package.json>"
 pip install -e ".[dev]" && pytest && ruff check . && ruff format --check . && mypy src
 mkdocs serve                    # documentation site, from docs/
 python scripts/screenshots.py   # light and dark images of the cluster preview

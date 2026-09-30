@@ -1,9 +1,14 @@
 // anywidget-instruments-automotive front-end entry point (AFM module, GEN-003).
 // One bundle serves every widget; the `_kind` trait selects the view.
 import { watchModel } from "anywidget-instruments/js/src/core/liveness.js";
+import { registerContracts } from "anywidget-instruments/js/src/core/view.js";
 import type { AnyModel } from "anywidget-instruments/js/src/core/model.js";
 import { type ViewClass, WIDGET_VIEWS } from "./registry.js";
+import { BY_KIND } from "./generated/contract.js";
 import { ClusterView } from "./widgets/cluster.js";
+
+// the base view reads the traits of a widget through the contract of its kind (HOST-002)
+registerContracts(BY_KIND);
 
 export const VIEWS: Record<string, ViewClass> = { ...WIDGET_VIEWS, "awa-cluster": ClusterView };
 

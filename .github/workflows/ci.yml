@@ -58,11 +58,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/setup-node@v4 # anywidget-instruments builds its front end when installed from git
+      - uses: actions/setup-node@v4 # reads the commit of the core in package.json
         with:
           node-version: 22
-      - name: anywidget-instruments, at the commit the front end is built against
-        run: pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")"
+      - name: The anywidget-instruments core, at the commit the front end is built against
+        run: pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments@$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")"
       - run: pip install -e ".[dev]"
       - run: ruff check .
       - run: ruff format --check .
@@ -87,8 +87,8 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - name: anywidget-instruments, at the commit the front end is built against
-        run: pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")"
+      - name: The anywidget-instruments core, at the commit the front end is built against
+        run: pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments@$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")"
       - run: pip install -e . marimo jupyterlab notebook
       - run: npm ci
       - run: npx playwright install --with-deps chromium

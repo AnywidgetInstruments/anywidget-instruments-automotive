@@ -10,7 +10,7 @@ import pathlib
 from typing import Any
 
 import traitlets as t
-from anywidget_instruments._base import InstrumentWidget
+from anywidget_instruments import InstrumentWidget
 
 _STATIC = pathlib.Path(__file__).parent / "static"
 

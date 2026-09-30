@@ -1,7 +1,7 @@
 # Development
 
 anywidget-instruments-automotive is built, tested and released the way
-[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial) is, on the
+[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments) is, on the
 front end of which it builds.
 
 ## Layout
@@ -34,7 +34,7 @@ npm run images                      # docs/img/<widget>-light.png and -dark.png 
 npm run test:e2e                    # Playwright: a page with no kernel, marimo, JupyterLab, Notebook 7
                                     # (needs pip install -e . marimo jupyterlab notebook)
 
-pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@<commit of package.json>"
+pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments@<commit of package.json>"
 pip install -e ".[dev]"
 pytest && ruff check . && ruff format --check . && mypy src
 mkdocs serve                        # this site
