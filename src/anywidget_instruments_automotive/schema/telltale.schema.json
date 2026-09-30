@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/telltale.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/telltale.schema.json",
   "title": "TellTale",
   "description": "A tell-tale: the symbol of a function, lit in the colour of its meaning, with its name as text (TEL-001 .. TEL-005, TEL-007).",
   "type": "object",

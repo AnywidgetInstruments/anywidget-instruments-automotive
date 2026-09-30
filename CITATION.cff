@@ -11,8 +11,8 @@ authors:
     affiliation: "Université de Poitiers"
 version: 0.1.0.dev0
 license: BSD-3-Clause
-repository-code: "https://github.com/s-celles/anywidget-instruments-automotive"
-url: "https://s-celles.github.io/anywidget-instruments-automotive/"
+repository-code: "https://github.com/AnywidgetInstruments/anywidget-instruments-automotive"
+url: "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/"
 abstract: >-
   Speedometer, tachometer, fuel and temperature gauges, tell-tales, trip
   computer, odometer, gear indicator, the indicators of electric and hybrid
@@ -37,4 +37,4 @@ references:
     authors:
       - family-names: Celles
         given-names: Sébastien
-    repository-code: "https://github.com/s-celles/anywidget-instruments-industrial"
+    repository-code: "https://github.com/AnywidgetInstruments/anywidget-instruments-industrial"

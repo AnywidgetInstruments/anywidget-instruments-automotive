@@ -7,7 +7,7 @@ Guidance for AI coding agents (and humans) working on this repository.
 `anywidget-instruments-automotive`: automotive instruments (speedometer, tachometer, gauges,
 tell-tales, trip computer, cluster, head-up display mode) for computational notebooks,
 built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/s-celles/anywidget-instruments-industrial), whose base
+[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial), whose base
 class, trait contract, themes and hosts it reuses.
 
 The family: `anywidget-instruments` is becoming the shared base (base view, trait
@@ -50,7 +50,7 @@ the layout.
 npm install && npm run build    # trait contract + front-end bundle
 npm run lint && npm run typecheck && npm test
 npm run images                  # docs/img/<widget>-light.png and -dark.png, from the widgets
-pip install "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments-industrial@<commit of package.json>"
+pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@<commit of package.json>"
 pip install -e ".[dev]" && pytest && ruff check . && ruff format --check . && mypy src
 mkdocs serve                    # documentation site, from docs/
 python scripts/screenshots.py   # light and dark images of the cluster preview

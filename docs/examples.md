@@ -64,7 +64,7 @@ With the marimo editor, from a clone of the repository (see
 [Development](development.md)):
 
 ```bash
-pip install marimo "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments-industrial"
+pip install marimo "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial"
 npm install && npm run build && pip install -e .
 marimo edit lite/marimo/electric.py
 ```
@@ -77,7 +77,7 @@ A notebook lighting the tell-tales from Python, in the browser, with no installa
 
 ## In Grafana
 
-[afm-host-panel](https://s-celles.github.io/afm-host-panel/automotives/), a Grafana panel
+[afm-host-panel](https://anywidgetinstruments.github.io/afm-host-panel/automotives/), a Grafana panel
 plugin that hosts anywidget front-end modules, shows the earlier cluster preview, drawn with anywidget-instruments widgets, on a
 dashboard: the dials follow Grafana queries and the tell-tale a dashboard variable. The
 panels are named after the widgets of this library (`anywidget_instruments_automotive:Speedometer`,

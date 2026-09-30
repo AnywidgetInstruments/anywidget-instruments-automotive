@@ -3,7 +3,7 @@
 ## License
 
 anywidget-instruments-automotive is distributed under the
-[BSD 3-Clause license](https://github.com/s-celles/anywidget-instruments-automotive/blob/main/LICENSE),
+[BSD 3-Clause license](https://github.com/AnywidgetInstruments/anywidget-instruments-automotive/blob/main/LICENSE),
 as anywidget-instruments: you may use, modify and redistribute it, including in
 commercial and closed products, provided that you keep the copyright notice and the
 license text, and that you do not use the author's name to endorse derived products. The
@@ -16,7 +16,7 @@ If you use the library in teaching material, a publication, a thesis or a produc
 please cite it. This is a request, not a condition of the license.
 
 The citation metadata is in
-[`CITATION.cff`](https://github.com/s-celles/anywidget-instruments-automotive/blob/main/CITATION.cff)
+[`CITATION.cff`](https://github.com/AnywidgetInstruments/anywidget-instruments-automotive/blob/main/CITATION.cff)
 at the root of the repository; GitHub shows it as *Cite this repository*, and reference
 managers can import it.
 
@@ -27,7 +27,7 @@ APA:
 
 > Celles, S. (2026). *anywidget-instruments-automotive: automotive instruments for computational
 > notebooks* (Version 0.1.0.dev0) [Computer software].
-> https://github.com/s-celles/anywidget-instruments-automotive
+> https://github.com/AnywidgetInstruments/anywidget-instruments-automotive
 
 ## Releases
 

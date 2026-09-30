@@ -27,7 +27,7 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md("""
-    [⬅ Back to the documentation](https://s-celles.github.io/anywidget-instruments-automotive/examples/)
+    [⬅ Back to the documentation](https://anywidgetinstruments.github.io/anywidget-instruments-automotive/examples/)
 
     # Instrument cluster
 
@@ -41,7 +41,7 @@ def _(mo):
     > The figures are simulated.
 
     > **Not a vehicle instrument.** See the
-    > [safety notice](https://s-celles.github.io/anywidget-instruments-automotive/safety/).
+    > [safety notice](https://anywidgetinstruments.github.io/anywidget-instruments-automotive/safety/).
     """)
     return
 

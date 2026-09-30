@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/odometer.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/odometer.schema.json",
   "title": "Odometer",
   "description": "Total and trip distance, in a mechanical-counter style (DIG-005).",
   "type": "object",

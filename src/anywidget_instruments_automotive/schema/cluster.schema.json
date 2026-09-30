@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/cluster.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/cluster.schema.json",
   "title": "Cluster",
   "description": "An instrument panel: dials on the sides, tell-tales between them, digital displays below; its hud, theme, brightness and unit_system apply to every widget it holds (CLU-001 .. CLU-003, DIS-001, HUD-001 .. HUD-006, UNIT-004).",
   "type": "object",

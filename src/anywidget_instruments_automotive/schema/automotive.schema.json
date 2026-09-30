@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/automotive.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/automotive.schema.json",
   "title": "Automotive",
   "description": "Traits shared by every widget of anywidget-instruments-automotive (API-001, API-002, ROB-001). The common traits of anywidget-instruments are kept; every widget is an indicator.",
   "type": "object",

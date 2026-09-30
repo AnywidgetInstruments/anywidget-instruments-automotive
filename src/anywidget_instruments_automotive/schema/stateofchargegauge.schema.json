@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/stateofchargegauge.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/stateofchargegauge.schema.json",
   "title": "StateOfChargeGauge",
   "description": "The charge of the traction battery, 0 to 100 %, with a low zone and a battery symbol lit amber in it, and a charging state (EV-001, EV-002).",
   "type": "object",

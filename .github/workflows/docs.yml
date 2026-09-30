@@ -39,7 +39,7 @@ jobs:
         run: |
           pip install build uv # uv: import analysis of the marimo export
           sha=$(node -p "require('./package.json').devDependencies['anywidget-instruments'].split('#')[1]")
-          pip wheel --no-deps -w dist "anywidget-instruments @ git+https://github.com/s-celles/anywidget-instruments-industrial@$sha"
+          pip wheel --no-deps -w dist "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@$sha"
           pip install dist/anywidget_instruments-*.whl
           python -m build --wheel -o dist
           pip install -e ".[docs]" jupyter-server jupyterlite-core jupyterlite-pyodide-kernel

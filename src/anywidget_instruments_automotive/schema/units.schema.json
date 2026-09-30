@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/units.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/units.schema.json",
   "title": "Units",
   "description": "Unit names the front end accepts, by quantity, and the unit each unit system assigns to a quantity (UNIT-001, UNIT-002, UNIT-017). A unit name is also the text shown next to a value, so a gallon is always named imperial or US (UNIT-005). The first unit of each quantity is its metric unit, the default of input_unit (UNIT-010).",
   "x-awa-units": {

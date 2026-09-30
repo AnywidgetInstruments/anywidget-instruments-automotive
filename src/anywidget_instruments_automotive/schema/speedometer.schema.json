@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/speedometer.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/speedometer.schema.json",
   "title": "Speedometer",
   "description": "Vehicle speed on a dial with a digital readout, rounded up to the readout resolution after conversion, never down (DIAL-101, SPD-001 .. SPD-004).",
   "type": "object",

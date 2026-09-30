@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://s-celles.github.io/anywidget-instruments-automotive/schema/tachometer.schema.json",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/tachometer.schema.json",
   "title": "Tachometer",
   "description": "Engine speed in rpm, with a red zone from redline, a shift light and the ready state of a drivetrain able to move with its engine stopped (DIAL-102 .. DIAL-104).",
   "type": "object",
