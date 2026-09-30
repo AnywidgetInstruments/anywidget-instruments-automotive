@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/tachometer.schema.json",
+  "title": "Tachometer",
+  "description": "Engine speed in rpm, with a red zone from redline, a shift light and the ready state of a drivetrain able to move with its engine stopped (DIAL-102 .. DIAL-104).",
+  "type": "object",
+  "x-awi-class": "Tachometer",
+  "x-awa-quantity": "engine_speed",
+  "allOf": [
+    {
+      "$ref": "dial.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-tachometer",
+      "default": "awa-tachometer",
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "$ref": "units.schema.json#/$defs/engine_speed"
+    },
+    "input_unit": {
+      "$ref": "units.schema.json#/$defs/engine_speed"
+    },
+    "max": {
+      "default": 7000
+    },
+    "ticks": {
+      "default": 7
+    },
+    "redline": {
+      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "description": "Start of the red zone, in rpm; null: no red zone (DIAL-102).",
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "shift_light": {
+      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json#/$defs/optionalNumber",
+      "description": "Engine speed at and above which the shift light is lit; null: no shift light (DIAL-103).",
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "ready": {
+      "type": "boolean",
+      "description": "The vehicle can move: at 0 rpm the dial says READY rather than looking off (DIAL-104).",
+      "default": false,
+      "x-awi-writer": "host"
+    },
+    "resolution": {
+      "default": 50
+    },
+    "label": {
+      "default": "Engine speed"
+    }
+  }
+}

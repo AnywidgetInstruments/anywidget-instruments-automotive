@@ -1,0 +1,310 @@
+{
+  "description": "Rows of a trip computer (DIG-001 .. DIG-004, UNIT-016): the raw figures of a trip (metric), its energy (fuel by default) and a unit system in, the text of each row out. null: no figure, a dash with its reason.",
+  "cases": [
+    {
+      "name": "cruising",
+      "trip": {
+        "speed": 90,
+        "fuel_rate": 5.4,
+        "distance": 45,
+        "fuel_used": 3.15,
+        "elapsed": 1800
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "6.0",
+          "L/100 km"
+        ],
+        "average": [
+          "7.0",
+          "L/100 km"
+        ],
+        "fuel_used": [
+          "3.15",
+          "L"
+        ],
+        "distance": [
+          "45.0",
+          "km"
+        ],
+        "elapsed": [
+          "0:30:00",
+          ""
+        ]
+      }
+    },
+    {
+      "name": "at a standstill, per hour",
+      "trip": {
+        "speed": 0,
+        "fuel_rate": 0.8,
+        "distance": 45,
+        "fuel_used": 3.15,
+        "elapsed": 1800
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "0.8",
+          "L/h"
+        ]
+      }
+    },
+    {
+      "name": "just below 5 km/h, per hour",
+      "trip": {
+        "speed": 4.99,
+        "fuel_rate": 1.0
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "1.0",
+          "L/h"
+        ]
+      }
+    },
+    {
+      "name": "at 5 km/h, per 100 km",
+      "trip": {
+        "speed": 5,
+        "fuel_rate": 1.0
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "20.0",
+          "L/100 km"
+        ]
+      }
+    },
+    {
+      "name": "no average under 0.1 km",
+      "trip": {
+        "distance": 0.099,
+        "fuel_used": 0.02
+      },
+      "unit_system": "metric",
+      "rows": {
+        "average": [
+          null,
+          "L/100 km"
+        ]
+      }
+    },
+    {
+      "name": "an average from 0.1 km",
+      "trip": {
+        "distance": 0.1,
+        "fuel_used": 0.01
+      },
+      "unit_system": "metric",
+      "rows": {
+        "average": [
+          "10.0",
+          "L/100 km"
+        ]
+      }
+    },
+    {
+      "name": "us: mpg, gallons, miles",
+      "trip": {
+        "speed": 100,
+        "fuel_rate": 8,
+        "distance": 160.9344,
+        "fuel_used": 12,
+        "elapsed": 3600
+      },
+      "unit_system": "us",
+      "rows": {
+        "instant": [
+          "29.4",
+          "mpg (US)"
+        ],
+        "average": [
+          "31.5",
+          "mpg (US)"
+        ],
+        "fuel_used": [
+          "3.17",
+          "US gal"
+        ],
+        "distance": [
+          "100.0",
+          "mi"
+        ]
+      }
+    },
+    {
+      "name": "imperial at a standstill: gallons per hour, no infinite mpg",
+      "trip": {
+        "speed": 0,
+        "fuel_rate": 1.2
+      },
+      "unit_system": "imperial",
+      "rows": {
+        "instant": [
+          "0.3",
+          "imperial gal/h"
+        ]
+      }
+    },
+    {
+      "name": "a zero consumption has no mpg",
+      "trip": {
+        "speed": 80,
+        "fuel_rate": 0
+      },
+      "unit_system": "us",
+      "rows": {
+        "instant": [
+          null,
+          "mpg (US)"
+        ]
+      }
+    },
+    {
+      "name": "range where given",
+      "trip": {
+        "range": 420.4
+      },
+      "unit_system": "metric",
+      "rows": {
+        "range": [
+          "420",
+          "km"
+        ]
+      }
+    },
+    {
+      "name": "range in miles",
+      "trip": {
+        "range": 100
+      },
+      "unit_system": "imperial",
+      "rows": {
+        "range": [
+          "62",
+          "mi"
+        ]
+      }
+    },
+    {
+      "name": "no range row without a range",
+      "trip": {
+        "speed": 50
+      },
+      "unit_system": "metric",
+      "rows": {
+        "range": "absent"
+      }
+    },
+    {
+      "name": "electric cruising",
+      "energy": "electric",
+      "trip": {
+        "speed": 100,
+        "power": 16,
+        "distance": 50,
+        "energy_used": 8,
+        "elapsed": 1800
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "16.0",
+          "kWh/100 km"
+        ],
+        "average": [
+          "16.0",
+          "kWh/100 km"
+        ],
+        "energy_used": [
+          "8.00",
+          "kWh"
+        ],
+        "distance": [
+          "50.0",
+          "km"
+        ],
+        "fuel_used": "absent"
+      }
+    },
+    {
+      "name": "electric in the us: mi/kWh",
+      "energy": "electric",
+      "trip": {
+        "speed": 100,
+        "power": 16
+      },
+      "unit_system": "us",
+      "rows": {
+        "instant": [
+          "3.9",
+          "mi/kWh"
+        ]
+      }
+    },
+    {
+      "name": "electric, regenerating: the power, never a negative consumption",
+      "energy": "electric",
+      "trip": {
+        "speed": 60,
+        "power": -12.5
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "12.5",
+          "kW"
+        ]
+      }
+    },
+    {
+      "name": "electric below 5 km/h: the power",
+      "energy": "electric",
+      "trip": {
+        "speed": 3,
+        "power": 1.2
+      },
+      "unit_system": "metric",
+      "rows": {
+        "instant": [
+          "1.2",
+          "kW"
+        ]
+      }
+    },
+    {
+      "name": "electric, no average under 0.1 km",
+      "energy": "electric",
+      "trip": {
+        "distance": 0.05,
+        "energy_used": 0.01
+      },
+      "unit_system": "metric",
+      "rows": {
+        "average": [
+          null,
+          "kWh/100 km"
+        ]
+      }
+    },
+    {
+      "name": "electric, net regeneration has no average",
+      "energy": "electric",
+      "trip": {
+        "distance": 2,
+        "energy_used": -0.1
+      },
+      "unit_system": "metric",
+      "rows": {
+        "average": [
+          null,
+          "kWh/100 km"
+        ]
+      }
+    }
+  ]
+}

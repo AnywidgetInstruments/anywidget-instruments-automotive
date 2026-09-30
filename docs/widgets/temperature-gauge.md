@@ -1,16 +1,19 @@
 # TemperatureGauge
 
-!!! info "Planned"
-    `TemperatureGauge` is specified but not written yet: this page describes what it will show.
+[![A temperature gauge at 90 °C, cold and hot zones, day theme](../img/widgets/temperature-gauge-light.png#only-light)![A temperature gauge at 90 °C, cold and hot zones, night theme](../img/widgets/temperature-gauge-dark.png#only-dark)](../../marimo/dials/ "Open it in marimo, in your browser")
 
-![Preview of TemperatureGauge, light theme](../img/widgets/temperature-gauge-light.png#only-light)
-![Preview of TemperatureGauge, dark theme](../img/widgets/temperature-gauge-dark.png#only-dark)
+*Click the picture to drive it in a marimo notebook, in your browser.*
 
-*Preview: an anywidget-instruments [`Thermometer`](https://s-celles.github.io/anywidget-instruments/widgets/thermometer/) with its high limits, as the [cluster preview](../examples.md) draws it — not yet
-`TemperatureGauge` itself. Captured from the running preview, in the theme of this page.*
+Coolant or oil temperature, with a cold zone below `cold` and a hot zone from `hot`,
+where the temperature tell-tale lights red (DIAL-107, DIAL-108). °C, or °F in the `us`
+unit system.
 
-Coolant or oil temperature, cold and hot zones, and the temperature tell-tale when the
-hot zone is reached.
+```python
+aa.TemperatureGauge(118, hot=115)       # in the hot zone: the tell-tale lit red
+aa.TemperatureGauge(90, unit_system="us")  # 194 °F
+```
+
+[![Fuel and temperature gauges, day theme](../img/gauges-light.png#only-light)![Fuel and temperature gauges, night theme](../img/gauges-dark.png#only-dark)](../../marimo/dials/ "Open it in marimo, in your browser")
 
 **Dials** · [Widget catalog](../widgets.md) · [Specification](../specification.md) ·
 [Safety notice](../safety.md)

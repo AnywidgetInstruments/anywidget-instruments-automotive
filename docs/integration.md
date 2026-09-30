@@ -10,12 +10,28 @@ id: cluster
 title: Cluster
 columns: 3
 instruments:
-  - {widget: "anywidget_automotives:Speedometer", source: trip.speed_kmh, max: 220}
-  - {widget: "anywidget_automotives:Tachometer", source: trip.rpm, max: 7000}
-  - {widget: "anywidget_automotives:TripComputer", source: trip.average_l_per_100km}
+  - {widget: "anywidget_instruments_automotive:Speedometer", source: trip.speed_kmh, max: 220}
+  - {widget: "anywidget_instruments_automotive:Tachometer", source: trip.rpm, max: 7000}
 ```
 
 `just dashboard` in the studio opens the pages in marimo, with its own HUD switch.
+
+The `TripComputer` computes its consumptions itself, with the same rules as the studio
+(per hour below 5 km/h, no average under 0.1 km), from the raw figures of the trip. Whatever
+feeds it maps the studio's sources onto its fields:
+
+| `TripComputer` field | Studio source |
+|---|---|
+| `speed` (km/h) | `trip.speed_kmh` |
+| `fuel_rate` (L/h) | `trip.instant_lph` |
+| `distance` (km) | `trip.distance_km` |
+| `fuel_used` (L) | `trip.fuel_used_l` |
+
+<!-- illustration: not run -->
+```python
+trip = aa.TripComputer()
+trip.update(speed=speed_kmh, fuel_rate=instant_lph, distance=distance_km, fuel_used=fuel_used_l)
+```
 
 | Source | Meaning |
 |---|---|

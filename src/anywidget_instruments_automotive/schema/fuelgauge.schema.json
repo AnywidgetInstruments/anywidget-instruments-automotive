@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/fuelgauge.schema.json",
+  "title": "FuelGauge",
+  "description": "Fuel level from empty to full, with a reserve zone and the fuel pump symbol, lit amber in the reserve (DIAL-105, DIAL-106).",
+  "type": "object",
+  "x-awi-class": "FuelGauge",
+  "x-awa-quantity": "level",
+  "allOf": [
+    {
+      "$ref": "dial.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-fuelgauge",
+      "default": "awa-fuelgauge",
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "$ref": "units.schema.json#/$defs/level"
+    },
+    "input_unit": {
+      "$ref": "units.schema.json#/$defs/level"
+    },
+    "reserve": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Upper end of the reserve zone, in input_unit (percent of a full tank).",
+      "default": 12,
+      "x-awi-writer": "host"
+    },
+    "filler_side": {
+      "enum": [
+        "",
+        "left",
+        "right"
+      ],
+      "description": "Side of the filler flap, pointed at by the fuel pump symbol; empty: not known (DIAL-106).",
+      "default": "",
+      "x-awi-writer": "host"
+    },
+    "ticks": {
+      "default": 2
+    },
+    "minor_ticks": {
+      "default": 1
+    },
+    "size": {
+      "default": [
+        160,
+        130
+      ]
+    },
+    "label": {
+      "default": "Fuel"
+    }
+  }
+}

@@ -1,0 +1,188 @@
+/* anywidget-instruments-automotive styles, on top of those of anywidget-instruments.
+ * Every rule is scoped under .awa-root, which is also an .awi-root (GEN-008),
+ * and every colour is a custom property that a page may override. */
+@import "anywidget-instruments/js/src/styles.css";
+
+.awa-root {
+  /* tell-tale colours by meaning (TEL-001): the same in every theme, on a dark ground */
+  --awa-tt-ground: #0b0f14;
+  --awa-tt-red: #ff453a;
+  --awa-tt-amber: #ffb020;
+  --awa-tt-green: #30d158;
+  --awa-tt-blue: #4d8dff;
+  /* an unlit tell-tale is a dim neutral grey whatever its colour when lit (TEL-005) */
+  --awa-tt-off: #4b5563;
+  --awa-tt-flag-ink: #f9fafb;
+}
+
+/* ---- tell-tales ---------------------------------------------------------- */
+.awa-root .awa-tt { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--awa-tt-off); }
+.awa-root .awa-tt-tile { position: relative; width: 100%; height: 100%; }
+.awa-root.awa-telltalecluster .awa-tt-tile { width: var(--awa-tile, 56px); height: var(--awa-tile, 56px); }
+.awa-root .awa-tt-svg { width: 100%; height: 100%; display: block; }
+.awa-root .awa-tt-ground { fill: var(--awa-tt-ground); }
+.awa-root .awa-sym { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.awa-root .awa-sym .awa-fill { fill: currentColor; stroke: none; }
+.awa-root .awa-sym .awa-sym-text { fill: currentColor; stroke: none; font-family: var(--awi-font, system-ui, sans-serif); font-weight: 700; }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-red { color: var(--awa-tt-red); }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-amber { color: var(--awa-tt-amber); }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-green { color: var(--awa-tt-green); }
+.awa-root .awa-tt:is(.awa-tt-on, .awa-tt-blinking).awa-blue { color: var(--awa-tt-blue); }
+/* TEL-007: the period comes from the view (--awa-blink-period, 1 / BLINK_HZ) */
+.awa-root .awa-tt-blinking .awa-sym { animation: awa-blink var(--awa-blink-period, 0.667s) steps(1, end) infinite; }
+@keyframes awa-blink { 50% { opacity: 0.12; } }
+/* A11Y-002: no blinking under reduced motion; the state is then given by text */
+.awa-root .awa-tt-blinking .awa-tt-flag { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .awa-root .awa-tt-blinking .awa-sym { animation: none; }
+  .awa-root .awa-tt-blinking .awa-tt-flag:not([hidden]) { display: block; }
+}
+.awa-root .awa-tt-flag { position: absolute; left: 0; right: 0; bottom: 2px; text-align: center; font-size: 8px; font-weight: 700; letter-spacing: 0.02em; color: var(--awa-tt-flag-ink); pointer-events: none; }
+/* no state, a rejected state, or a stale one: never read as an unlit lamp */
+.awa-root .awa-tt:is(.awa-tt-missing, .awa-tt-invalid, .awa-tt-stale) .awa-tt-ground { stroke: var(--awa-tt-flag-ink); stroke-width: 0.8; stroke-dasharray: 1.5 1.2; }
+.awa-root .awa-tt:is(.awa-tt-missing, .awa-tt-invalid) .awa-sym { opacity: 0.35; }
+.awa-root .awa-tt-name { font-size: 11px; line-height: 1.2; text-align: center; color: var(--awi-fg); max-width: calc(var(--awa-tile, 56px) + 40px); overflow-wrap: normal; }
+.awa-root .awa-tt-list { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: flex-start; }
+.awa-root.awa-telltalecluster .awa-tt { width: calc(var(--awa-tile, 56px) + 40px); }
+.awa-root .awa-row-flag { font-size: 11px; font-weight: 700; color: var(--awi-alarm-hihi); margin-bottom: 4px; }
+
+/* ---- dials ---------------------------------------------------------------- */
+.awa-root {
+  --awa-zone-danger: #e5372c;
+  --awa-zone-warning: #f59e0b;
+  --awa-zone-cold: #3b82f6;
+  --awa-limit: #e5372c;
+}
+.awa-root .awa-face { fill: var(--awi-face); stroke: var(--awi-face-stroke); stroke-width: 1.5; }
+.awa-root .awa-tick-major { stroke: var(--awi-fg); stroke-width: 2; }
+.awa-root .awa-tick-minor { stroke: var(--awi-muted); stroke-width: 1; }
+.awa-root .awa-tick-label { fill: var(--awi-fg); font-size: 13px; font-weight: 600; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root .awa-zone-danger { fill: var(--awa-zone-danger); }
+.awa-root .awa-zone-warning { fill: var(--awa-zone-warning); }
+.awa-root .awa-zone-cold { fill: var(--awa-zone-cold); }
+.awa-root .awa-needle-shape { fill: var(--awi-needle); }
+.awa-root .awa-hub { fill: var(--awi-fg); }
+.awa-root .awa-needle { transform-box: view-box; }
+/* DIS-003, A11Y-002: the needle glides only when asked, never under reduced motion */
+.awa-root.awa-animate .awa-needle { transition: transform 0.3s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .awa-root.awa-animate .awa-needle { transition: none; }
+}
+.awa-root .awa-readout { fill: var(--awi-fg); font-size: 24px; font-weight: 700; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root:is(.awa-fuelgauge, .awa-temperaturegauge, .awa-stateofchargegauge) .awa-readout { font-size: 16px; }
+.awa-root .awa-unit { fill: var(--awi-muted); font-size: 12px; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root:is(.awa-fuelgauge, .awa-temperaturegauge, .awa-stateofchargegauge) .awa-unit { display: none; }
+.awa-root .awa-dial { overflow: visible; }
+.awa-root .awa-note { fill: var(--awi-muted); font-size: 11px; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root .awa-oor { fill: var(--awi-alarm-hihi); }
+.awa-root .awa-limit { stroke: var(--awa-limit); stroke-width: 3.5; stroke-linecap: round; }
+/* SPD-003: above the limit, the readout is drawn in the colour of the limit and underlined */
+.awa-root.awa-over-limit .awa-readout { fill: var(--awa-limit); text-decoration: underline; }
+.awa-root:is(.awa-invalid, .awa-missing) .awa-readout { font-size: 15px; fill: var(--awi-muted); }
+.awa-root.awa-invalid .awa-needle { opacity: 0.3; }
+.awa-root.awa-stale .awa-needle, .awa-root.awa-stale .awa-readout { opacity: 0.5; }
+.awa-root .awa-shift { fill: var(--awa-tt-off); stroke: var(--awi-face-stroke); }
+.awa-root .awa-shift.awa-lit { fill: var(--awa-tt-amber); }
+.awa-root .awa-ready { fill: var(--awa-tt-green); font-size: 13px; font-weight: 700; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root .awa-dial-tt { color: var(--awi-muted); opacity: 0.6; }
+.awa-root .awa-dial-tt.awa-lit { opacity: 1; }
+.awa-root .awa-dial-tt.awa-lit.awa-red { color: var(--awa-tt-red); }
+.awa-root .awa-dial-tt.awa-lit.awa-amber { color: var(--awa-tt-amber); }
+.awa-root .awa-filler { fill: var(--awi-muted); }
+
+/* ---- digital displays ----------------------------------------------------- */
+.awa-root { --awa-lcd-bg: #0b0f14; --awa-lcd-ink: #e5e7eb; --awa-lcd-dim: #9ca3af; }
+.awa-root.awa-tripcomputer .awi-body, .awa-root.awa-odometer .awi-body, .awa-root.awa-gearindicator .awi-body { height: auto !important; background: var(--awa-lcd-bg); color: var(--awa-lcd-ink); border-radius: 8px; padding: 8px 12px; box-sizing: border-box; font-family: var(--awi-font, system-ui, sans-serif); font-variant-numeric: tabular-nums slashed-zero; }
+.awa-root .awa-state-line { font-size: 11px; font-weight: 700; color: var(--awa-tt-amber); }
+.awa-root .awa-trip { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0; align-items: baseline; }
+.awa-root .awa-trip dt { font-size: 12px; color: var(--awa-lcd-dim); }
+.awa-root .awa-trip dd { margin: 0; text-align: right; white-space: nowrap; }
+.awa-root .awa-trip-num { font-size: 18px; font-weight: 700; }
+.awa-root .awa-trip-unit { font-size: 11px; color: var(--awa-lcd-dim); margin-left: 4px; }
+.awa-root .awa-trip-why { display: block; font-size: 10px; color: var(--awa-lcd-dim); }
+.awa-root .awa-odo-row { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.awa-root .awa-odo-trip { margin-top: 6px; }
+.awa-root .awa-odo-tag { font-size: 10px; font-weight: 700; color: var(--awa-lcd-dim); margin-right: auto; }
+.awa-root .awa-drums { display: inline-flex; gap: 2px; }
+.awa-root .awa-drum { display: inline-block; min-width: 0.85em; padding: 1px 2px; text-align: center; font-size: 20px; font-weight: 700; background: #1f2937; color: var(--awa-lcd-ink); border-radius: 2px; }
+.awa-root .awa-drums-trip .awa-drum { font-size: 15px; }
+.awa-root .awa-drum-tenth { background: var(--awa-lcd-ink); color: var(--awa-lcd-bg); }
+.awa-root .awa-odo-unit { font-size: 11px; color: var(--awa-lcd-dim); min-width: 2em; }
+.awa-root.awa-gearindicator .awi-body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.awa-root .awa-gear-row { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.awa-root .awa-gear-state { text-align: center; }
+.awa-root .awa-gear { font-size: 56px; font-weight: 800; line-height: 1; min-width: 0.8em; text-align: center; }
+.awa-root.awa-gear-reverse .awa-gear { color: var(--awa-tt-amber); }
+.awa-root .awa-gear-arrow { width: 22px; height: 22px; }
+.awa-root .awa-shift-arrow { fill: var(--awa-tt-green); }
+.awa-root.awa-stale :is(.awa-trip, .awa-odo-row, .awa-gear) { opacity: 0.5; }
+
+/* ---- cluster -------------------------------------------------------------- */
+.awa-root {
+  /* the one colour of the figures in head-up display mode (HUD-003) */
+  --awa-hud: #7ee8fa;
+}
+.awa-root .awa-panel { display: grid; grid-template-columns: auto auto auto; grid-template-areas: "left mid right" "bottom bottom bottom"; gap: 12px 16px; justify-content: center; align-items: center; padding: 8px; border-radius: 10px; }
+.awa-root .awa-area { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.awa-root .awa-area-left { grid-area: left; }
+.awa-root .awa-area-mid { grid-area: mid; max-width: 360px; }
+.awa-root .awa-area-right { grid-area: right; }
+.awa-root .awa-area-bottom { grid-area: bottom; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+.awa-root .awa-area:empty { display: none; }
+.awa-root .awa-cell-invalid { padding: 8px 12px; border: 1px dashed var(--awi-alarm-hihi); color: var(--awi-alarm-hihi); font-size: 12px; font-weight: 700; }
+.awa-root .awa-cluster-note { font-size: 11px; color: var(--awi-muted); text-align: center; margin-top: 4px; }
+/* HUD-001, HUD-002: mirrored, on black */
+.awa-root.awa-hud-on .awa-panel { transform: scaleX(-1); background: #000; }
+/* HUD-003: one colour for the figures, whatever the theme; tell-tale colours are kept */
+.awa-root.awa-hud-on .awa-panel .awa-root.awa-root.awa-root.awa-root {
+  --awi-fg: var(--awa-hud);
+  --awi-muted: var(--awa-hud);
+  --awi-face: #000;
+  --awi-face-stroke: var(--awa-hud);
+  --awi-needle: var(--awa-hud);
+  --awa-lcd-bg: #000;
+  --awa-lcd-ink: var(--awa-hud);
+  --awa-lcd-dim: var(--awa-hud);
+  --awa-tt-ground: #000;
+  --awa-limit: var(--awa-hud);
+  color: var(--awa-hud);
+}
+.awa-root.awa-hud-on .awa-panel .awa-drum { background: #000; color: var(--awa-hud); border: 1px solid var(--awa-hud); }
+
+/* ---- night theme (LEG-003, LEG-004) ------------------------------------------
+ * The dark theme at a lower luminance: dimmer figures on a darker face, still at
+ * the contrast targets (LEG-002), and no large bright area. Tell-tale colours are
+ * not the theme's (TEL-001). */
+.awa-root.awa-root.awa-root.awa-root.awa-night {
+  --awi-fg: #b3bac5;
+  --awi-muted: #8a93a3;
+  --awi-face: #0b0f14;
+  --awi-face-stroke: #4b5563;
+  --awi-needle: #d9480f;
+  --awi-bg: #05070a;
+  --awa-lcd-bg: #05070a;
+  --awa-lcd-ink: #b3bac5;
+  --awa-lcd-dim: #8a93a3;
+}
+
+/* ---- electric and hybrid drivetrains (EV) --------------------------------- */
+.awa-root { --awa-zone-charge: #22c55e; --awa-flow-on: #22c55e; }
+.awa-root .awa-zone-charge { fill: var(--awa-zone-charge); }
+.awa-root .awa-dial-tt.awa-lit.awa-green { color: var(--awa-tt-green); }
+.awa-root.awa-regen .awa-readout { fill: var(--awa-zone-charge); }
+.awa-root.awa-charging .awa-note { fill: var(--awa-tt-green); font-weight: 700; }
+.awa-root.awa-powerflow .awi-body { height: auto !important; font-family: var(--awi-font, system-ui, sans-serif); }
+.awa-root .awa-flow { height: auto; }
+.awa-root .awa-flow-node rect { fill: var(--awi-face); stroke: var(--awi-face-stroke); stroke-width: 1.5; }
+.awa-root .awa-flow-node.awa-on rect { stroke: var(--awa-flow-on); stroke-width: 2.5; }
+.awa-root .awa-flow-name { fill: var(--awi-fg); font-size: 12px; font-weight: 700; }
+.awa-root .awa-flow-kw { fill: var(--awi-muted); font-size: 10px; }
+.awa-root .awa-flow-arrow { stroke: var(--awi-face-stroke); stroke-width: 2; stroke-dasharray: 3 4; opacity: 0.45; fill: none; }
+.awa-root .awa-flow-arrow.awa-on { stroke: var(--awa-flow-on); stroke-width: 4; stroke-dasharray: none; opacity: 1; }
+.awa-root .awa-flow-head { fill: var(--awa-flow-on); }
+.awa-root .awa-flow-mode { font-size: 13px; font-weight: 800; text-align: center; color: var(--awi-fg); }
+.awa-root .awa-flow-text { font-size: 11px; text-align: center; color: var(--awi-muted); min-height: 1.2em; }
+
+/* LEG-005: every figure a driver reads has digits of equal width, and a zero with a
+ * slash, so that it is not read as an eight; the typeface is the page's own. */
+.awa-root :is(.awa-readout, .awa-tick-label, .awa-trip, .awa-drum, .awa-gear, .awa-flow-kw, .awa-note) { font-variant-numeric: tabular-nums slashed-zero; }

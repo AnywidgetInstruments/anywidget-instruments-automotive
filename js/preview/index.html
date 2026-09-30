@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>anywidget-instruments-automotive preview</title>
+<link rel="stylesheet" href="../../src/anywidget_instruments_automotive/static/index.css">
+<style>
+  body { font-family: system-ui, sans-serif; margin: 16px; background: #ffffff; color: #1f2937; }
+  body.dark { background: #05070a; color: #b3bac5; }
+  .shot { display: inline-flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; padding: 12px; margin: 0 16px 16px 0; vertical-align: top; }
+  h2 { font-size: 13px; font-weight: 600; margin: 0 0 4px; }
+</style>
+</head>
+<body>
+<!-- Every widget, drawn by the built front end from plain trait dictionaries, as a
+     host with no kernel would set them. `npm run build`, then serve the repository
+     root and open /js/preview/index.html (?theme=dark for the night theme).
+     js/scripts/docs-images.mjs captures each .shot for the documentation (DOC-005). -->
+<main id="shots"></main>
+<script type="module">
+import widget from "../../src/anywidget_instruments_automotive/static/index.js";
+import contract from "../../src/anywidget_instruments_automotive/static/contract.json" with { type: "json" };
+
+const theme = new URLSearchParams(location.search).get("theme") === "dark" ? "dark" : "light";
+if (theme === "dark") document.body.classList.add("dark");
+
+function model(state) {
+  const handlers = {};
+  return {
+    get: (k) => state[k],
+    set: (k, v) => { state[k] = v; (handlers[`change:${k}`] || []).forEach((h) => h()); },
+    save_changes: () => {},
+    on: (e, cb) => (handlers[e] ||= []).push(cb),
+    off: (e, cb) => { handlers[e] = (handlers[e] || []).filter((h) => h !== cb); },
+    send: () => {},
+  };
+}
+
+/** A widget from the class defaults of the contract and the given traits. */
+function show(parent, title, traits) {
+  const defaults = Object.fromEntries(Object.entries(contract.widgets[title].traits).map(([k, s]) => [k, s.default]));
+  const el = document.createElement("div");
+  parent.appendChild(el);
+  // the documentation shows the day and the night themes (LEG-003, DOC-005)
+  const m = model({ ...defaults, theme: theme === "dark" ? "night" : "day", ...traits });
+  widget.initialize({ model: m });
+  widget.render({ model: m, el });
+}
+
+/** One picture of the documentation: docs/img/<name>-light.png and -dark.png. */
+function shot(name, fill) {
+  const section = document.createElement("section");
+  section.className = "shot";
+  section.dataset.shot = name;
+  document.getElementById("shots").appendChild(section);
+  fill(section);
+}
+
+// A blinking tell-tale would be captured at a random phase: the pictures show
+// steady states, and the blinking one is described in the catalog.
+shot("telltale", (s) => {
+  show(s, "TellTale", { function: "oil_pressure", value: "on" });
+  show(s, "TellTale", { function: "engine", value: "on" });
+  show(s, "TellTale", { function: "low_beam", value: "on" });
+  show(s, "TellTale", { function: "high_beam", value: "on" });
+  show(s, "TellTale", { function: "brake", value: "off" });
+  show(s, "TellTale", { function: "abs", value: null });
+});
+
+shot("telltalecluster", (s) => {
+  show(s, "TellTaleCluster", {
+    label: "Tell-tales",
+    value: [
+      { function: "turn_left", state: "off" },
+      { function: "low_beam", state: "on" },
+      { function: "high_beam", state: "off" },
+      { function: "engine", state: "on" },
+      { function: "low_fuel", state: "on" },
+      { function: "oil_pressure", state: "off" },
+      { function: "seat_belt", state: "on" },
+      { function: "abs", state: "off" },
+      { function: "turn_right", state: "off" },
+    ],
+  });
+});
+
+// every symbol, lit: the catalog shows the set of functions
+shot("telltale-functions", (s) => {
+  show(s, "TellTaleCluster", {
+    size: [44, 44],
+    value: contract.widgets.TellTale.traits.function.values.map((f) => ({ function: f, state: "on" })),
+  });
+  s.style.maxWidth = "760px";
+});
+
+shot("speedometer", (s) => {
+  show(s, "Speedometer", { value: 87.3, limit: 90 });
+  show(s, "Speedometer", { value: 104, limit: 90, label: "Above the limit" });
+  show(s, "Speedometer", { value: 87.3, unit_system: "us", label: "Speed (us)" });
+});
+
+shot("tachometer", (s) => {
+  show(s, "Tachometer", { value: 3200, redline: 6000, shift_light: 5800 });
+  show(s, "Tachometer", { value: 6100, redline: 6000, shift_light: 5800, label: "Shift light" });
+  show(s, "Tachometer", { value: 0, max: 7000, ready: true, label: "Hybrid, ready" });
+});
+
+shot("gauges", (s) => {
+  show(s, "FuelGauge", { value: 64, filler_side: "right" });
+  show(s, "FuelGauge", { value: 8, filler_side: "right", label: "Fuel, reserve" });
+  show(s, "TemperatureGauge", { value: 90 });
+  show(s, "TemperatureGauge", { value: 118, label: "Coolant, hot" });
+});
+
+shot("dial-states", (s) => {
+  show(s, "Speedometer", { label: "No value yet" });
+  show(s, "Speedometer", { value: 250, label: "Above the scale" });
+  show(s, "Speedometer", { value: "nan", label: "Invalid value" });
+});
+
+shot("digital", (s) => {
+  show(s, "TripComputer", { value: { speed: 92, fuel_rate: 5.6, distance: 48.3, fuel_used: 3.1, elapsed: 1930, range: 420 } });
+  show(s, "TripComputer", { label: "Trip, just started", value: { speed: 3, fuel_rate: 0.9, distance: 0.04, fuel_used: 0.01, elapsed: 25 } });
+  show(s, "Odometer", { value: 48213.7, trip: 48.36 });
+  show(s, "GearIndicator", { value: "3", suggestion: "up" });
+  show(s, "GearIndicator", { value: "D", label: "Automatic" });
+});
+
+shot("electric", (s) => {
+  show(s, "PowerMeter", { value: 42, label: "Power" });
+  show(s, "PowerMeter", { value: -23, label: "Power, regenerating" });
+  show(s, "PowerMeter", { value: 0, ready: true, label: "Power, ready" });
+  show(s, "StateOfChargeGauge", { value: 64 });
+  show(s, "StateOfChargeGauge", { value: 9, label: "Battery, low" });
+  show(s, "StateOfChargeGauge", { value: 38, charging: true, label: "Battery, charging" });
+});
+
+shot("hybrid", (s) => {
+  show(s, "PowerFlow", { value: { engine: 38, battery: 12, wheels: 50 }, label: "Hybrid" });
+  show(s, "PowerFlow", { value: { engine: 0, battery: 18, wheels: 18 }, label: "Electric drive" });
+  show(s, "PowerFlow", { value: { engine: 0, battery: -21, wheels: -21 }, label: "Regeneration" });
+  show(s, "TripComputer", { energy: "electric", label: "Trip, electric", value: { speed: 96, power: 15.8, distance: 62.4, energy_used: 10.3, elapsed: 2710, range: 284 } });
+  show(s, "TellTaleCluster", { label: "Electric drivetrain", value: ["ready", "charging", "low_charge", "reduced_power", "ev_fault"].map((f) => ({ function: f, state: "on" })) });
+});
+
+const panel = [
+  { _kind: "awa-tachometer", value: 2600, redline: 6200, shift_light: 5800 },
+  { _kind: "awa-telltalecluster", size: [40, 40], value: [
+    { function: "turn_left", state: "off" }, { function: "low_beam", state: "on" }, { function: "engine", state: "on" },
+    { function: "seat_belt", state: "off" }, { function: "abs", state: "off" }, { function: "turn_right", state: "off" },
+  ] },
+  { _kind: "awa-speedometer", value: 87.3, limit: 90, hud: true },
+  { _kind: "awa-fuelgauge", value: 38, filler_side: "right" },
+  { _kind: "awa-temperaturegauge", value: 90 },
+  { _kind: "awa-tripcomputer", value: { speed: 87, fuel_rate: 5.2, distance: 48.3, fuel_used: 3.1, elapsed: 1930 } },
+  { _kind: "awa-gearindicator", value: "5", hud: true },
+  { _kind: "awa-telltale", function: "high_beam", value: "on", hud: true, label: "" },
+];
+
+shot("cluster", (s) => show(s, "Cluster", { value: panel }));
+shot("cluster-hud", (s) => show(s, "Cluster", { value: panel, hud: true, label: "Head-up display" }));
+
+// one picture per widget, for its page of the catalog (docs/widgets/<page>.md)
+const single = {
+  speedometer: ["Speedometer", { value: 87.3, limit: 90 }],
+  tachometer: ["Tachometer", { value: 3200, redline: 6000, shift_light: 5800 }],
+  "fuel-gauge": ["FuelGauge", { value: 38, filler_side: "right" }],
+  "temperature-gauge": ["TemperatureGauge", { value: 90 }],
+  "tell-tale": ["TellTale", { function: "engine", value: "on" }],
+  "tell-tale-cluster": ["TellTaleCluster", { size: [44, 44], value: [
+    { function: "turn_left", state: "off" }, { function: "turn_right", state: "off" }, { function: "low_beam", state: "on" },
+    { function: "engine", state: "on" }, { function: "seat_belt", state: "on" }, { function: "abs", state: "off" },
+  ] }],
+  "trip-computer": ["TripComputer", { value: { speed: 92, fuel_rate: 5.6, distance: 48.3, fuel_used: 3.1, elapsed: 1930, range: 420 } }],
+  odometer: ["Odometer", { value: 48213.7, trip: 48.36 }],
+  "gear-indicator": ["GearIndicator", { value: "3", suggestion: "up" }],
+  "power-meter": ["PowerMeter", { value: -23 }],
+  "state-of-charge-gauge": ["StateOfChargeGauge", { value: 38, charging: true }],
+  "power-flow": ["PowerFlow", { value: { engine: 38, battery: 12, wheels: 50 } }],
+};
+for (const [page, [title, traits]] of Object.entries(single)) shot(`widgets/${page}`, (s) => show(s, title, traits));
+
+document.body.dataset.ready = "true";
+</script>
+</body>
+</html>

@@ -1,20 +1,21 @@
 # Tachometer
 
-!!! info "Planned"
-    `Tachometer` is specified but not written yet: this page describes what it will show.
+[![A tachometer at 3200 rpm, red zone from 6000, day theme](../img/widgets/tachometer-light.png#only-light)![A tachometer at 3200 rpm, red zone from 6000, night theme](../img/widgets/tachometer-dark.png#only-dark)](../../marimo/dials/ "Open it in marimo, in your browser")
 
-![Preview of Tachometer, light theme](../img/widgets/tachometer-light.png#only-light)
-![Preview of Tachometer, dark theme](../img/widgets/tachometer-dark.png#only-dark)
+*Click the picture to drive it in a marimo notebook, in your browser.*
 
-*Preview: an anywidget-instruments [`Gauge`](https://s-celles.github.io/anywidget-instruments/widgets/gauge/) with an amber and a red zone, as the [cluster preview](../examples.md) draws it — not yet
-`Tachometer` itself. Captured from the running preview, in the theme of this page.*
+Engine speed in rpm, the scale in thousands.
 
-Engine speed, in rpm or thousands of rpm.
+```python
+aa.Tachometer(3200, redline=6000, shift_light=5800)
+```
 
-* `redline`: the start of the red zone.
-* `shift_light`: a light that comes on at a chosen engine speed.
-* Hybrid and electric drivetrains: a `ready` state shown when the engine is stopped but
-  the vehicle can move, so that 0 rpm is not read as "off".
+[![Tachometers, day theme](../img/tachometer-light.png#only-light)![Tachometers, night theme](../img/tachometer-dark.png#only-dark)](../../marimo/dials/ "Open it in marimo, in your browser")
+
+* `redline` — the start of the red zone (DIAL-102).
+* `shift_light` — a lamp lit amber at and above this engine speed (DIAL-103).
+* `ready` — hybrid and electric drivetrains: at 0 rpm the dial says *READY*, so that a
+  stopped engine of a vehicle able to move is not read as off (DIAL-104).
 
 **Dials** · [Widget catalog](../widgets.md) · [Specification](../specification.md) ·
 [Safety notice](../safety.md)

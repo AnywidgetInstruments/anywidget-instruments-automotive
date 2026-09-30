@@ -1,7 +1,7 @@
-site_name: anywidget-automotives
+site_name: anywidget-instruments-automotive
 site_description: Automotive instruments for computational notebooks
-site_url: https://s-celles.github.io/anywidget-automotives/
-repo_url: https://github.com/s-celles/anywidget-automotives
+site_url: https://anywidgetinstruments.github.io/anywidget-instruments-automotive/
+repo_url: https://github.com/AnywidgetInstruments/anywidget-instruments-automotive
 edit_uri: ""
 # Buildable offline — no Google Fonts, no CDN assets, as anywidget-instruments.
 theme:
@@ -36,19 +36,39 @@ nav:
           - TripComputer: widgets/trip-computer.md
           - Odometer: widgets/odometer.md
           - GearIndicator: widgets/gear-indicator.md
+      - Electric and hybrid:
+          - PowerMeter: widgets/power-meter.md
+          - StateOfChargeGauge: widgets/state-of-charge-gauge.md
+          - PowerFlow: widgets/power-flow.md
       - Layout:
           - Cluster: widgets/cluster.md
   - Examples: examples.md
+  - API reference: api.md
   - Safety notice: safety.md
   - Standards and references: standards.md
   - Guides:
+      - Hosts: hosts.md
       - Head-up display mode: hud.md
       - Use with CAN & CANopen Studio: integration.md
   - Specification: specification.md
   - Requirements status: requirements-status.md
   - Roadmap: roadmap.md
+  - Development: development.md
+  - License and citation: citing.md
 plugins:
   - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: false
+            members_order: source
+            docstring_style: numpy
+            show_root_heading: true
+            show_signature_annotations: true
+            separate_signature: true
+            filters: ["!^_"]
 markdown_extensions:
   - admonition
   - tables

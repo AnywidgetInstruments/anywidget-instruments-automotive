@@ -4,13 +4,13 @@
 
 | Field | Value |
 |-------|-------|
-| Project | anywidget-automotives |
+| Project | anywidget-instruments-automotive |
 | Author | Sébastien Celles |
 | Document type | Software requirements specification |
 | Notation | EARS (Easy Approach to Requirements Syntax) |
-| Version | 0.5 |
+| Version | 0.10 |
 | Date | 2026-09-28 |
-| Status | Draft for review, before implementation |
+| Status | Draft for review, during implementation |
 
 ---
 
@@ -34,6 +34,7 @@ to run for a widget to behave as specified.
 
 **Included:**
 - Dials: speedometer, tachometer, fuel gauge, temperature gauge
+- Electric and hybrid drivetrains: state of charge, power and regeneration, power flow, energy consumption
 - Tell-tales and tell-tale clusters
 - Digital displays: trip computer, odometer, gear indicator
 - A cluster layout with day, night and head-up display modes
@@ -81,7 +82,7 @@ to run for a widget to behave as specified.
 | Viewing distance | The distance from the driver's eye to the display, from which character sizes are derived. |
 | Visual angle | The angle a character subtends at the eye; ISO 15008 expresses legibility with it. |
 | Unit system | A consistent choice of units for every quantity: metric, imperial (UK) or US customary. |
-| Library | The anywidget-automotives package as a whole. |
+| Library | The anywidget-instruments-automotive package as a whole. |
 
 ### 1.6 Requirement Identifiers and Priority
 
@@ -167,9 +168,10 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 | TEL-003 | M | The `TellTale` shall show the name of its function as text as well as its symbol, so that colour is never the only cue. |
 | TEL-004 | M | The `TellTale` shall accept the states `off`, `on` and `blinking`. |
 | TEL-005 | S | While a `TellTale` is off, the widget shall draw its symbol dimmed, so that a lit one stands out. |
-| TEL-006 | S | When several tell-tales of a `TellTaleCluster` are lit, the widget shall order them red first, then amber, then green and blue. |
+| TEL-006 | S | When several tell-tales of a `TellTaleCluster` other than the direction indicators are lit, the widget shall order them red first, then amber, then green and blue. |
 | TEL-007 | M | While a `TellTale` is blinking, the widget shall blink at a frequency between 1 and 2 Hz. |
 | TEL-008 | M | The library shall provide a **TellTaleCluster**: a row of tell-tales. |
+| TEL-009 | S | The `TellTaleCluster` shall show the direction indicators side by side, left before right, at the start of the row, whatever their state, so that one blinking is never separated from the other. |
 
 ---
 
@@ -189,6 +191,11 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 
 ## 7. Cluster (CLU)
 
+A `Cluster` is one front-end module. Its `value` is the list of the widgets it holds,
+each given as its trait dictionary with its `_kind`, which the cluster draws itself: a
+host sets one list of dictionaries, whatever its language, and needs no support for
+nested widgets. A host binding may accept its own widget objects and pass their traits.
+
 | ID | Pri. | Requirement |
 |---|---|---|
 | CLU-001 | M | The library shall provide a **Cluster** arranging dials on the sides, tell-tales between them and digital displays below. |
@@ -198,6 +205,10 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 ---
 
 ## 8. Legibility (LEG)
+
+The `theme` trait takes, beyond the values of anywidget-instruments, `day` and `night`
+(LEG-003): the day theme is the light theme; the night theme is dark, with a lower
+luminance than the dark theme (LEG-004).
 
 | ID | Pri. | Requirement |
 |---|---|---|
@@ -221,6 +232,9 @@ Requirements use identifiers `<GROUP>-<NNN>` with priorities:
 ---
 
 ## 10. Head-up Display (HUD)
+
+Every widget has a `hud` trait. On a `Cluster` it turns the head-up display mode on; on a
+widget held by a cluster it marks the widget as one the head-up display shows (HUD-004).
 
 | ID | Pri. | Requirement |
 |---|---|---|
@@ -246,6 +260,15 @@ systems and lets any quantity be set on its own.
 | Fuel economy | L/100 km | mpg (imperial) | mpg (US) |
 | Temperature | °C | °C | °F |
 | Pressure | kPa | psi | psi |
+| Fuel rate | L/h | imperial gal/h | US gal/h |
+| Power | kW | kW | kW |
+| Energy | kWh | kWh | kWh |
+| Energy economy | kWh/100 km | mi/kWh | mi/kWh |
+
+The names in this table are the unit names of the trait contract and the text shown
+next to a value; the contract also accepts km/L for a fuel economy (UNIT-014) and bar for
+a pressure, and lists every name it accepts (UNIT-017). A gallon is always named
+`imperial gal` or `US gal`, an mpg `mpg (imperial)` or `mpg (US)` (UNIT-005).
 
 ### 11.1 Unit Systems
 
@@ -267,7 +290,7 @@ figures, so every host shows the same result.
 |---|---|---|
 | UNIT-010 | M | Every widget shall read its `value` in the unit named by its `input_unit` trait, defaulting to the metric unit of its quantity, and the front end shall convert it for display. |
 | UNIT-011 | M | The front end shall convert with the exact defining factors: 1 mi = 1.609344 km, 1 US gal = 3.785411784 L, 1 imperial gal = 4.54609 L, °F = °C × 9/5 + 32. |
-| UNIT-012 | M | When the front end converts a fuel economy between L/100 km and mpg or km/L, it shall use the reciprocal relation between them, not a proportional one. |
+| UNIT-012 | M | When the front end converts a fuel economy between L/100 km and mpg or km/L, or an energy economy between kWh/100 km and mi/kWh or km/kWh, it shall use the reciprocal relation between them, not a proportional one. |
 | UNIT-013 | M | When the front end converts a fuel economy between a per-distance unit (L/100 km) and a per-volume unit (mpg, km/L), it shall convert the `min`, `max`, zones and limits too, and shall reverse the scale so that its better end stays marked as better. |
 | UNIT-014 | S | The library shall offer km/L as a fuel economy unit. |
 | UNIT-015 | M | When the `Speedometer` converts a speed, the front end shall round up after the conversion (SPD-001), not before. |
@@ -278,6 +301,10 @@ figures, so every host shows the same result.
 ---
 
 ## 12. Robustness (ROB)
+
+A host binding that sets an unchanged value still updates it, although a trait
+synchronisation only carries changes: it then increments the `_value_seq` trait, from
+which the front end counts `max_age` (ROB-001) as from a change of `value`.
 
 | ID | Pri. | Requirement |
 |---|---|---|
@@ -331,7 +358,25 @@ figures, so every host shows the same result.
 
 ---
 
-## 17. Traceability of Cluster Components
+## 17. Electric and Hybrid Drivetrains (EV)
+
+A vehicle driven by an electric motor, alone or with an engine, is read through other
+figures: the charge of its battery rather than a fuel level, the power it draws or
+regenerates rather than an engine speed, and an energy consumption. Power is positive
+when the drivetrain drives the wheels and negative when it regenerates.
+
+| ID | Pri. | Requirement |
+|---|---|---|
+| EV-001 | M | The library shall provide a **StateOfChargeGauge**: the charge of the traction battery from 0 to 100 %, with a low zone and a battery symbol lit in it. |
+| EV-002 | S | While `charging` is true, the `StateOfChargeGauge` shall show a charging symbol and the text CHARGING. |
+| EV-003 | M | The library shall provide a **PowerMeter**: the power of the drivetrain in kW on a scale extending below zero, the part below zero marked as regeneration. |
+| EV-004 | M | While the power is negative, the `PowerMeter` shall show that the vehicle regenerates, in text as well as by the position of the needle. |
+| EV-005 | S | While `ready` is true and the power is zero, the `PowerMeter` shall show a ready state, so that a stopped motor of a vehicle able to move is not read as off. |
+| EV-006 | M | Where `energy` is `"electric"`, the `TripComputer` shall show the energy consumption and the energy used instead of fuel, with the rules of DIG-002 and DIG-003: the power below 5 km/h, no average under 0.1 km. |
+| EV-007 | S | The library shall provide a **PowerFlow** display showing, for a hybrid drivetrain, which of the engine, the battery and the wheels deliver and receive power, by arrows and in text. |
+| EV-008 | M | The tell-tale set shall include the functions of an electric drivetrain: ready to drive, charging, low battery charge, reduced power, and electric drive system fault. |
+
+## 18. Traceability of Cluster Components
 
 | Component of a vehicle display | Widget or trait | Requirements |
 |---|---|---|
@@ -339,21 +384,23 @@ figures, so every host shows the same result.
 | Tachometer, red zone, shift light | Tachometer | DIAL-102 to DIAL-104 |
 | Fuel gauge, reserve, filler side | FuelGauge | DIAL-105, DIAL-106 |
 | Temperature gauge | TemperatureGauge | DIAL-107, DIAL-108 |
-| Warning and indicator lights | TellTale, TellTaleCluster | TEL-001 to TEL-008 |
+| Warning and indicator lights | TellTale, TellTaleCluster | TEL-001 to TEL-009 |
 | Trip computer | TripComputer | DIG-001 to DIG-004 |
 | Odometer and trip meter | Odometer | DIG-005 |
 | Gear display and shift suggestion | GearIndicator | DIG-006, DIG-007 |
 | Instrument panel layout | Cluster | CLU-001 to CLU-003 |
 | Head-up display | `hud` trait of Cluster | HUD-001 to HUD-006 |
 | Day and night illumination | `theme`, `brightness` traits | LEG-003, LEG-004 |
+| State of charge, power and regeneration, power flow | StateOfChargeGauge, PowerMeter, PowerFlow | EV-001 to EV-007 |
+| Electric drivetrain tell-tales | TellTale | EV-008 |
 | Market units (metric, UK, US) | `unit_system`, `unit`, `input_unit` traits | UNIT-001 to UNIT-018 |
 
 ---
 
-## 18. Open Questions
+## 19. Open Questions
 
-1. Whether the dials extend the TypeScript `Gauge` view of anywidget-instruments with automotive defaults, or are front-end modules of their own.
-2. How the ISO 2575 symbols are drawn without reproducing the standard's figures: original drawings modelled on the published meaning of each symbol.
+1. *Resolved in 0.6.* The dials are front-end modules of their own, deriving from the base view of anywidget-instruments — its common traits, scheduling, themes and kernel liveness — and reusing its scale functions, not from its `Gauge` view, which is a control with alarm levels, a value entry and peak hold. No change upstream is needed.
+2. *Resolved in 0.6.* The symbols are original drawings on a 24 × 24 grid, modelled on the published meaning of each ISO 2575 symbol and not copied from the figures of the standard; the set is listed in the widget catalog.
 3. The visual angle LEG-001 targets, to be set after reading ISO 15008.
 4. Whether mph and km/h scales on one `Speedometer` (SPD-005) are needed for 1.0.
 5. Whether pressure (tyre) and other quantities beyond the table of section 11 are in scope for 1.0.
@@ -363,6 +410,11 @@ figures, so every host shows the same result.
 | Version | Changes |
 |---|---|
 | 0.1 | Initial draft. |
+| 0.10 | The project renamed anywidget-instruments-automotive, in the family of anywidget-instruments with anywidget-instruments-industrial; no requirement changed. |
+| 0.9 | TEL-009 added: the direction indicators side by side, left before right, at the start of a tell-tale row; TEL-006 orders the other tell-tales. |
+| 0.8 | Section 17 added: electric and hybrid drivetrains (EV-001 .. EV-008). Unit table: power, energy and energy economy; UNIT-012 extended to energy economy. Former sections 17 and 18 renumbered 18 and 19. |
+| 0.7 | Section 7: a `Cluster` holds its widgets as a list of trait dictionaries and draws them itself. Section 10: the `hud` trait of every widget. Section 8: the `theme` values `day` and `night`. |
+| 0.6 | Open questions 1 (dials derive from the base view of anywidget-instruments) and 2 (original tell-tale drawings) resolved. Unit table: fuel rate added, unit names stated as those of the trait contract and of the display. Section 12: the `_value_seq` trait, by which a host signals an update that does not change the value (ROB-001). |
 | 0.5 | DOC-005 added: every widget pictured in the day and the night theme, captured from the widgets themselves by an automated run. |
 | 0.4 | The library is a TypeScript front end first, used from Python, Julia, Rust and other hosts: GEN rewritten (front-end modules, AFM, everything displayed computed in the front end), HOST-001 .. HOST-006 added (trait contract, contract file, parity cases), API made host-neutral. Unit conversion moved to the front end (UNIT-010 .. UNIT-018); pint is no longer a requirement but an optional convenience of the Python binding, as DynamicQuantities.jl and uom are of theirs. |
 | 0.3 | Units rewritten (UNIT-001 .. UNIT-017): metric, imperial and US unit systems, per-widget override, exact conversion factors, reciprocal fuel economy with converted and reversed scales, rounding after conversion. |

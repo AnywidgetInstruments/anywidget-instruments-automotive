@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/automotive.schema.json",
+  "title": "Automotive",
+  "description": "Traits shared by every widget of anywidget-instruments-automotive (API-001, API-002, ROB-001). The common traits of anywidget-instruments are kept; every widget is an indicator.",
+  "type": "object",
+  "x-awi-abstract": true,
+  "x-awi-class": "AutomotiveWidget",
+  "allOf": [
+    {
+      "$ref": "https://s-celles.github.io/anywidget-instruments/schema/instrument.schema.json"
+    }
+  ],
+  "properties": {
+    "mode": {
+      "const": "indicator",
+      "description": "Always \"indicator\": nothing is meant to be operated while driving (API-002).",
+      "default": "indicator",
+      "x-awi-writer": "host"
+    },
+    "max_age": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Seconds after which a value not updated is shown as stale; 0: never (ROB-001).",
+      "default": 0,
+      "x-awi-writer": "host"
+    },
+    "_value_seq": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Counter a host increments on every assignment of value, even an unchanged one, so that max_age counts from the last update rather than the last change (ROB-001). Hosts that set only changes may leave it alone.",
+      "default": 0,
+      "x-awi-writer": "host"
+    },
+    "hud": {
+      "type": "boolean",
+      "description": "On a Cluster: the head-up display mode (HUD-001 .. HUD-006). On a widget held by a Cluster: shown in that mode, with the speed (HUD-004).",
+      "default": false,
+      "x-awi-writer": "host"
+    },
+    "theme": {
+      "enum": [
+        "auto",
+        "light",
+        "dark",
+        "system",
+        "day",
+        "night"
+      ],
+      "description": "\"day\": the light theme; \"night\": a dark theme of lowered luminance, with no large bright area (LEG-003, LEG-004); the others as in anywidget-instruments. Tell-tale colours do not depend on it (TEL-001).",
+      "default": "auto",
+      "x-awi-writer": "host"
+    }
+  }
+}

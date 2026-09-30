@@ -4,18 +4,27 @@ Guidance for AI coding agents (and humans) working on this repository.
 
 ## Project
 
-`anywidget-automotives`: automotive instruments (speedometer, tachometer, gauges,
+`anywidget-instruments-automotive`: automotive instruments (speedometer, tachometer, gauges,
 tell-tales, trip computer, cluster, head-up display mode) for computational notebooks,
 built on [anywidget](https://anywidget.dev) and on
-[anywidget-instruments](https://github.com/s-celles/anywidget-instruments), whose base
+[anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments-industrial), whose base
 class, trait contract, themes and hosts it reuses.
+
+The family: `anywidget-instruments` is becoming the shared base (base view, trait
+contract, themes, liveness), with `anywidget-instruments-industrial` (industrial
+widgets) and this library as its two widget libraries. Until the base is extracted,
+the code this library builds on lives in anywidget-instruments-industrial, still as the
+package `anywidget-instruments`, pinned at a commit (`package.json`).
 
 The library is a **TypeScript front end first**: the anywidget front-end modules are the
 implementation, and Python, Julia (KaimonSlate.jl), Rust and other languages are hosts
 that set traits described by the trait contract.
 
-The repository is at the **design stage**: `docs/` holds the documentation and the EARS
-specification, and no widget is implemented yet.
+The repository is in **early implementation**: every widget of the catalog is written
+(tell-tales, dials, digital displays, the `Cluster` and its head-up display mode), with
+the Python binding; the next milestones are in `docs/roadmap.md`, and where each
+requirement stands in `docs/requirements-status.md`. `docs/development.md` describes
+the layout.
 
 ## Rules
 
@@ -38,15 +47,21 @@ specification, and no widget is implemented yet.
 ## Commands
 
 ```bash
-mkdocs serve        # documentation site, from docs/
-python scripts/screenshots.py   # light and dark images of docs/img/ (cluster and widget pages), from the preview
+npm install && npm run build    # trait contract + front-end bundle
+npm run lint && npm run typecheck && npm test
+npm run images                  # docs/img/<widget>-light.png and -dark.png, from the widgets
+pip install "anywidget-instruments @ git+https://github.com/AnywidgetInstruments/anywidget-instruments-industrial@<commit of package.json>"
+pip install -e ".[dev]" && pytest && ruff check . && ruff format --check . && mypy src
+mkdocs serve                    # documentation site, from docs/
+python scripts/screenshots.py   # light and dark images of the cluster preview
 ```
 
-The images of `docs/img/` are captures of the running notebook: take them again
-whenever the preview changes, so the site never shows an older look.
+The images of `docs/img/` are captures of the running code: take them again whenever
+a widget or the preview changes, so the site never shows an older look.
 
 ## Conventions
 
 - Comments explain *why*, not *what*.
 - Tests are named as sentences describing the behaviour.
+- Never commit generated files: `js/src/generated/`, `src/anywidget_instruments_automotive/static/`.
 - Commit messages state the problem, then the change, and end with `Assisted-by: AI`.

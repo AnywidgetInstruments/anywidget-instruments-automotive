@@ -1,7 +1,7 @@
-# Captures the documentation images of docs/img/ in the light and the dark colour
-# scheme, from the running notebook, so that the site shows what the reader will get:
-# the whole cluster preview, and in docs/img/widgets/ the stand-in of each planned widget
-# that the preview draws (DOC-005).
+# Captures the pictures of the cluster example, docs/img/cluster-preview-*.png, in the
+# light and the dark colour scheme, from the running notebook, so that the site shows
+# what the reader will get. The pictures of each widget come from the widgets themselves
+# (`npm run images`, DOC-005).
 #
 #   pip install marimo playwright anywidget-instruments
 #   playwright install chromium
@@ -19,18 +19,6 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parent.parent
 IMG = ROOT / "docs" / "img"
 NOTEBOOKS = {"cluster-preview": ROOT / "lite" / "marimo" / "cluster_preview.py"}
-# Page of each planned widget (docs/widgets/<page>.md) -> labels of the preview widgets
-# that stand in for it. Odometer and GearIndicator have no stand-in yet.
-STAND_INS = {
-    "speedometer": ["Speed"],
-    "tachometer": ["Engine speed"],
-    "fuel-gauge": ["Fuel"],
-    "temperature-gauge": ["Coolant"],
-    "tell-tale": ["Engine"],
-    "tell-tale-cluster": ["Oil pressure", "Coolant hot", "Engine", "Low fuel", "Indicator", "High beam"],
-    "trip-computer": ["Fuel rate", "Instant consumption"],
-}
-MARGIN = 0  # the widgets have their own padding; a margin would catch a neighbour
 
 
 def free_port() -> int:
@@ -52,32 +40,22 @@ def wait_for(url: str, timeout: float = 60) -> None:
     raise TimeoutError(url)
 
 
-def capture_stand_ins(page, scheme: str) -> None:
-    """The preview widgets standing in for each planned widget, framed together."""
-    (IMG / "widgets").mkdir(exist_ok=True)
-    for name, labels in STAND_INS.items():
-        boxes = []
-        for label in labels:
-            # The label of an anywidget-instruments widget is its own text node; exact,
-            # so that "Engine" is not "Engine speed".
-            root = page.locator(".awi-root").filter(has=page.get_by_text(label, exact=True))
-            boxes.append(root.first.bounding_box())
-        left = min(b["x"] for b in boxes) - MARGIN
-        top = min(b["y"] for b in boxes) - MARGIN
-        right = max(b["x"] + b["width"] for b in boxes) + MARGIN
-        bottom = max(b["y"] + b["height"] for b in boxes) + MARGIN
-        out = IMG / "widgets" / f"{name}-{scheme}.png"
-        clip = {"x": left, "y": top, "width": right - left, "height": bottom - top}
-        page.screenshot(path=out, clip=clip, full_page=True)
-        print(out.relative_to(ROOT))
-
-
 def capture(name: str, notebook: Path) -> None:
     port = free_port()
     server = subprocess.Popen(
-        [sys.executable, "-m", "marimo", "run", str(notebook), "--headless",
-         "--port", str(port), "--no-token"],
-        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        [
+            sys.executable,
+            "-m",
+            "marimo",
+            "run",
+            str(notebook),
+            "--headless",
+            "--port",
+            str(port),
+            "--no-token",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
     )
     try:
         url = f"http://127.0.0.1:{port}/"
@@ -86,11 +64,12 @@ def capture(name: str, notebook: Path) -> None:
             browser = p.chromium.launch()
             for scheme in ("light", "dark"):
                 page = browser.new_page(
-                    color_scheme=scheme, viewport={"width": 1100, "height": 900},
+                    color_scheme=scheme,
+                    viewport={"width": 1100, "height": 900},
                     device_scale_factor=2,
                 )
                 page.goto(url)
-                page.get_by_text("Instant consumption").first.wait_for(timeout=60_000)
+                page.get_by_text("Fuel used").first.wait_for(timeout=60_000)
                 # Light a warning and a function tell-tale, so the picture shows the
                 # colours by meaning next to unlit ones. Not the direction indicator:
                 # it blinks, and a capture would catch it at random.
@@ -104,7 +83,6 @@ def capture(name: str, notebook: Path) -> None:
                 out = IMG / f"{name}-{scheme}.png"
                 cluster.screenshot(path=out)
                 print(out.relative_to(ROOT))
-                capture_stand_ins(page, scheme)
                 page.close()
             browser.close()
     finally:

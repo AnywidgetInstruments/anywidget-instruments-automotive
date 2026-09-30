@@ -1,0 +1,59 @@
+# Build and publish to PyPI with trusted publishing and build provenance, on a
+# published GitHub release, as anywidget-instruments does. Requires a PyPI
+# trusted publisher configured for this repository and the "pypi" environment.
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci && npm run build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build && python -m build
+      - name: The version of the release is the version of the package and of its citation
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          grep -q "^version = \"$tag\"$" pyproject.toml
+          grep -q "^version: $tag$" CITATION.cff
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      # The package depends on anywidget-instruments: published without it, it
+      # could not be installed from the package index.
+      - name: anywidget-instruments is on the package index
+        run: curl -fsS https://pypi.org/pypi/anywidget-instruments/json > /dev/null
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1

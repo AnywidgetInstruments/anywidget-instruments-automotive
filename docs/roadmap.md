@@ -1,18 +1,27 @@
 # Roadmap
 
-Where anywidget-automotives is, and the order in which it gets built. Milestones are
+Where anywidget-instruments-automotive is, and the order in which it gets built. Milestones are
 sequenced by dependency, not dated: each one rests on the ones before it.
 
 ## Where the project is
 
 | Delivered | Notes |
 |---|---|
-| Documentation site | Catalog, safety notice, standards, head-up display guide, integration with CAN & CANopen Studio |
-| Specification 0.5 | 99 requirements in EARS notation, 16 groups; TypeScript front end first, units for every market |
-| Cluster preview | A marimo WebAssembly example composed from anywidget-instruments widgets, labelled a preview |
-| Preview screenshots | Light and dark captures of the preview in the documentation, taken by `scripts/screenshots.py` |
+| Documentation site | Catalog, safety notice, standards, head-up display guide, integration with CAN & CANopen Studio, development guide |
+| Specification 0.9 | 108 requirements in EARS notation, 17 groups; open questions 1 and 2 resolved |
+| 1. Foundations | TypeScript front end on the base view of anywidget-instruments, trait contract and parity cases, Python binding, CI, JupyterLite, documentation images captured in CI |
+| 2. Units and robustness | The unit layer and the missing, stale and invalid states, applied by every widget |
+| 3. Tell-tales | `TellTale` and `TellTaleCluster`, 22 functions with original symbols |
+| 4. Dials | `Speedometer`, `Tachometer`, `FuelGauge`, `TemperatureGauge`; day and night themes; the character size (LEG-001) waits for the visual angle of open question 3 |
+| 5. Digital displays | `TripComputer`, `Odometer`, `GearIndicator`, with the consumption rules of CAN & CANopen Studio |
+| 6. Cluster and head-up display | `Cluster`, one widget holding the trait dictionaries of the others; HUD mode |
+| Electric and hybrid drivetrains | `StateOfChargeGauge`, `PowerMeter`, `PowerFlow`, electric trip computer and tell-tales (specification 0.8) |
+| 7. Hosts, in part | JupyterLab, Notebook 7, marimo and a page with no kernel tested end to end; pint quantities; a KaimonSlate.jl example and a Rust web view documented |
+| 8. Version 1.0, prepared | API reference, citation metadata, release workflow; LEG-001 and publishing remain |
+| Examples | marimo WebAssembly notebooks, opened by clicking the pictures of the documentation: a cluster with a combustion, hybrid or electric drivetrain, tell-tales, dials, digital displays, electric and hybrid |
 
-No widget is implemented: the [requirements status](requirements-status.md) shows 0 of 99.
+The [requirements status](requirements-status.md) shows 102 of 108 requirements
+implemented, 99 of them tested.
 
 ## Principles
 
@@ -31,7 +40,7 @@ These hold for every milestone below.
 
 ## Milestones, in order
 
-### 1. Foundations
+### 1. Foundations — done
 
 The toolchain of anywidget-instruments, so the two libraries are built, tested and
 released the same way.
@@ -44,14 +53,13 @@ released the same way.
   JupyterLite.
 * Documentation images (DOC-005): a day and a night capture of every widget, taken by
   Playwright from the built front end in continuous integration, so the site never shows
-  an older look than the code. They take the place of the preview screenshots as the
-  widgets arrive.
+  an older look than the code; each widget's page opens with its own.
 
-**Decides:** whether the dials extend the `Gauge` view of anywidget-instruments or are
-modules of their own (open question 1 of the specification). If extending it needs a
-change upstream, that change comes first.
+**Decided** (specification 0.6): the dials are modules of their own, deriving from the
+base view of anywidget-instruments and reusing its scale functions; no change upstream
+was needed.
 
-### 2. Units and robustness
+### 2. Units and robustness — done
 
 The layer every widget uses, written once in the front end.
 
@@ -60,55 +68,62 @@ The layer every widget uses, written once in the front end.
 * Stale and missing values, and the invalid state for rejected traits (ROB, HOST-004).
 * Parity cases for every conversion, so a host binding cannot drift.
 
-### 3. Tell-tales
+### 3. Tell-tales — done
 
 The first widgets, and the ones that need no dial.
 
-* `TellTale` and `TellTaleCluster` (TEL-001 .. TEL-008): colour from function, name as
-  text as well as symbol, blinking at 1 to 2 Hz, priority order.
+* `TellTale` and `TellTaleCluster` (TEL-001 .. TEL-009): colour from function, name as
+  text as well as symbol, blinking at 1 to 2 Hz, priority order, the direction
+  indicators side by side.
 * Symbols drawn originally from the published meaning of each ISO 2575 symbol, never
   copied from the standard (open question 2).
 * The test that checks every tell-tale colour (QA-002).
 
-### 4. Dials
+### 4. Dials — done, legibility aside
 
 * `Speedometer` with rounding up after conversion, the speed limit marker and its
   boundary tests (SPD, QA-003).
 * `Tachometer` with red zone, shift light and the ready state of hybrid and electric
   drivetrains.
 * `FuelGauge` and `TemperatureGauge` (DIAL).
-* Legibility from the viewing distance, day and night themes (LEG), once the visual angle
-  is set from ISO 15008 (open question 3).
+* Day and night themes, contrast, digits of equal width and a slashed zero (LEG-002 ..
+  LEG-005); the size of characters from the viewing distance (LEG-001) once the visual
+  angle is set from ISO 15008 (open question 3).
 
-### 5. Digital displays
+### 5. Digital displays — done
 
 * `TripComputer`, `Odometer` and `GearIndicator` (DIG), with the consumption rules shared
   with CAN & CANopen Studio's trip computer: per hour below 5 km/h, no average under
   0.1 km.
 
-### 6. Cluster and head-up display
+### 6. Cluster and head-up display — done
 
 * `Cluster` layout, the eight-widget default, hold times against flicker, animation
   switch (CLU, DIS).
 * Head-up display mode: mirrored, black, one colour, tell-tale colours kept, brightness
   (HUD).
-* The preview example replaced by the real widgets.
+* The cluster example made of the real widgets, with a combustion, hybrid or electric
+  drivetrain.
 
-### 7. Hosts
+### 7. Hosts — in part: publishing, and the studio's pages, remain
 
-* Python binding published, with examples in JupyterLab, marimo and in the browser
-  (JupyterLite, marimo WebAssembly).
+* Python binding with examples in marimo and in the browser (JupyterLite, marimo
+  WebAssembly), tested end to end in JupyterLab, Notebook 7, marimo and a page with no
+  kernel; published with the release (milestone 8).
 * Julia: a KaimonSlate.jl example, with quantities from DynamicQuantities.jl passed as a
   number and a unit name (HOST-005, UNIT-018).
 * Rust: a documented embedding through a web view, traits as JSON (HOST-006).
-* CAN & CANopen Studio: dashboard pages using `anywidget_automotives:` widgets, fed by
+* CAN & CANopen Studio: dashboard pages using `anywidget_instruments_automotive:` widgets, fed by
   its trip computer.
 
-### 8. Version 1.0
+### 8. Version 1.0 — prepared
 
-* Every requirement marked **M** implemented and covered by a test (QA-001).
-* Accessibility (A11Y) and documentation (DOC) complete.
-* A release on the package index, with citation metadata.
+* Every requirement marked **M** implemented and covered by a test (QA-001): all but
+  LEG-001, checked by `tests/test_traceability.py`.
+* Accessibility (A11Y) and documentation (DOC) complete, with an API reference.
+* A release on the package index, with citation metadata: `CITATION.cff` and the release
+  workflow are ready; publishing waits for anywidget-instruments on the package index,
+  on which this package depends.
 
 ## After 1.0
 
@@ -117,5 +132,4 @@ Candidates, to be specified before they are built:
 * A second speed scale on one speedometer (SPD-005) and km/L (UNIT-014).
 * Tyre pressure, oil pressure and other quantities beyond the unit table (open
   question 5).
-* Electric and hybrid displays: state of charge, power and regeneration meter, range.
 * A widget for the readiness monitors and trouble codes CAN & CANopen Studio reads.

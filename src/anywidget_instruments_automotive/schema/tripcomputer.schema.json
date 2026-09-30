@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/tripcomputer.schema.json",
+  "title": "TripComputer",
+  "description": "The figures of a trip: instant and average consumption, fuel used, distance, elapsed time and range, computed by the front end from the raw figures of the trip (DIG-001 .. DIG-004, UNIT-016).",
+  "type": "object",
+  "x-awi-class": "TripComputer",
+  "allOf": [
+    {
+      "$ref": "automotive.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-tripcomputer",
+      "default": "awa-tripcomputer",
+      "x-awi-writer": "host"
+    },
+    "value": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Raw figures of the trip, in metric units: speed (km/h), fuel_rate (L/h), distance (km), fuel_used (L), elapsed (s), range (km, optional: the range is shown only where given, DIG-004); for an electric drivetrain, power (kW, negative when regenerating) and energy_used (kWh). null: no trip yet (ROB-002). A field the schema rejects makes the display invalid (HOST-004).",
+      "properties": {
+        "speed": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "fuel_rate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "distance": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "fuel_used": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "elapsed": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "range": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "power": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "energy_used": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "unit": {
+      "enum": [
+        "",
+        "L/100 km",
+        "mpg (imperial)",
+        "mpg (US)",
+        "km/L",
+        "kWh/100 km",
+        "mi/kWh",
+        "km/kWh"
+      ],
+      "description": "Unit of the consumptions, whatever the unit system; empty: the one of the unit system (UNIT-003). A fuel economy unit, or with energy \"electric\" an energy economy unit.",
+      "default": "",
+      "x-awi-writer": "host"
+    },
+    "unit_system": {
+      "$ref": "units.schema.json#/$defs/unitSystem",
+      "default": "metric",
+      "x-awi-writer": "host"
+    },
+    "label": {
+      "default": "Trip"
+    },
+    "size": {
+      "default": [
+        240,
+        170
+      ]
+    },
+    "energy": {
+      "enum": [
+        "fuel",
+        "electric"
+      ],
+      "description": "\"electric\": the energy consumption (kWh) from power and energy_used, instead of fuel (EV-006).",
+      "default": "fuel",
+      "x-awi-writer": "host"
+    }
+  }
+}

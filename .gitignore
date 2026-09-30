@@ -1,4 +1,27 @@
 # MkDocs build output
 /site/
 __pycache__/
+*.py[cod]
 .venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+# Built front-end bundle and contract (`npm run build`)
+src/anywidget_instruments_automotive/static/
+# Trait contract generated from the JSON Schemas (`npm run gen`)
+js/src/generated/
+test-results/
+playwright-report/
+__marimo__/
+lite/.jupyterlite.doit.db
+lite/_output/
+lite/.cache/
+lite/marimo/public/
+
+# Playwright
+blob-report/
+e2e/notebooks/.ipynb_checkpoints/

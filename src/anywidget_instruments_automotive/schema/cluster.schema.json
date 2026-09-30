@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://anywidgetinstruments.github.io/anywidget-instruments-automotive/schema/cluster.schema.json",
+  "title": "Cluster",
+  "description": "An instrument panel: dials on the sides, tell-tales between them, digital displays below; its hud, theme, brightness and unit_system apply to every widget it holds (CLU-001 .. CLU-003, DIS-001, HUD-001 .. HUD-006, UNIT-004).",
+  "type": "object",
+  "x-awi-class": "Cluster",
+  "allOf": [
+    {
+      "$ref": "automotive.schema.json"
+    }
+  ],
+  "properties": {
+    "_kind": {
+      "const": "awa-cluster",
+      "default": "awa-cluster",
+      "x-awi-writer": "host"
+    },
+    "value": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "The trait dictionary of a widget, with its _kind; traits not given take the defaults of the contract.",
+        "properties": {
+          "_kind": {
+            "enum": [
+              "awa-speedometer",
+              "awa-tachometer",
+              "awa-fuelgauge",
+              "awa-temperaturegauge",
+              "awa-telltale",
+              "awa-telltalecluster",
+              "awa-tripcomputer",
+              "awa-odometer",
+              "awa-gearindicator",
+              "awa-stateofchargegauge",
+              "awa-powermeter",
+              "awa-powerflow"
+            ]
+          }
+        },
+        "required": [
+          "_kind"
+        ]
+      },
+      "description": "The widgets of the cluster, each as its trait dictionary with its _kind (section 7); an item the contract rejects is shown invalid in its place (HOST-004).",
+      "default": [],
+      "x-awi-writer": "host"
+    },
+    "unit_system": {
+      "$ref": "units.schema.json#/$defs/unitSystem",
+      "description": "Applied to every widget held, except in the unit a widget sets for itself (UNIT-003, UNIT-004).",
+      "default": "metric",
+      "x-awi-writer": "host"
+    },
+    "brightness": {
+      "type": "number",
+      "minimum": 0.1,
+      "maximum": 1,
+      "description": "Brightness of every widget held, 1: full (CLU-002, HUD-006).",
+      "default": 1,
+      "x-awi-writer": "host"
+    },
+    "max_items": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "description": "Most widgets shown; null: eight (DIS-001). The others are named as not shown.",
+      "default": null,
+      "x-awi-writer": "host"
+    },
+    "label": {
+      "default": ""
+    },
+    "size": {
+      "default": [
+        640,
+        420
+      ],
+      "description": "[width, height] of the panel, in CSS pixels; each widget keeps its own size."
+    }
+  }
+}
