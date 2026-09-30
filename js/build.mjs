@@ -14,12 +14,14 @@ const OUT = "src/anywidget_instruments_automotive/static";
 
 // The base view of anywidget-instruments looks a widget up in the contract of
 // its own widgets, which is most of its bundle; ours carry their own contract
-// (js/src/core/view.ts), so theirs is left out.
+// (js/src/core/view.ts), so theirs is left out. Matched on the installed
+// package, not on the name: this repository's own path contains it too.
+const UPSTREAM_PACKAGE = /[\\/]node_modules[\\/]anywidget-instruments[\\/]/;
 const upstreamContract = {
   name: "upstream-contract",
   setup(b) {
     b.onResolve({ filter: /\/generated\/contract\.js$/ }, (args) =>
-      args.importer.includes("anywidget-instruments") ? { path: "upstream-contract", namespace: "awa-stub" } : undefined,
+      UPSTREAM_PACKAGE.test(args.importer) ? { path: "upstream-contract", namespace: "awa-stub" } : undefined,
     );
     b.onLoad({ filter: /.*/, namespace: "awa-stub" }, () => ({ contents: "export const BY_KIND = {};\nexport const CONTRACTS = {};\n", loader: "js" }));
   },
