@@ -4,6 +4,10 @@ Automotive instruments for computational notebooks: speedometer, tachometer, fue
 temperature gauges, tell-tales, a trip computer display, gear and shift indicators, the
 indicators of electric and hybrid drivetrains, and a head-up display mode.
 
+Part of the [anywidget instruments family](https://anywidgetinstruments.github.io/):
+the core, the industrial, automotive and aeronautics widget libraries, their
+hosts (Python, Julia, Grafana) and their live demos.
+
 A **TypeScript front end first**, built on [anywidget](https://anywidget.dev) and on
 [anywidget-instruments](https://github.com/AnywidgetInstruments/anywidget-instruments), whose front
 end, [trait contract](https://anywidgetinstruments.github.io/anywidget-instruments-industrial/trait-contract/)
